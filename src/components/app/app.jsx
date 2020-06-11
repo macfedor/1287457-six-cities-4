@@ -6,6 +6,6 @@ export const App = (props) => {
   const {placesCount} = props;
 
   return <Main
-    placesCount = {placesCount}
+    placesCount={placesCount}
   />;
 };

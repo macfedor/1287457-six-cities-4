@@ -9,7 +9,7 @@ const init = () => {
 
   ReactDOM.render(
       <App
-        placesCount = {settings.placesCount}
+        placesCount={settings.placesCount}
       />,
       document.querySelector(`#root`)
   );
