@@ -88,7 +88,7 @@ export const Main = (props) => {
             </form>
             <div className="cities__places-list places__list tabs__content">
               {places.map((name, index) => (
-                <article key={index} className="cities__place-card place-card">
+                <article key={name + index} className="cities__place-card place-card">
                   <div className="place-card__mark">
                     <span>Premium</span>
                   </div>
