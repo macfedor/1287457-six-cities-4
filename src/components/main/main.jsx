@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export const Main = (props) => {
-  const {places} = props;
+const Main = (props) => {
+  const {places, onTitleClick} = props;
 
   return <div className="page page--gray page--main">
     <header className="header">
@@ -117,7 +117,7 @@ export const Main = (props) => {
                       </div>
                     </div>
                     <h2 className="place-card__name">
-                      <a href="#">{name}</a>
+                      <a onClick={onTitleClick} href="#">{name}</a>
                     </h2>
                     <p className="place-card__type">Apartment</p>
                   </div>
@@ -136,4 +136,7 @@ export const Main = (props) => {
 
 Main.propTypes = {
   places: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onTitleClick: PropTypes.func.isRequired,
 };
+
+export default Main;
