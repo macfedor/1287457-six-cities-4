@@ -1,15 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
-import {Main} from "../main/main.jsx";
+import Main from "../main/main.jsx";
 
-export const App = (props) => {
-  const {places} = props;
+const PLACES = [`Beautiful & luxurious apartment at great location`, `Wood and stone place`, `Third name`, `test`];
 
+const App = () => {
   return <Main
-    places={places}
+    places={PLACES}
+    onTitleClick={() => {}}
   />;
 };
 
-App.propTypes = {
-  places: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
+export default App;
