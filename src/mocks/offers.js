@@ -1,0 +1,38 @@
+export default [
+  {
+    id: Math.random(),
+    image: `img/apartment-01.jpg`,
+    isPremium: false,
+    price: 120,
+    name: `Beautiful & luxurious apartment at great location`,
+    type: `apartment`,
+    rating: 5,
+  },
+  {
+    id: Math.random(),
+    image: `img/apartment-02.jpg`,
+    isPremium: false,
+    price: 150,
+    name: `Wood and stone place`,
+    type: `room`,
+    rating: 2.4,
+  },
+  {
+    id: Math.random(),
+    image: `img/apartment-03.jpg`,
+    isPremium: true,
+    price: 1200,
+    name: `Third place`,
+    type: `house`,
+    rating: 5,
+  },
+  {
+    id: Math.random(),
+    image: `img/apartment-01.jpg`,
+    isPremium: false,
+    price: 90,
+    name: `Last one`,
+    type: `hotel`,
+    rating: 3.6,
+  },
+];

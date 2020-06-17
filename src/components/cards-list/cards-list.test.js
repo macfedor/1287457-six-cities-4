@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import App from "./app.jsx";
+import CardsList from "./cards-list.jsx";
 
 const testData = [
   {
@@ -23,10 +23,10 @@ const testData = [
   }
 ];
 
-it(`Render App`, () => {
+it(`Should CardsList render correctly`, () => {
   const tree = renderer
-    .create(<App
-      places={testData}
+    .create(<CardsList
+      cards={testData}
     />)
     .toJSON();
 
