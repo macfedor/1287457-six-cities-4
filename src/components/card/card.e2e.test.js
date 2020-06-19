@@ -19,7 +19,7 @@ const mock = {
 
 it(`Should place's title be pressed`, () => {
   const onTitleClick = jest.fn();
-  const onMouseEnter = jest.fn();
+  const onMouseEnter = () => {};
 
   const card = shallow(
       <Card
@@ -35,9 +35,9 @@ it(`Should place's title be pressed`, () => {
   expect(onTitleClick).toHaveBeenCalledTimes(1);
 });
 
-it(`Should card be hovered`, () => { // убрать f
-  const onTitleClick = jest.fn();
-  const onMouseEnter = jest.fn((...args) => [...args]);
+it(`Should card be hovered`, () => {
+  const onTitleClick = () => {};
+  const onMouseEnter = jest.fn();
 
   const card = shallow(
       <Card

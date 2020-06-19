@@ -16,7 +16,7 @@ it(`Should Card render correctly`, () => {
   const tree = renderer
     .create(<Card
       card={testData}
-      onMouseOver={() => {}}
+      onMouseEnter={() => {}}
       onTitleClick={() => {}}
     />)
     .toJSON();

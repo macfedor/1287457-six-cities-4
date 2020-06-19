@@ -1,20 +1,16 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import {uppercaseFirstLetter} from "../../utils/common.js";
+import {capitalize} from "../../utils/common.js";
 import {PlaceType} from "../../consts.js";
 
+const RATING_PITCH = 20;
+const formatRating = (rating) => String(Math.round(rating) * RATING_PITCH) + `%`;
+
 class Card extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
-    const RATING_PITCH = 20;
     const {card, onMouseEnter, onTitleClick} = this.props;
-    const placeTypeName = uppercaseFirstLetter(card.type);
-    const formatRating = () => {
-      return String(Math.round(card.rating) * RATING_PITCH) + `%`;
-    };
+    const placeTypeName = capitalize(card.type);
 
     return (
       <article onMouseEnter={onMouseEnter} className="cities__place-card place-card">
@@ -43,7 +39,7 @@ class Card extends PureComponent {
           </div>
           <div className="place-card__rating rating">
             <div className="place-card__stars rating__stars">
-              <span style={{width: formatRating()}}></span>
+              <span style={{width: formatRating(card.rating)}}></span>
               <span className="visually-hidden">Rating</span>
             </div>
           </div>
