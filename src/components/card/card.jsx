@@ -1,10 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import {capitalize} from "../../utils/common.js";
+import {capitalize, formatRating} from "../../utils/common.js";
 import {PlaceType} from "../../consts.js";
-
-const RATING_PITCH = 20;
-const formatRating = (rating) => String(Math.round(rating) * RATING_PITCH) + `%`;
 
 class Card extends PureComponent {
 
@@ -62,6 +59,16 @@ Card.propTypes = {
     name: PropTypes.string.isRequired,
     type: PropTypes.oneOf([PlaceType.APARTMENT, PlaceType.ROOM, PlaceType.HOUSE, PlaceType.HOTEL]).isRequired,
     rating: PropTypes.number.isRequired,
+    images: PropTypes.arrayOf(PropTypes.string).isRequired,
+    insideItems: PropTypes.arrayOf(PropTypes.string).isRequired,
+    bedrooms: PropTypes.number.isRequired,
+    guests: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    host: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      avatar: PropTypes.string.isRequired,
+      pro: PropTypes.bool.isRequired,
+    }).isRequired,
   }).isRequired,
   onMouseEnter: PropTypes.func.isRequired,
   onTitleClick: PropTypes.func.isRequired,

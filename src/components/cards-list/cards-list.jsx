@@ -12,7 +12,7 @@ class CardsList extends PureComponent {
   }
 
   render() {
-    const {cards} = this.props;
+    const {cards, onTitleClickCallback} = this.props;
     return (
       <div className="cities__places-list places__list tabs__content">
         {cards.map((card) => (
@@ -21,7 +21,9 @@ class CardsList extends PureComponent {
             onMouseEnter={() => {
               this.setState({activeCard: card});
             }}
-            onTitleClick={() => {}}
+            onTitleClick={() => {
+              this.setState({activeCard: card}, onTitleClickCallback(this.state.activeCard));
+            }}
           />
         ))}
       </div>
@@ -38,7 +40,18 @@ CardsList.propTypes = {
     name: PropTypes.string.isRequired,
     type: PropTypes.oneOf([PlaceType.APARTMENT, PlaceType.ROOM, PlaceType.HOUSE, PlaceType.HOTEL]).isRequired,
     rating: PropTypes.number.isRequired,
+    images: PropTypes.arrayOf(PropTypes.string).isRequired,
+    insideItems: PropTypes.arrayOf(PropTypes.string).isRequired,
+    bedrooms: PropTypes.number.isRequired,
+    guests: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    host: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      avatar: PropTypes.string.isRequired,
+      pro: PropTypes.bool.isRequired,
+    }).isRequired,
   })).isRequired,
+  onTitleClickCallback: PropTypes.func.isRequired,
 };
 
 export default CardsList;
