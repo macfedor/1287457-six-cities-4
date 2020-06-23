@@ -24,7 +24,7 @@ class App extends PureComponent {
     if (step === `main`) {
       return <Main
         places={offers}
-        handleTitleClick={this.handleTitleClick}
+        onTitleClick={this.handleTitleClick}
       />;
     }
 

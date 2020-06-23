@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CardsList from "../cards-list/cards-list.jsx";
 import {PlaceType} from "../../consts.js";
 
-const Main = ({places, handleTitleClick}) => {
+const Main = ({places, onTitleClick}) => {
 
   return <div className="page page--gray page--main">
     <header className="header">
@@ -89,7 +89,7 @@ const Main = ({places, handleTitleClick}) => {
             </form>
             <CardsList
               cards={places}
-              onTitleClick={handleTitleClick}
+              onTitleClick={onTitleClick}
             />
           </section>
           <div className="cities__right-section">
@@ -121,7 +121,7 @@ Main.propTypes = {
       pro: PropTypes.bool.isRequired,
     }).isRequired,
   }).isRequired).isRequired,
-  handleTitleClick: PropTypes.func.isRequired,
+  onTitleClick: PropTypes.func.isRequired,
 };
 
 export default Main;

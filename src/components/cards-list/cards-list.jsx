@@ -21,9 +21,7 @@ class CardsList extends PureComponent {
             onMouseEnter={() => {
               this.setState({activeCard: card});
             }}
-            onTitleClick={() => {
-              this.setState(onTitleClick(this.state.activeCard));
-            }}
+            onTitleClick={() => onTitleClick(this.state.activeCard)}
           />
         ))}
       </div>
