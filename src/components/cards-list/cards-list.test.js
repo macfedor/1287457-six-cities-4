@@ -47,7 +47,7 @@ it(`Should CardsList render correctly`, () => {
   const tree = renderer
     .create(<CardsList
       cards={testData}
-      onTitleClickCallback={() => {}}
+      onTitleClick={() => {}}
     />)
     .toJSON();
 

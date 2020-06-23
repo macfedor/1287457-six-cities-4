@@ -12,7 +12,7 @@ class CardsList extends PureComponent {
   }
 
   render() {
-    const {cards, onTitleClickCallback} = this.props;
+    const {cards, onTitleClick} = this.props;
     return (
       <div className="cities__places-list places__list tabs__content">
         {cards.map((card) => (
@@ -22,7 +22,7 @@ class CardsList extends PureComponent {
               this.setState({activeCard: card});
             }}
             onTitleClick={() => {
-              this.setState({activeCard: card}, onTitleClickCallback(this.state.activeCard));
+              this.setState(onTitleClick(this.state.activeCard));
             }}
           />
         ))}
@@ -51,7 +51,7 @@ CardsList.propTypes = {
       pro: PropTypes.bool.isRequired,
     }).isRequired,
   })).isRequired,
-  onTitleClickCallback: PropTypes.func.isRequired,
+  onTitleClick: PropTypes.func.isRequired,
 };
 
 export default CardsList;

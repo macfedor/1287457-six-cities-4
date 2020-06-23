@@ -64,7 +64,7 @@ class Property extends PureComponent {
                 </div>
                 <div className="property__rating rating">
                   <div className="property__stars rating__stars">
-                    <span style={{width: formatRating(property.rating)}}></span>
+                    <span style={{width: formatRating(property.rating)}} />
                     <span className="visually-hidden">Rating</span>
                   </div>
                   <span className="property__rating-value rating__value">{property.rating}</span>

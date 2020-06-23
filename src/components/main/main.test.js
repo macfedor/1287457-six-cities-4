@@ -47,7 +47,7 @@ it(`Should Main render correctly`, () => {
   const tree = renderer
     .create(<Main
       places={testData}
-      onTitleClickCallback={() => {}}
+      handleTitleClick={() => {}}
     />)
     .toJSON();
 

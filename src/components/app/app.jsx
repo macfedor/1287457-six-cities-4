@@ -11,10 +11,10 @@ class App extends PureComponent {
       step: `main`,
       activeOffer: null
     };
-    this.cardTitleClickCallback = this.cardTitleClickCallback.bind(this);
+    this.handleTitleClick = this.handleTitleClick.bind(this);
   }
 
-  cardTitleClickCallback(result) {
+  handleTitleClick(result) {
     this.setState({step: `property`, activeOffer: result});
   }
 
@@ -24,7 +24,7 @@ class App extends PureComponent {
     if (step === `main`) {
       return <Main
         places={offers}
-        onTitleClickCallback={this.cardTitleClickCallback}
+        handleTitleClick={this.handleTitleClick}
       />;
     }
 
