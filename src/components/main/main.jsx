@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CardsList from "../cards-list/cards-list.jsx";
 import {PlaceType} from "../../consts.js";
 
-const Main = ({places}) => {
+const Main = ({places, onTitleClick}) => {
 
   return <div className="page page--gray page--main">
     <header className="header">
@@ -89,6 +89,7 @@ const Main = ({places}) => {
             </form>
             <CardsList
               cards={places}
+              onTitleClick={onTitleClick}
             />
           </section>
           <div className="cities__right-section">
@@ -109,7 +110,18 @@ Main.propTypes = {
     name: PropTypes.string.isRequired,
     type: PropTypes.oneOf([PlaceType.APARTMENT, PlaceType.ROOM, PlaceType.HOUSE, PlaceType.HOTEL]).isRequired,
     rating: PropTypes.number.isRequired,
+    images: PropTypes.arrayOf(PropTypes.string).isRequired,
+    insideItems: PropTypes.arrayOf(PropTypes.string).isRequired,
+    bedrooms: PropTypes.number.isRequired,
+    guests: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    host: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      avatar: PropTypes.string.isRequired,
+      pro: PropTypes.bool.isRequired,
+    }).isRequired,
   }).isRequired).isRequired,
+  onTitleClick: PropTypes.func.isRequired,
 };
 
 export default Main;

@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import Card from "./card.jsx";
+import Property from "./property.jsx";
 
 const testData = {
   id: Math.random(),
@@ -22,12 +22,10 @@ const testData = {
   },
 };
 
-it(`Should Card render correctly`, () => {
+it(`Should Property render correctly`, () => {
   const tree = renderer
-    .create(<Card
-      card={testData}
-      onMouseEnter={() => {}}
-      onTitleClick={() => {}}
+    .create(<Property
+      property={testData}
     />)
     .toJSON();
 
