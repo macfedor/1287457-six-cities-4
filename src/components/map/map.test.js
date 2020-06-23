@@ -1,6 +1,10 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import CardsList from "./cards-list.jsx";
+import Map from "./map.jsx";
+
+const div = document.createElement(`div`);
+div.id = `map`;
+document.body.appendChild(div);
 
 const testData = [
   {
@@ -45,11 +49,10 @@ const testData = [
   }
 ];
 
-it(`Should CardsList render correctly`, () => {
+it(`Should Map render correctly`, () => {
   const tree = renderer
-    .create(<CardsList
-      cards={testData}
-      onTitleClick={() => {}}
+    .create(<Map
+      places={testData}
     />)
     .toJSON();
 

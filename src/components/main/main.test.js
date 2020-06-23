@@ -2,6 +2,10 @@ import React from "react";
 import renderer from "react-test-renderer";
 import Main from "./main.jsx";
 
+const div = document.createElement(`div`);
+div.id = `map`;
+document.body.appendChild(div);
+
 const testData = [
   {
     id: Math.random(),
@@ -21,6 +25,7 @@ const testData = [
       avatar: `img/avatar-angelina.jpg`,
       pro: true,
     },
+    location: [52.3909553943508, 4.929309666406198],
   },
   {
     id: Math.random(),
@@ -40,6 +45,7 @@ const testData = [
       avatar: `img/avatar-angelina.jpg`,
       pro: true,
     },
+    location: [52.3809553943508, 4.939309666406198],
   }
 ];
 

@@ -20,6 +20,7 @@ const testData = {
     avatar: `img/avatar-angelina.jpg`,
     pro: true,
   },
+  location: [52.3809553943508, 4.939309666406198],
 };
 
 it(`Should Card render correctly`, () => {

@@ -20,6 +20,7 @@ const testData = {
     avatar: `img/avatar-angelina.jpg`,
     pro: true,
   },
+  location: [52.3909553943508, 4.929309666406198],
 };
 
 it(`Should Property render correctly`, () => {

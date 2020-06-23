@@ -312,6 +312,7 @@ Property.propTypes = {
       avatar: PropTypes.string.isRequired,
       pro: PropTypes.bool.isRequired,
     }).isRequired,
+    location: PropTypes.arrayOf(PropTypes.number).isRequired,
   }).isRequired,
 };
 
