@@ -69,6 +69,7 @@ Card.propTypes = {
       avatar: PropTypes.string.isRequired,
       pro: PropTypes.bool.isRequired,
     }).isRequired,
+    location: PropTypes.arrayOf(PropTypes.number).isRequired,
   }).isRequired,
   onMouseEnter: PropTypes.func.isRequired,
   onTitleClick: PropTypes.func.isRequired,

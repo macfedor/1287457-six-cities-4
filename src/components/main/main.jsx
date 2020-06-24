@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CardsList from "../cards-list/cards-list.jsx";
+import Map from "../map/map.jsx";
 import {PlaceType} from "../../consts.js";
 
 const Main = ({places, onTitleClick}) => {
@@ -93,7 +94,9 @@ const Main = ({places, onTitleClick}) => {
             />
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map"></section>
+            <Map
+              places={places}
+            />
           </div>
         </div>
       </div>
@@ -120,6 +123,7 @@ Main.propTypes = {
       avatar: PropTypes.string.isRequired,
       pro: PropTypes.bool.isRequired,
     }).isRequired,
+    location: PropTypes.arrayOf(PropTypes.number).isRequired,
   }).isRequired).isRequired,
   onTitleClick: PropTypes.func.isRequired,
 };
