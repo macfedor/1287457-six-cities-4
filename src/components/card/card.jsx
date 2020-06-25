@@ -1,22 +1,35 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {capitalize, formatRating} from "../../utils/common.js";
-import {PlaceType} from "../../consts.js";
+import {PlaceType, CardType} from "../../consts.js";
 
 class Card extends PureComponent {
 
   render() {
-    const {card, onMouseEnter, onTitleClick} = this.props;
+    const {card, cardType, onMouseEnter, onTitleClick} = this.props;
     const placeTypeName = capitalize(card.type);
+    let cardClassName = ``;
+    let imageWrapperClassName = ``;
+
+    switch (cardType) {
+      case CardType.CITY:
+        cardClassName = `cities__place-card`;
+        imageWrapperClassName = `cities__image-wrapper`;
+        break;
+      case CardType.NEAR:
+        cardClassName = `near-places__card`;
+        imageWrapperClassName = `near-places__image-wrapper`;
+        break;
+    }
 
     return (
-      <article onMouseEnter={onMouseEnter} className="cities__place-card place-card">
+      <article onMouseEnter={onMouseEnter} className={`${cardClassName} place-card`}>
         {card.isPremium ?
           <div className="place-card__mark">
             <span>Premium</span>
           </div>
           : ``}
-        <div className="cities__image-wrapper place-card__image-wrapper">
+        <div className={`${imageWrapperClassName} place-card__image-wrapper`}>
           <a href="#">
             <img className="place-card__image" src={card.image} width="260" height="200" alt="Place image"/>
           </a>
@@ -70,7 +83,15 @@ Card.propTypes = {
       pro: PropTypes.bool.isRequired,
     }).isRequired,
     location: PropTypes.arrayOf(PropTypes.number).isRequired,
+    reviews: PropTypes.arrayOf(PropTypes.shape({
+      avatar: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      date: PropTypes.string.isRequired,
+      comment: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
   }).isRequired,
+  cardType: PropTypes.string.isRequired,
   onMouseEnter: PropTypes.func.isRequired,
   onTitleClick: PropTypes.func.isRequired,
 };

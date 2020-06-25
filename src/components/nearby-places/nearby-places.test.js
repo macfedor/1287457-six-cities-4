@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import CardsList from "./cards-list.jsx";
+import NearbyPlaces from "./nearby-places.jsx";
 
 const testData = [
   {
@@ -77,16 +77,11 @@ const testData = [
   }
 ];
 
-const cardsListClassName = `cities__places-list`;
-const cardType = `city`;
-
-it(`Should CardsList render correctly`, () => {
+it(`Should NearbyPlaces render correctly`, () => {
   const tree = renderer
-    .create(<CardsList
-      cards={testData}
+    .create(<NearbyPlaces
+      places={testData}
       onTitleClick={() => {}}
-      cardsListClassName={cardsListClassName}
-      cardType={cardType}
     />)
     .toJSON();
 

@@ -47,7 +47,7 @@ class Map extends PureComponent {
 
   render() {
     return (
-      <section className="cities__map map"><div id="map" style={{height: `100%`}}></div></section>
+      <section className={`${this.props.prefix}__map map`}><div id="map" style={{height: `100%`}}></div></section>
     );
   }
 }
@@ -72,7 +72,15 @@ Map.propTypes = {
       pro: PropTypes.bool.isRequired,
     }).isRequired,
     location: PropTypes.arrayOf(PropTypes.number).isRequired,
+    reviews: PropTypes.arrayOf(PropTypes.shape({
+      avatar: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      date: PropTypes.string.isRequired,
+      comment: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
   }).isRequired).isRequired,
+  prefix: PropTypes.string.isRequired,
 };
 
 export default Map;
