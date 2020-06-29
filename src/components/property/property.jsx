@@ -1,19 +1,18 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {formatRating} from "../../utils/common.js";
-import {PlaceType, maxNearbyOffers} from "../../consts.js";
+import {PlaceType} from "../../consts.js";
 import ReviewsList from "../reviews-list/reviews-list.jsx";
 import NearbyPlaces from "../nearby-places/nearby-places.jsx";
 import Map from "../map/map.jsx";
 import offers from "../../mocks/offers.js";
-
-const nearbyOffers = offers.slice(0, maxNearbyOffers);
 
 class Property extends PureComponent {
 
   render() {
     const mapPrefix = `property`;
     const {property, onTitleClick} = this.props;
+    const nearbyOffers = offers.filter((item) => item.id !== property.id);
 
     return (
       <div className="page">
@@ -123,6 +122,7 @@ class Property extends PureComponent {
             <Map
               places={nearbyOffers}
               prefix={mapPrefix}
+              activePlace={property.location}
             />
           </section>
           <div className="container">
@@ -161,7 +161,7 @@ Property.propTypes = {
       avatar: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       rating: PropTypes.number.isRequired,
-      date: PropTypes.string.isRequired,
+      date: PropTypes.instanceOf(Date).isRequired,
       comment: PropTypes.string.isRequired,
     }).isRequired).isRequired,
   }).isRequired,

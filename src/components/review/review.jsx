@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {formatRating} from "../../utils/common.js";
+import {formatRating, formatDate, formatDateShort} from "../../utils/common.js";
 
 const Review = ({review}) => {
 
@@ -23,19 +23,17 @@ const Review = ({review}) => {
       <p className="reviews__text">
         {review.comment}
       </p>
-      <time className="reviews__time" dateTime="2019-04-24">{review.date}</time>
+      <time className="reviews__time" dateTime={formatDateShort(review.date)}>{formatDate(review.date)}</time>
     </div>
   </li>;
 };
-
-// значение в dateTime пропущено не случайно - не хочется писать функцию форматирования времени наугад, не зная, что в итоге будет приходить в дату. Как появятся реальные данные внесу корректировки тут
 
 Review.propTypes = {
   review: PropTypes.shape({
     avatar: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
-    date: PropTypes.string.isRequired,
+    date: PropTypes.instanceOf(Date).isRequired,
     comment: PropTypes.string.isRequired,
   }).isRequired,
 };

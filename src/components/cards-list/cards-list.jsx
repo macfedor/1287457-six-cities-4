@@ -54,7 +54,7 @@ CardsList.propTypes = {
       avatar: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       rating: PropTypes.number.isRequired,
-      date: PropTypes.string.isRequired,
+      date: PropTypes.instanceOf(Date).isRequired,
       comment: PropTypes.string.isRequired,
     }).isRequired).isRequired,
   })).isRequired,

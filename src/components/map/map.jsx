@@ -3,9 +3,14 @@ import PropTypes from "prop-types";
 import {PlaceType} from "../../consts.js";
 import leaflet from "leaflet";
 
-const icon = leaflet.icon({
+const iconDefault = leaflet.icon({
   iconUrl: `img/pin.svg`,
-  iconSize: [30, 30]
+  iconSize: [27, 41],
+});
+
+const iconActive = leaflet.icon({
+  iconUrl: `img/pin-active.svg`,
+  iconSize: [27, 41],
 });
 
 const MapConfig = {
@@ -22,12 +27,30 @@ class Map extends PureComponent {
     this._addPoints();
   }
 
+  componentDidUpdate() {
+    this._removePoints();
+    this._addPoints();
+  }
+
   _addPoints() {
+    const markers = [];
     this.props.places.forEach((place) => {
-      leaflet
-        .marker(place.location, {icon})
-        .addTo(this._map);
+      const marker = leaflet.marker(place.location, {icon: iconDefault});
+      markers.push(marker);
     });
+
+    if (this.props.activePlace) {
+      const marker = leaflet.marker(this.props.activePlace, {icon: iconActive});
+      markers.push(marker);
+    }
+
+    this._markersGroup = leaflet.layerGroup(markers);
+    this._markersGroup.addTo(this._map);
+  }
+
+  _removePoints() {
+    this._markersGroup.clearLayers();
+    this._markersGroup = null;
   }
 
   _initMap() {
@@ -76,11 +99,12 @@ Map.propTypes = {
       avatar: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       rating: PropTypes.number.isRequired,
-      date: PropTypes.string.isRequired,
+      date: PropTypes.instanceOf(Date).isRequired,
       comment: PropTypes.string.isRequired,
     }).isRequired).isRequired,
   }).isRequired).isRequired,
   prefix: PropTypes.string.isRequired,
+  activePlace: PropTypes.arrayOf(PropTypes.number),
 };
 
 export default Map;
