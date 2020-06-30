@@ -31,6 +31,7 @@ class App extends PureComponent {
     if (step === `property`) {
       return <Property
         property={activeOffer}
+        onTitleClick={this.handleTitleClick}
       />;
     }
 
@@ -47,6 +48,7 @@ class App extends PureComponent {
           <Route exact path="/dev-offer">
             <Property
               property={offers[0]}
+              onTitleClick={this.handleTitleClick}
             />;
           </Route>
         </Switch>

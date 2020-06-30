@@ -26,6 +26,22 @@ const testData = [
       pro: true,
     },
     location: [52.3909553943508, 4.929309666406198],
+    reviews: [
+      {
+        avatar: `img/avatar-max.jpg`,
+        name: `Max`,
+        rating: 2.4,
+        date: new Date(`2020-03-21`),
+        comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`
+      },
+      {
+        avatar: `img/avatar-angelina.jpg`,
+        name: `Angelina`,
+        rating: 5,
+        date: new Date(`2020-04-23`),
+        comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`
+      }
+    ],
   },
   {
     id: Math.random(),
@@ -46,13 +62,32 @@ const testData = [
       pro: true,
     },
     location: [52.3809553943508, 4.939309666406198],
+    reviews: [
+      {
+        avatar: `img/avatar-max.jpg`,
+        name: `Max`,
+        rating: 2.4,
+        date: new Date(`2020-03-21`),
+        comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`
+      },
+      {
+        avatar: `img/avatar-angelina.jpg`,
+        name: `Angelina`,
+        rating: 5,
+        date: new Date(`2020-04-23`),
+        comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`
+      }
+    ],
   }
 ];
+
+const prefix = `city`;
 
 it(`Should Map render correctly`, () => {
   const tree = renderer
     .create(<Map
       places={testData}
+      prefix={prefix}
     />)
     .toJSON();
 

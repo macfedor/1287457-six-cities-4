@@ -1,10 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import Main from "./main.jsx";
-
-const div = document.createElement(`div`);
-div.id = `map`;
-document.body.appendChild(div);
+import NearbyPlaces from "./nearby-places.jsx";
 
 const testData = [
   {
@@ -81,9 +77,9 @@ const testData = [
   }
 ];
 
-it(`Should Main render correctly`, () => {
+it(`Should NearbyPlaces render correctly`, () => {
   const tree = renderer
-    .create(<Main
+    .create(<NearbyPlaces
       places={testData}
       onTitleClick={() => {}}
     />)

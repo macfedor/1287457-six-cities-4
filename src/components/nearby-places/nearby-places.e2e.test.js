@@ -1,4 +1,14 @@
-export default [
+import React from "react";
+import Enzyme, {mount} from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
+import NearbyPlaces from "./nearby-places";
+import {maxNearbyOffers} from "../../consts.js";
+
+Enzyme.configure({
+  adapter: new Adapter(),
+});
+
+const mockOffers = [
   {
     id: Math.random(),
     image: `img/apartment-01.jpg`,
@@ -144,3 +154,16 @@ export default [
     ],
   }
 ];
+
+it(`Should be max "maxNearbyOffers" places`, () => {
+  const onTitleClick = () => {};
+  const nearbyPlaces = mount(
+      <NearbyPlaces
+        places={mockOffers}
+        onTitleClick={onTitleClick}
+      />
+  );
+
+  const cards = nearbyPlaces.find(`.near-places__card`);
+  expect(cards.length).toBeLessThanOrEqual(maxNearbyOffers);
+});

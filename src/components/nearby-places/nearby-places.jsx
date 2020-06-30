@@ -1,37 +1,25 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import Card from "../card/card.jsx";
-import {PlaceType} from "../../consts.js";
+import CardsList from "../cards-list/cards-list.jsx";
+import {CardType, PlaceType, maxNearbyOffers} from "../../consts.js";
 
-class CardsList extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeCard: null
-    };
-  }
+const NearbyPlaces = ({places, onTitleClick}) => {
+  const cardsListClassName = `near-places__list`;
+  const offers = places.slice(0, maxNearbyOffers);
 
-  render() {
-    const {cards, onTitleClick, cardsListClassName, cardType} = this.props;
-    return (
-      <div className={`places__list ${cardsListClassName}`}>
-        {cards.map((card) => (
-          <Card key={card.id}
-            card={card}
-            cardType={cardType}
-            onMouseEnter={() => {
-              this.setState({activeCard: card});
-            }}
-            onTitleClick={() => onTitleClick(this.state.activeCard)}
-          />
-        ))}
-      </div>
-    );
-  }
-}
+  return <section className="near-places places">
+    <h2 className="near-places__title">Other places in the neighbourhood</h2>
+    <CardsList
+      cards={offers}
+      onTitleClick={onTitleClick}
+      cardsListClassName={cardsListClassName}
+      cardType={CardType.NEAR}
+    />
+  </section>;
+};
 
-CardsList.propTypes = {
-  cards: PropTypes.arrayOf(PropTypes.shape({
+NearbyPlaces.propTypes = {
+  places: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
     isPremium: PropTypes.bool.isRequired,
@@ -57,10 +45,8 @@ CardsList.propTypes = {
       date: PropTypes.instanceOf(Date).isRequired,
       comment: PropTypes.string.isRequired,
     }).isRequired).isRequired,
-  })).isRequired,
+  }).isRequired).isRequired,
   onTitleClick: PropTypes.func.isRequired,
-  cardsListClassName: PropTypes.string.isRequired,
-  cardType: PropTypes.string.isRequired,
 };
 
-export default CardsList;
+export default NearbyPlaces;

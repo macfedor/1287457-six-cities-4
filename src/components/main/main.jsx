@@ -2,9 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import CardsList from "../cards-list/cards-list.jsx";
 import Map from "../map/map.jsx";
-import {PlaceType} from "../../consts.js";
+import {PlaceType, CardType} from "../../consts.js";
 
 const Main = ({places, onTitleClick}) => {
+
+  const cardsListClassName = `cities__places-list tabs__content`;
+  const mapPrefix = `cities`;
 
   return <div className="page page--gray page--main">
     <header className="header">
@@ -91,11 +94,14 @@ const Main = ({places, onTitleClick}) => {
             <CardsList
               cards={places}
               onTitleClick={onTitleClick}
+              cardsListClassName={cardsListClassName}
+              cardType={CardType.CITY}
             />
           </section>
           <div className="cities__right-section">
             <Map
               places={places}
+              prefix={mapPrefix}
             />
           </div>
         </div>
@@ -124,6 +130,13 @@ Main.propTypes = {
       pro: PropTypes.bool.isRequired,
     }).isRequired,
     location: PropTypes.arrayOf(PropTypes.number).isRequired,
+    reviews: PropTypes.arrayOf(PropTypes.shape({
+      avatar: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      date: PropTypes.instanceOf(Date).isRequired,
+      comment: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
   }).isRequired).isRequired,
   onTitleClick: PropTypes.func.isRequired,
 };
