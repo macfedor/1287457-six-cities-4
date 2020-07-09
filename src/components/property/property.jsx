@@ -12,7 +12,7 @@ class Property extends PureComponent {
   render() {
     const mapPrefix = `property`;
     const {property, onTitleClick} = this.props;
-    const nearbyOffers = offers.filter((item) => item.id !== property.id);
+    const nearbyOffers = offers.filter((item) => item.id !== property.id && item.city === property.city);
 
     return (
       <div className="page">
@@ -125,12 +125,14 @@ class Property extends PureComponent {
               activePlace={property.location}
             />
           </section>
-          <div className="container">
-            <NearbyPlaces
-              places={nearbyOffers}
-              onTitleClick={onTitleClick}
-            />
-          </div>
+          {nearbyOffers.length ?
+            <div className="container">
+              <NearbyPlaces
+                places={nearbyOffers}
+                onTitleClick={onTitleClick}
+              />
+            </div>
+            : ``}
         </main>
       </div>
     );
@@ -164,6 +166,7 @@ Property.propTypes = {
       date: PropTypes.instanceOf(Date).isRequired,
       comment: PropTypes.string.isRequired,
     }).isRequired).isRequired,
+    city: PropTypes.string.isRequired,
   }).isRequired,
   onTitleClick: PropTypes.func.isRequired,
 };

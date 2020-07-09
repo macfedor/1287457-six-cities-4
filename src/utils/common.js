@@ -1,4 +1,5 @@
 import {monthNames} from "../consts.js";
+import offers from "../mocks/offers.js";
 
 const RATING_PITCH = 20;
 
@@ -18,4 +19,23 @@ export const compareDates = (dateFirst, dateSecond) => {
   const firstDate = new Date(dateFirst);
   const secondDate = new Date(dateSecond);
   return firstDate.getTime() - secondDate.getTime();
+};
+
+export const getNameById = (id, array) => {
+  return array.find((item) => item.id === id).name;
+};
+
+export const getCitiesList = () => {
+  const citiesObj = {};
+  offers.forEach((item) => {
+    if (!citiesObj[item.city]) {
+      citiesObj[item.city] = item.city;
+    }
+  });
+
+  return Object.entries(citiesObj).map((value) => value[1]);
+};
+
+export const extend = (a, b) => {
+  return Object.assign({}, a, b);
 };

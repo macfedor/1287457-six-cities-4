@@ -22,6 +22,8 @@ export const ImageWrapperClassName = {
 
 export const maxNearbyOffers = 3;
 
+export const maxCities = 6;
+
 export const maxReviews = 10;
 
 export const monthNames = [

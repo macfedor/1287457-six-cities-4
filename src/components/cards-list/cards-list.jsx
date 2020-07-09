@@ -57,6 +57,7 @@ CardsList.propTypes = {
       date: PropTypes.instanceOf(Date).isRequired,
       comment: PropTypes.string.isRequired,
     }).isRequired).isRequired,
+    city: PropTypes.string.isRequired,
   })).isRequired,
   onTitleClick: PropTypes.func.isRequired,
   cardsListClassName: PropTypes.string.isRequired,

@@ -77,6 +77,7 @@ Card.propTypes = {
       date: PropTypes.instanceOf(Date).isRequired,
       comment: PropTypes.string.isRequired,
     }).isRequired).isRequired,
+    city: PropTypes.string.isRequired,
   }).isRequired,
   cardType: PropTypes.string.isRequired,
   onMouseEnter: PropTypes.func.isRequired,

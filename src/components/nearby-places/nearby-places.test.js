@@ -38,6 +38,7 @@ const testData = [
         comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`
       }
     ],
+    city: `Paris`
   },
   {
     id: Math.random(),
@@ -74,6 +75,7 @@ const testData = [
         comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`
       }
     ],
+    city: `Paris`
   }
 ];
 

@@ -14,8 +14,7 @@ const iconActive = leaflet.icon({
 });
 
 const MapConfig = {
-  CENTER: [52.38333, 4.9],
-  ZOOM: 12,
+  ZOOM: 11,
   ZOOM_CONTROL: false,
   MARKER: true
 };
@@ -30,6 +29,11 @@ class Map extends PureComponent {
   componentDidUpdate() {
     this._removePoints();
     this._addPoints();
+    this._map.panTo(this._getMapCenter());
+  }
+
+  _getMapCenter() {
+    return this.props.places[0] ? this.props.places[0].location : this.props.activePlace;
   }
 
   _addPoints() {
@@ -55,12 +59,12 @@ class Map extends PureComponent {
 
   _initMap() {
     this._map = leaflet.map(`map`, {
-      center: MapConfig.CENTER,
+      center: this._getMapCenter(),
       zoom: MapConfig.ZOOM,
       zoomControl: MapConfig.ZOOM_CONTROL,
       marker: MapConfig.MARKER
     });
-    this._map.setView(MapConfig.CENTER, MapConfig.ZOOM);
+    this._map.setView(this._getMapCenter(), MapConfig.ZOOM);
     leaflet
     .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
       attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
@@ -102,6 +106,7 @@ Map.propTypes = {
       date: PropTypes.instanceOf(Date).isRequired,
       comment: PropTypes.string.isRequired,
     }).isRequired).isRequired,
+    city: PropTypes.string.isRequired,
   }).isRequired).isRequired,
   prefix: PropTypes.string.isRequired,
   activePlace: PropTypes.arrayOf(PropTypes.number),

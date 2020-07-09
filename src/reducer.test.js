@@ -1,12 +1,9 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import Property from "./property.jsx";
+import {reducer, ActionCreator, ActionType} from "./reducer.js";
+import {getCitiesList} from "./utils/common.js";
 
-const div = document.createElement(`div`);
-div.id = `map`;
-document.body.appendChild(div);
+const cities = getCitiesList();
 
-const testData = {
+const mockOffer = {
   id: Math.random(),
   image: `img/apartment-01.jpg`,
   isPremium: false,
@@ -44,13 +41,61 @@ const testData = {
   city: `Paris`
 };
 
-it(`Should Property render correctly`, () => {
-  const tree = renderer
-    .create(<Property
-      property={testData}
-      onTitleClick={() => {}}
-    />)
-    .toJSON();
+it(`Reducer without additional parameters should return initial state`, () => {
+  expect(reducer(undefined, {})).toEqual({
+    activeCity: cities[0],
+    activeOffer: null,
+    step: `main`
+  });
+});
 
-  expect(tree).toMatchSnapshot();
+it(`Reducer should change state by a given value`, () => {
+  expect(reducer({
+    activeCity: cities[0],
+    activeOffer: null,
+    step: `main`
+  }, {
+    type: ActionType.SHOW_CARD,
+    payload: {
+      step: `property`,
+      activeOffer: mockOffer
+    }
+  })).toEqual({
+    activeCity: cities[0],
+    activeOffer: mockOffer,
+    step: `property`
+  });
+
+  expect(reducer({
+    activeCity: cities[0],
+    activeOffer: null,
+    step: `main`
+  }, {
+    type: ActionType.CHANGE_CITY,
+    payload: `Paris`,
+  })).toEqual({
+    activeCity: `Paris`,
+    activeOffer: null,
+    step: `main`
+  });
+});
+
+describe(`Action creators work correctly`, () => {
+  it(`Action creator for showCard returns correct action`, () => {
+    expect(ActionCreator.showCard(mockOffer)).toEqual({
+      type: ActionType.SHOW_CARD,
+      payload: {
+        step: `property`,
+        activeOffer: mockOffer
+      },
+    });
+  });
+
+  it(`Action creator for changeCity returns correct action`, () => {
+    expect(ActionCreator.changeCity(`Paris`)).toEqual({
+      type: ActionType.CHANGE_CITY,
+      payload: `Paris`,
+    });
+  });
+
 });

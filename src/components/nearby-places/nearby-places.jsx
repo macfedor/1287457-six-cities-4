@@ -45,6 +45,7 @@ NearbyPlaces.propTypes = {
       date: PropTypes.instanceOf(Date).isRequired,
       comment: PropTypes.string.isRequired,
     }).isRequired).isRequired,
+    city: PropTypes.string.isRequired,
   }).isRequired).isRequired,
   onTitleClick: PropTypes.func.isRequired,
 };
