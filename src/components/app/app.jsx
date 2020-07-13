@@ -4,12 +4,9 @@ import {Switch, Route, BrowserRouter} from "react-router-dom";
 import Main from "../main/main.jsx";
 import Property from "../property/property.jsx";
 import offers from "../../mocks/offers.js";
-import {getCitiesList} from "../../utils/common.js";
 import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer.js";
 import {PlaceType} from "../../consts.js";
-
-const cities = getCitiesList();
 
 const getOffersByCity = (city) => offers.filter((item) => item.city === city);
 
@@ -17,7 +14,7 @@ const getOffersByCity = (city) => offers.filter((item) => item.city === city);
 class App extends PureComponent {
 
   _renderScreen() {
-    const {step, activeCity, activeOffer, onTitleClick, onCityClick} = this.props;
+    const {step, activeCity, activeOffer, cities, onTitleClick, onCityClick} = this.props;
     if (step === `main`) {
       return <Main
         places={getOffersByCity(activeCity)}
@@ -103,6 +100,7 @@ App.propTypes = {
     }).isRequired).isRequired,
     city: PropTypes.string.isRequired,
   }),
+  cities: PropTypes.arrayOf(PropTypes.string).isRequired,
   onTitleClick: PropTypes.func.isRequired,
   onCityClick: PropTypes.func,
 };

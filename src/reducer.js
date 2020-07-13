@@ -1,11 +1,12 @@
 import {getCitiesList, extend} from "./utils/common.js";
 
-const cities = getCitiesList();
+const citiesList = getCitiesList();
 
 const initialState = {
   step: `main`,
-  activeCity: cities[0],
+  activeCity: citiesList[0],
   activeOffer: null,
+  cities: citiesList,
 };
 
 const ActionType = {
@@ -39,9 +40,9 @@ const reducer = (state = initialState, action) => {
         step: action.payload.step,
         activeOffer: action.payload.activeOffer,
       });
+    default:
+      return state;
   }
-
-  return state;
 };
 
 export {reducer, ActionType, ActionCreator};

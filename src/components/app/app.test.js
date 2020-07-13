@@ -20,6 +20,7 @@ it(`Render App`, () => {
       <App
         step={`main`}
         activeCity={`Paris`}
+        cities={[`Paris`, `Amsterdam`]}
         onTitleClick={() => {}}
         onCityClick={() => {}}
       />

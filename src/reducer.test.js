@@ -1,7 +1,7 @@
 import {reducer, ActionCreator, ActionType} from "./reducer.js";
 import {getCitiesList} from "./utils/common.js";
 
-const cities = getCitiesList();
+const citiesList = getCitiesList();
 
 const mockOffer = {
   id: Math.random(),
@@ -43,17 +43,19 @@ const mockOffer = {
 
 it(`Reducer without additional parameters should return initial state`, () => {
   expect(reducer(undefined, {})).toEqual({
-    activeCity: cities[0],
+    activeCity: citiesList[0],
     activeOffer: null,
-    step: `main`
+    step: `main`,
+    cities: citiesList
   });
 });
 
 it(`Reducer should change state by a given value`, () => {
   expect(reducer({
-    activeCity: cities[0],
+    activeCity: citiesList[0],
     activeOffer: null,
-    step: `main`
+    step: `main`,
+    cities: citiesList,
   }, {
     type: ActionType.SHOW_CARD,
     payload: {
@@ -61,22 +63,25 @@ it(`Reducer should change state by a given value`, () => {
       activeOffer: mockOffer
     }
   })).toEqual({
-    activeCity: cities[0],
+    activeCity: citiesList[0],
     activeOffer: mockOffer,
-    step: `property`
+    step: `property`,
+    cities: citiesList
   });
 
   expect(reducer({
-    activeCity: cities[0],
+    activeCity: citiesList[0],
     activeOffer: null,
-    step: `main`
+    step: `main`,
+    cities: citiesList
   }, {
     type: ActionType.CHANGE_CITY,
     payload: `Paris`,
   })).toEqual({
     activeCity: `Paris`,
     activeOffer: null,
-    step: `main`
+    step: `main`,
+    cities: citiesList
   });
 });
 
