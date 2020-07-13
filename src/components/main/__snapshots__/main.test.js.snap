@@ -77,43 +77,9 @@ exports[`Should Main render correctly 1`] = `
             className="locations__item"
           >
             <a
-              className="locations__item-link tabs__item"
+              className="locations__item-link tabs__item "
               href="#"
-            >
-              <span>
-                Paris
-              </span>
-            </a>
-          </li>
-          <li
-            className="locations__item"
-          >
-            <a
-              className="locations__item-link tabs__item"
-              href="#"
-            >
-              <span>
-                Cologne
-              </span>
-            </a>
-          </li>
-          <li
-            className="locations__item"
-          >
-            <a
-              className="locations__item-link tabs__item"
-              href="#"
-            >
-              <span>
-                Brussels
-              </span>
-            </a>
-          </li>
-          <li
-            className="locations__item"
-          >
-            <a
-              className="locations__item-link tabs__item tabs__item--active"
+              onClick={[Function]}
             >
               <span>
                 Amsterdam
@@ -124,8 +90,48 @@ exports[`Should Main render correctly 1`] = `
             className="locations__item"
           >
             <a
-              className="locations__item-link tabs__item"
+              className="locations__item-link tabs__item tabs__item--active"
               href="#"
+              onClick={[Function]}
+            >
+              <span>
+                Paris
+              </span>
+            </a>
+          </li>
+          <li
+            className="locations__item"
+          >
+            <a
+              className="locations__item-link tabs__item "
+              href="#"
+              onClick={[Function]}
+            >
+              <span>
+                Cologne
+              </span>
+            </a>
+          </li>
+          <li
+            className="locations__item"
+          >
+            <a
+              className="locations__item-link tabs__item "
+              href="#"
+              onClick={[Function]}
+            >
+              <span>
+                Brussels
+              </span>
+            </a>
+          </li>
+          <li
+            className="locations__item"
+          >
+            <a
+              className="locations__item-link tabs__item "
+              href="#"
+              onClick={[Function]}
             >
               <span>
                 Hamburg
@@ -136,8 +142,9 @@ exports[`Should Main render correctly 1`] = `
             className="locations__item"
           >
             <a
-              className="locations__item-link tabs__item"
+              className="locations__item-link tabs__item "
               href="#"
+              onClick={[Function]}
             >
               <span>
                 Dusseldorf
@@ -165,62 +172,10 @@ exports[`Should Main render correctly 1`] = `
             className="places__found"
           >
             2
-             places to stay in Amsterdam
+             places to stay in 
+            Paris
           </b>
-          <form
-            action="#"
-            className="places__sorting"
-            method="get"
-          >
-            <span
-              className="places__sorting-caption"
-            >
-              Sort by
-            </span>
-            <span
-              className="places__sorting-type"
-              tabIndex="0"
-            >
-              Popular
-              <svg
-                className="places__sorting-arrow"
-                height="4"
-                width="7"
-              >
-                <use
-                  xlinkHref="#icon-arrow-select"
-                />
-              </svg>
-            </span>
-            <ul
-              className="places__options places__options--custom places__options--opened"
-            >
-              <li
-                className="places__option places__option--active"
-                tabIndex="0"
-              >
-                Popular
-              </li>
-              <li
-                className="places__option"
-                tabIndex="0"
-              >
-                Price: low to high
-              </li>
-              <li
-                className="places__option"
-                tabIndex="0"
-              >
-                Price: high to low
-              </li>
-              <li
-                className="places__option"
-                tabIndex="0"
-              >
-                Top rated first
-              </li>
-            </ul>
-          </form>
+          
           <div
             className="places__list cities__places-list tabs__content"
           >

@@ -42,6 +42,7 @@ const testData = [
         comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`
       }
     ],
+    city: `Paris`
   },
   {
     id: Math.random(),
@@ -78,14 +79,28 @@ const testData = [
         comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`
       }
     ],
+    city: `Paris`
   }
+];
+
+const cities = [
+  `Amsterdam`,
+  `Paris`,
+  `Cologne`,
+  `Brussels`,
+  `Hamburg`,
+  `Dusseldorf`,
+  `Omsk`,
 ];
 
 it(`Should Main render correctly`, () => {
   const tree = renderer
     .create(<Main
       places={testData}
+      cities={cities}
+      activeCity={`Paris`}
       onTitleClick={() => {}}
+      onCityClick={() => {}}
     />)
     .toJSON();
 

@@ -22,6 +22,8 @@ export const ImageWrapperClassName = {
 
 export const maxNearbyOffers = 3;
 
+export const maxCities = 6;
+
 export const maxReviews = 10;
 
 export const monthNames = [
@@ -38,3 +40,10 @@ export const monthNames = [
   `November`,
   `December`,
 ];
+
+export const SortType = {
+  POPULAR: `Popular`,
+  PRICE_UP: `Price: low to high`,
+  PRICE_DOWN: `Price: high to low`,
+  RATING: `Top rated first`
+};
