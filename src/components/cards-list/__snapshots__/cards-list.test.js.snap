@@ -7,6 +7,7 @@ exports[`Should CardsList render correctly 1`] = `
   <article
     className="cities__place-card place-card"
     onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
   >
     
     <div
@@ -105,6 +106,7 @@ exports[`Should CardsList render correctly 1`] = `
   <article
     className="cities__place-card place-card"
     onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
   >
     
     <div

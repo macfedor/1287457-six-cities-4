@@ -186,6 +186,43 @@ export default [
   },
   {
     id: Math.random(),
+    image: `img/apartment-03.jpg`,
+    isPremium: true,
+    price: 1000,
+    name: `Paris room2`,
+    type: `room`,
+    rating: 3.4,
+    images: [`img/room.jpg`, `img/apartment-01.jpg`],
+    insideItems: [`Wi-Fi`, `Washing machine`],
+    bedrooms: 3,
+    guests: 4,
+    description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+    host: {
+      name: `Max`,
+      avatar: `img/avatar-max.jpg`,
+      pro: true,
+    },
+    location: [48.8534, 2.3488],
+    reviews: [
+      {
+        avatar: `img/avatar-max.jpg`,
+        name: `Max`,
+        rating: 2.4,
+        date: new Date(`2020-03-21`),
+        comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`
+      },
+      {
+        avatar: `img/avatar-angelina.jpg`,
+        name: `Angelina`,
+        rating: 5,
+        date: new Date(`2020-04-23`),
+        comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`
+      }
+    ],
+    city: `Paris`,
+  },
+  {
+    id: Math.random(),
     image: `img/apartment-01.jpg`,
     isPremium: false,
     price: 100,

@@ -6,8 +6,7 @@ import Map from "../map/map.jsx";
 import Sort from "../sort/sort.jsx";
 import {PlaceType, CardType} from "../../consts.js";
 
-const Main = ({places, onTitleClick, cities, activeCity, onCityClick}) => {
-
+const Main = ({places, onTitleClick, cities, activeCity, onCityClick, onCardHover, hoveredOffer}) => {
   const cardsListClassName = `cities__places-list tabs__content`;
   const mapPrefix = `cities`;
 
@@ -54,6 +53,7 @@ const Main = ({places, onTitleClick, cities, activeCity, onCityClick}) => {
               onTitleClick={onTitleClick}
               cardsListClassName={cardsListClassName}
               cardType={CardType.CITY}
+              onCardHover={onCardHover}
             />
           </section>
           <div className="cities__right-section">
@@ -61,6 +61,7 @@ const Main = ({places, onTitleClick, cities, activeCity, onCityClick}) => {
               places={places}
               prefix={mapPrefix}
               activeCity={activeCity}
+              activePlace={hoveredOffer}
             />
           </div>
         </div>
@@ -102,6 +103,8 @@ Main.propTypes = {
   onTitleClick: PropTypes.func.isRequired,
   activeCity: PropTypes.string,
   onCityClick: PropTypes.func.isRequired,
+  onCardHover: PropTypes.func.isRequired,
+  hoveredOffer: PropTypes.arrayOf(PropTypes.number),
 };
 
 export default Main;

@@ -6,11 +6,11 @@ import {PlaceType, CardClassName, ImageWrapperClassName} from "../../consts.js";
 class Card extends PureComponent {
 
   render() {
-    const {card, cardType, onMouseEnter, onTitleClick} = this.props;
+    const {card, cardType, onMouseEnter, onMouseLeave, onTitleClick} = this.props;
     const placeTypeName = capitalize(card.type);
 
     return (
-      <article onMouseEnter={onMouseEnter} className={`${CardClassName[cardType]} place-card`}>
+      <article onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={`${CardClassName[cardType]} place-card`}>
         {card.isPremium ?
           <div className="place-card__mark">
             <span>Premium</span>
@@ -81,6 +81,7 @@ Card.propTypes = {
   }).isRequired,
   cardType: PropTypes.string.isRequired,
   onMouseEnter: PropTypes.func.isRequired,
+  onMouseLeave: PropTypes.func.isRequired,
   onTitleClick: PropTypes.func.isRequired,
 };
 

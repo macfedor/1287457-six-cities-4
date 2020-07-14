@@ -10,6 +10,13 @@ export const CardType = {
   NEAR: `near`,
 };
 
+export const SortType = {
+  POPULAR: `Popular`,
+  TO_HIGH: `Price: low to high`,
+  TO_LOW: `Price: high to low`,
+  TOP_RATED: `Top rated first`,
+};
+
 export const CardClassName = {
   [CardType.CITY]: `cities__place-card`,
   [CardType.NEAR]: `near-places__card`,
@@ -40,10 +47,3 @@ export const monthNames = [
   `November`,
   `December`,
 ];
-
-export const SortType = {
-  POPULAR: `Popular`,
-  PRICE_UP: `Price: low to high`,
-  PRICE_DOWN: `Price: high to low`,
-  RATING: `Top rated first`
-};

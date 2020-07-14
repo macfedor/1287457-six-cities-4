@@ -1,7 +1,12 @@
 import {reducer, ActionCreator, ActionType} from "./reducer.js";
-import {getCitiesList} from "./utils/common.js";
+import {SortType} from "./consts.js";
+import {sortPlaces} from "./utils/common.js";
 
-const citiesList = getCitiesList();
+const citiesList = [
+  `Amsterdam`,
+  `Paris`,
+  `Berlin`
+];
 
 const mockOffer = {
   id: Math.random(),
@@ -41,8 +46,39 @@ const mockOffer = {
   city: `Paris`
 };
 
+const mocksSort = [
+  {
+    price: 200,
+    rating: 4,
+  },
+  {
+    price: 100,
+    rating: 2,
+  },
+  {
+    price: 150,
+    rating: 5,
+  },
+];
+
+it(`Sort works correctly`, () => {
+  const sortedToHigh = sortPlaces(mocksSort, SortType.TO_HIGH);
+  const sortedToLow = sortPlaces(mocksSort, SortType.TO_LOW);
+  const sortedByRating = sortPlaces(mocksSort, SortType.TOP_RATED);
+  const sortedDefault = sortPlaces(mocksSort);
+  expect(sortedToHigh[0].price).toBeLessThan(sortedToHigh[sortedToHigh.length - 1].price);
+  expect(sortedToLow[0].price).toBeGreaterThan(sortedToLow[sortedToLow.length - 1].price);
+  expect(sortedByRating[0].rating).toBeGreaterThan(sortedByRating[sortedByRating.length - 1].rating);
+  expect(sortedDefault).toEqual(mocksSort);
+});
+
 it(`Reducer without additional parameters should return initial state`, () => {
-  expect(reducer(undefined, {})).toEqual({
+  expect(reducer({
+    activeCity: citiesList[0],
+    activeOffer: null,
+    step: `main`,
+    cities: citiesList
+  }, {})).toEqual({
     activeCity: citiesList[0],
     activeOffer: null,
     step: `main`,
