@@ -44,9 +44,4 @@ export const sortPlaces = (array, sortType) => {
   }
 };
 
-export const getCitiesList = (places) => {
-  return places.map((item) => item.city).filter((value, index, array) => array.indexOf(value) === index);
-};
-
-// сделал через map И filter чтобы найти решение, не копируя твой способ) нашел. но твой вариант мне нравится больше, так что в дальнейшем я заменю на него
-// export const getCitiesList = (offers) => Array.from(new Set(offers.map(item => item.city)));
+export const getCitiesList = (places) => Array.from(new Set(places.map((item) => item.city)));

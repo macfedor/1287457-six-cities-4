@@ -38,13 +38,69 @@ const initialState = {
 
 const store = createStore(reducer, initialState);
 
-const getSortedDesc = (array) => {
+function getSortedDesc(array) {
   return array.slice().sort((a, b) => b - a);
-};
+}
 
-const getSortedAsc = (array) => {
+function getSortedAsc(array) {
   return array.slice().sort((a, b) => a - b);
-};
+}
+
+function getRating(app) {
+  const ratingNodes = app.find(`.rating__stars`);
+  const rating = [];
+  ratingNodes.forEach((ratingItem) => {
+    rating.push(
+        Number(
+            ratingItem
+              .find(`span`)
+              .first()
+              .props()
+              .style.width.replace(`%`, ``)
+        )
+    );
+  });
+
+  return rating;
+}
+
+function getPrices(app) {
+  const priceNodes = app.find(`.place-card__price-value`);
+  const prices = [];
+  priceNodes.forEach((priceItem) => {
+    prices.push(
+        Number(
+            priceItem
+              .props()
+              .children[1]
+        )
+    );
+  });
+
+  return prices;
+}
+
+function getNames(app) {
+  const namesNodes = app.find(`.place-card__name`);
+  const names = [];
+  namesNodes.forEach((nameItem) => {
+    names.push(
+        String(
+            nameItem
+              .find(`a`)
+              .props()
+              .children
+        )
+    );
+  });
+
+  return names;
+}
+
+function getNamesInOffers() {
+  const currentCityOffers = offers.filter((item) => item.city === mockActiveCity);
+  return currentCityOffers.map((item) => item.name);
+}
 
 describe(`Should sort item be clicked`, () => {
 
@@ -55,23 +111,7 @@ describe(`Should sort item be clicked`, () => {
   const sort = appWithProvider.find(`.places__sorting .places__sorting-type`);
 
   it(`Should sort by rating: top first`, () => {
-    const getRating = (app) => {
-      const ratingNodes = app.find(`.rating__stars`);
-      const rating = [];
-      ratingNodes.forEach((ratingItem) => {
-        rating.push(
-            Number(
-                ratingItem
-                  .find(`span`)
-                  .first()
-                  .props()
-                  .style.width.replace(`%`, ``)
-            )
-        );
-      });
 
-      return rating;
-    };
     const ratingBeforeSorting = getRating(appWithProvider);
 
     sort.simulate(`click`);
@@ -86,22 +126,6 @@ describe(`Should sort item be clicked`, () => {
     expect(ratingAfterSorting).toEqual(getSortedDesc(ratingBeforeSorting));
 
   });
-
-  const getPrices = (app) => {
-    const priceNodes = app.find(`.place-card__price-value`);
-    const prices = [];
-    priceNodes.forEach((priceItem) => {
-      prices.push(
-          Number(
-              priceItem
-                .props()
-                .children[1]
-          )
-      );
-    });
-
-    return prices;
-  };
 
   it(`Should sort by price: high to low`, () => {
 
@@ -138,28 +162,6 @@ describe(`Should sort item be clicked`, () => {
   });
 
   it(`Should sort by popular`, () => {
-
-    const getNames = (app) => {
-      const namesNodes = app.find(`.place-card__name`);
-      const names = [];
-      namesNodes.forEach((nameItem) => {
-        names.push(
-            String(
-                nameItem
-                  .find(`a`)
-                  .props()
-                  .children
-            )
-        );
-      });
-
-      return names;
-    };
-
-    const getNamesInOffers = () => {
-      const currentCityOffers = offers.filter((item) => item.city === mockActiveCity);
-      return currentCityOffers.map((item) => item.name);
-    };
 
     sort.simulate(`click`);
 
