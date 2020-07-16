@@ -1,19 +1,8 @@
-import {extend, sortPlaces} from "./utils/common.js";
+import {extend, sortPlaces, getCitiesList} from "./utils/common.js";
 import offers from "./mocks/offers.js";
 import {SortType} from "./consts.js";
 
-const getCitiesList = () => {
-  const citiesObj = {};
-  offers.forEach((item) => {
-    if (!citiesObj[item.city]) {
-      citiesObj[item.city] = item.city;
-    }
-  });
-
-  return Object.entries(citiesObj).map((value) => value[1]);
-};
-
-const citiesList = getCitiesList();
+const citiesList = getCitiesList(offers);
 
 const initialState = {
   step: `main`,

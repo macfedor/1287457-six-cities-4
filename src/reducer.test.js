@@ -70,6 +70,69 @@ it(`Sort works correctly`, () => {
   expect(sortedToLow[0].price).toBeGreaterThan(sortedToLow[sortedToLow.length - 1].price);
   expect(sortedByRating[0].rating).toBeGreaterThan(sortedByRating[sortedByRating.length - 1].rating);
   expect(sortedDefault).toEqual(mocksSort);
+
+  expect(reducer({
+    places: mocksSort
+  }, {type: ActionType.SORTING, payload: SortType.TO_LOW})).toEqual({
+    activeSortType: `Price: high to low`,
+    isSortOpen: false,
+    places: [
+      {
+        price: 200,
+        rating: 4,
+      },
+      {
+        price: 150,
+        rating: 5,
+      },
+      {
+        price: 100,
+        rating: 2,
+      },
+    ]
+  });
+
+  expect(reducer({
+    places: mocksSort
+  }, {type: ActionType.SORTING, payload: SortType.TOP_RATED})).toEqual({
+    activeSortType: `Top rated first`,
+    isSortOpen: false,
+    places: [
+      {
+        price: 150,
+        rating: 5,
+      },
+      {
+        price: 200,
+        rating: 4,
+      },
+      {
+        price: 100,
+        rating: 2,
+      },
+    ]
+  });
+
+  expect(reducer({
+    places: mocksSort
+  }, {type: ActionType.SORTING, payload: SortType.TO_HIGH})).toEqual({
+    activeSortType: `Price: low to high`,
+    isSortOpen: false,
+    places: [
+      {
+        price: 100,
+        rating: 2,
+      },
+      {
+        price: 150,
+        rating: 5,
+      },
+      {
+        price: 200,
+        rating: 4,
+      },
+    ]
+  });
 });
 
 it(`Reducer without additional parameters should return initial state`, () => {
