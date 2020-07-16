@@ -4,25 +4,18 @@ import Card from "../card/card.jsx";
 import {PlaceType} from "../../consts.js";
 
 class CardsList extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeCard: null
-    };
-  }
 
   render() {
-    const {cards, onTitleClick, cardsListClassName, cardType} = this.props;
+    const {cards, onTitleClick, onCardHover, cardsListClassName, cardType} = this.props;
     return (
       <div className={`places__list ${cardsListClassName}`}>
         {cards.map((card) => (
           <Card key={card.id}
             card={card}
             cardType={cardType}
-            onMouseEnter={() => {
-              this.setState({activeCard: card});
-            }}
-            onTitleClick={() => onTitleClick(this.state.activeCard)}
+            onMouseEnter={() => onCardHover(card.location)}
+            onMouseLeave={() => onCardHover(null)}
+            onTitleClick={() => onTitleClick(card)}
           />
         ))}
       </div>
@@ -60,6 +53,7 @@ CardsList.propTypes = {
     city: PropTypes.string.isRequired,
   })).isRequired,
   onTitleClick: PropTypes.func.isRequired,
+  onCardHover: PropTypes.func,
   cardsListClassName: PropTypes.string.isRequired,
   cardType: PropTypes.string.isRequired,
 };

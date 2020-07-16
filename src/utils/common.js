@@ -1,4 +1,4 @@
-import {monthNames} from "../consts.js";
+import {monthNames, SortType} from "../consts.js";
 import offers from "../mocks/offers.js";
 
 const RATING_PITCH = 20;
@@ -25,17 +25,23 @@ export const getNameById = (id, array) => {
   return array.find((item) => item.id === id).name;
 };
 
-export const getCitiesList = () => {
-  const citiesObj = {};
-  offers.forEach((item) => {
-    if (!citiesObj[item.city]) {
-      citiesObj[item.city] = item.city;
-    }
-  });
-
-  return Object.entries(citiesObj).map((value) => value[1]);
-};
-
 export const extend = (a, b) => {
   return Object.assign({}, a, b);
 };
+
+export const sortPlaces = (array, sortType) => {
+  switch (sortType) {
+    case SortType.TO_HIGH:
+      return array.slice().sort((a, b) => a.price - b.price);
+    case SortType.TO_LOW:
+      return array.slice().sort((a, b) => b.price - a.price);
+    case SortType.TOP_RATED:
+      return array.slice().sort((a, b) => b.rating - a.rating);
+    case SortType.POPULAR:
+      return offers;
+    default:
+      return array;
+  }
+};
+
+export const getCitiesList = (places) => Array.from(new Set(places.map((item) => item.city)));

@@ -50,6 +50,7 @@ const cardType = `city`;
 it(`Should place's title be pressed`, () => {
   const onTitleClick = jest.fn();
   const onMouseEnter = () => {};
+  const onMouseLeave = () => {};
 
   const card = shallow(
       <Card
@@ -57,6 +58,7 @@ it(`Should place's title be pressed`, () => {
         cardType={cardType}
         onTitleClick={onTitleClick}
         onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       />
   );
 
@@ -69,6 +71,7 @@ it(`Should place's title be pressed`, () => {
 
 it(`Should card be hovered`, () => {
   const onTitleClick = () => {};
+  const onMouseLeave = () => {};
   const onMouseEnter = jest.fn();
 
   const card = shallow(
@@ -77,6 +80,7 @@ it(`Should card be hovered`, () => {
         cardType={cardType}
         onTitleClick={onTitleClick}
         onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       />
   );
 

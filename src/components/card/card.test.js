@@ -48,6 +48,7 @@ it(`Should Card render correctly`, () => {
       card={testData}
       cardType={cardType}
       onMouseEnter={() => {}}
+      onMouseLeave={() => {}}
       onTitleClick={() => {}}
     />)
     .toJSON();
