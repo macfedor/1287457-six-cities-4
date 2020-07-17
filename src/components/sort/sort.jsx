@@ -5,6 +5,9 @@ import {SortType} from "../../consts.js";
 import {ActionCreator} from "../../reducer.js";
 
 class Sort extends PureComponent {
+  constructor(props) {
+    super(props);
+  }
 
   _renderSortItems() {
     const sortTypes = Object.values(SortType);
@@ -22,12 +25,12 @@ class Sort extends PureComponent {
   }
 
   render() {
-    const {activeSortType, isSortOpen, onSortClick} = this.props;
+    const {activeSortType, isOpen, onOpenChange} = this.props;
     return <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span
-        onClick={() => onSortClick()}
-        onKeyDown={() => onSortClick()}
+        onClick={() => onOpenChange()}
+        onKeyDown={() => onOpenChange()}
         className="places__sorting-type"
         tabIndex="0">
         {activeSortType}
@@ -35,7 +38,7 @@ class Sort extends PureComponent {
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className={`places__options places__options--custom ${isSortOpen ? `places__options--opened` : ``}`}>
+      <ul className={`places__options places__options--custom ${isOpen ? `places__options--opened` : ``}`}>
         {this._renderSortItems()}
       </ul>
     </form>;
@@ -44,24 +47,19 @@ class Sort extends PureComponent {
 
 const mapStateToProps = (state) => ({
   activeSortType: state.activeSortType,
-  isSortOpen: state.isSortOpen,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onSortItemClick(result) {
     dispatch(ActionCreator.changeSortType(result));
   },
-
-  onSortClick() {
-    dispatch(ActionCreator.toggleSort());
-  }
 });
 
 Sort.propTypes = {
   activeSortType: PropTypes.string.isRequired,
   onSortItemClick: PropTypes.func.isRequired,
-  isSortOpen: PropTypes.bool.isRequired,
-  onSortClick: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  onOpenChange: PropTypes.func.isRequired,
 };
 
 export {Sort};
