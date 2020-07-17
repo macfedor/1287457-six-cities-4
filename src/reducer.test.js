@@ -75,7 +75,6 @@ it(`Sort works correctly`, () => {
     places: mocksSort
   }, {type: ActionType.SORTING, payload: SortType.TO_LOW})).toEqual({
     activeSortType: `Price: high to low`,
-    isSortOpen: false,
     places: [
       {
         price: 200,
@@ -96,7 +95,6 @@ it(`Sort works correctly`, () => {
     places: mocksSort
   }, {type: ActionType.SORTING, payload: SortType.TOP_RATED})).toEqual({
     activeSortType: `Top rated first`,
-    isSortOpen: false,
     places: [
       {
         price: 150,
@@ -117,7 +115,6 @@ it(`Sort works correctly`, () => {
     places: mocksSort
   }, {type: ActionType.SORTING, payload: SortType.TO_HIGH})).toEqual({
     activeSortType: `Price: low to high`,
-    isSortOpen: false,
     places: [
       {
         price: 100,

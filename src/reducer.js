@@ -11,15 +11,13 @@ const initialState = {
   hoveredOffer: null,
   cities: citiesList,
   places: offers,
-  activeSortType: SortType.POPULAR,
-  isSortOpen: false
+  activeSortType: SortType.POPULAR
 };
 
 const ActionType = {
   CHANGE_CITY: `CHANGE_CITY`,
   SHOW_CARD: `SHOW_CARD`,
   SORTING: `SORTING`,
-  TOGGLE_SORT: `TOGGLE_SORT`,
   HOVER_CARD: `HOVER_CARD`,
 };
 
@@ -40,10 +38,6 @@ const ActionCreator = {
   changeSortType: (result) => ({
     type: ActionType.SORTING,
     payload: result,
-  }),
-
-  toggleSort: () => ({
-    type: ActionType.TOGGLE_SORT
   }),
 
   hoverCard: (result) => ({
@@ -67,13 +61,7 @@ const reducer = (state = initialState, action) => {
     case ActionType.SORTING:
       return extend(state, {
         places: sortPlaces(state.places, action.payload),
-        isSortOpen: false,
         activeSortType: action.payload
-      });
-    case ActionType.TOGGLE_SORT:
-      const previousSortState = state.isSortOpen;
-      return extend(state, {
-        isSortOpen: !previousSortState
       });
     case ActionType.HOVER_CARD:
       return extend(state, {

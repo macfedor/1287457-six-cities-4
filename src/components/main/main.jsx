@@ -5,6 +5,9 @@ import CitiesList from "../cities-list/cities-list.jsx";
 import Map from "../map/map.jsx";
 import Sort from "../sort/sort.jsx";
 import {PlaceType, CardType} from "../../consts.js";
+import withOpenFlag from '../../hocs/with-open-flag/with-open-flag';
+
+const SortWrapped = withOpenFlag(Sort);
 
 const Main = ({places, onTitleClick, cities, activeCity, onCityClick, onCardHover, hoveredOffer}) => {
   const cardsListClassName = `cities__places-list tabs__content`;
@@ -47,7 +50,7 @@ const Main = ({places, onTitleClick, cities, activeCity, onCityClick, onCardHove
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
             <b className="places__found">{places.length} places to stay in {activeCity}</b>
-            <Sort />
+            <SortWrapped />
             <CardsList
               cards={places}
               onTitleClick={onTitleClick}
