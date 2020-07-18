@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import Main from "./main.jsx";
+import ResultsWrapped from "./results-wrapped.jsx";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 
@@ -97,13 +97,12 @@ const cities = [
   `Omsk`,
 ];
 
-it(`Should Main render correctly`, () => {
-
+it(`Should ResultsWrapped render correctly`, () => {
   const store = mockStore({
     activeSortType: `Popular`
   });
   const tree = renderer
-    .create(<Provider store={store}><Main
+    .create(<Provider store={store}><ResultsWrapped
       places={testData}
       cities={cities}
       activeCity={`Paris`}

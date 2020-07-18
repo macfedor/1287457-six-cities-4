@@ -33,7 +33,6 @@ const initialState = {
   cities: mockCities,
   places: offers,
   activeSortType: `popular`,
-  isSortOpen: false
 };
 
 const store = createStore(reducer, initialState);
