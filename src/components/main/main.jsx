@@ -1,17 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import CardsList from "../cards-list/cards-list.jsx";
-import CitiesList from "../cities-list/cities-list.jsx";
-import Map from "../map/map.jsx";
-import Sort from "../sort/sort.jsx";
-import {PlaceType, CardType} from "../../consts.js";
-import withOpenFlag from '../../hocs/with-open-flag/with-open-flag';
-
-const SortWrapped = withOpenFlag(Sort);
+import ResultsWrapped from "../results-wrapped/results-wrapped.jsx";
+import NoResults from "../no-results/no-results.jsx";
+import {PlaceType} from "../../consts.js";
 
 const Main = ({places, onTitleClick, cities, activeCity, onCityClick, onCardHover, hoveredOffer}) => {
-  const cardsListClassName = `cities__places-list tabs__content`;
-  const mapPrefix = `cities`;
 
   return <div className="page page--gray page--main">
     <header className="header">
@@ -36,45 +29,21 @@ const Main = ({places, onTitleClick, cities, activeCity, onCityClick, onCardHove
         </div>
       </div>
     </header>
-    <main className="page__main page__main--index">
-      <h1 className="visually-hidden">Cities</h1>
-      <div className="tabs">
-        <CitiesList
-          cities={cities}
-          activeCity={activeCity}
-          onCityClick={onCityClick}
-        />
-      </div>
-      <div className="cities">
-        <div className="cities__places-container container">
-          <section className="cities__places places">
-            <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{places.length} places to stay in {activeCity}</b>
-            <SortWrapped />
-            <CardsList
-              cards={places}
-              onTitleClick={onTitleClick}
-              cardsListClassName={cardsListClassName}
-              cardType={CardType.CITY}
-              onCardHover={onCardHover}
-            />
-          </section>
-          <div className="cities__right-section">
-            <Map
-              places={places}
-              prefix={mapPrefix}
-              activeCity={activeCity}
-              activePlace={hoveredOffer}
-            />
-          </div>
-        </div>
-      </div>
-    </main>
+    {places.length ? <ResultsWrapped
+      places={places}
+      onTitleClick={onTitleClick}
+      cities={cities}
+      activeCity={activeCity}
+      onCityClick={onCityClick}
+      onCardHover={onCardHover}
+      hoveredOffer={hoveredOffer}
+    />
+      : <NoResults />}
   </div>;
 };
 
 Main.propTypes = {
-  cities: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  cities: PropTypes.arrayOf(PropTypes.string.isRequired),
   places: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
@@ -102,7 +71,7 @@ Main.propTypes = {
       comment: PropTypes.string.isRequired,
     }).isRequired).isRequired,
     city: PropTypes.string.isRequired,
-  }).isRequired).isRequired,
+  }).isRequired),
   onTitleClick: PropTypes.func.isRequired,
   activeCity: PropTypes.string,
   onCityClick: PropTypes.func.isRequired,

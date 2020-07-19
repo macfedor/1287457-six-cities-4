@@ -1,16 +1,22 @@
 import React from "react";
-import renderer from "react-test-renderer";
-import Main from "./main.jsx";
+import Enzyme, {mount} from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
+import Main from "../main/main.jsx";
 import {Provider} from "react-redux";
-import configureStore from "redux-mock-store";
+import {createStore} from "redux";
+import {reducer} from "../../reducer";
 
-const mockStore = configureStore([]);
+Enzyme.configure({
+  adapter: new Adapter(),
+});
 
-const div = document.createElement(`div`);
-div.id = `map`;
-document.body.appendChild(div);
+jest.mock(`../map/map.jsx`, () => `section`);
 
-const testData = [
+Enzyme.configure({
+  adapter: new Adapter(),
+});
+
+const mockOffers = [
   {
     id: Math.random(),
     image: `img/apartment-01.jpg`,
@@ -87,7 +93,7 @@ const testData = [
   }
 ];
 
-const cities = [
+const mockCities = [
   `Amsterdam`,
   `Paris`,
   `Cologne`,
@@ -97,21 +103,27 @@ const cities = [
   `Omsk`,
 ];
 
-it(`Should Main render correctly`, () => {
+const mockActiveCity = mockCities[0];
 
-  const store = mockStore({
-    activeSortType: `Popular`
-  });
-  const tree = renderer
-    .create(<Provider store={store}><Main
-      places={testData}
-      cities={cities}
-      activeCity={`Paris`}
-      onTitleClick={() => {}}
-      onCityClick={() => {}}
-      onCardHover={() => {}}
-    /></Provider>)
-    .toJSON();
+const initialState = {
+  step: `main`,
+  activeCity: mockActiveCity,
+  activeOffer: null,
+  hoveredOffer: null,
+  cities: mockCities,
+  places: mockOffers,
+  activeSortType: `popular`,
+};
 
-  expect(tree).toMatchSnapshot();
+const store = createStore(reducer, initialState);
+
+it(`Should render places`, () => {
+  const main = mount(<Provider store={store}><Main places={mockOffers} cities={mockCities} /></Provider>);
+
+  const placesList = main.find(`.places__list`);
+  const placesCards = main.find(`.place-card`);
+
+  expect(placesList).not.toBeUndefined();
+  expect(placesCards.length).toEqual(mockOffers.length);
+
 });
