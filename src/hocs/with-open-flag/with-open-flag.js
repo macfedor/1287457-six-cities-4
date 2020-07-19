@@ -13,18 +13,15 @@ const withOpenFlag = (Component) => {
     }
 
     _handleOpenChange() {
-
       this.setState((prevState) => ({isOpen: !prevState.isOpen}));
+    }
 
-      /*
-        хочу сделать тут закрытие селектора по клику где угодно, для этого навешивать/снимать eventListner на document
-        но возникла проблема: получаю ошибку this.getState is not a function
-        не понимаю, почему. Можешь объяснить в чем причина?
-
-        const isOpened = this.getState().isOpen;
-        isOpened ? document.addEventListener(`click`, this._handleOpenChange) : document.removeEventListener(`click`, this._handleOpenChange);
-
-      */
+    componentDidUpdate() {
+      if (this.state.isOpen) { // линтер ругается на версию с тернарным оператором
+        document.addEventListener(`click`, this._handleOpenChange);
+      } else {
+        document.removeEventListener(`click`, this._handleOpenChange);
+      }
     }
 
     render() {
