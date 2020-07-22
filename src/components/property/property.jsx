@@ -103,7 +103,7 @@ class Property extends PureComponent {
                 <div className="property__host">
                   <h2 className="property__host-title">Meet the host</h2>
                   <div className="property__host-user user">
-                    <div className={property.host.pro ? `property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper` : `property__avatar-wrapper user__avatar-wrapper`}>
+                    <div className={property.host.isPro ? `property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper` : `property__avatar-wrapper user__avatar-wrapper`}>
                       <img className="property__avatar user__avatar" src={property.host.avatar} width="74" height="74" alt="Host avatar"/>
                     </div>
                     <span className="property__user-name">
@@ -122,7 +122,7 @@ class Property extends PureComponent {
             <Map
               places={nearbyOffers}
               prefix={mapPrefix}
-              activePlace={property.location}
+              activePlace={{coordinates: property.location.coordinates, zoom: property.location.zoom}}
             />
           </section>
           {nearbyOffers.length ?
@@ -156,17 +156,19 @@ Property.propTypes = {
     host: PropTypes.shape({
       name: PropTypes.string.isRequired,
       avatar: PropTypes.string.isRequired,
-      pro: PropTypes.bool.isRequired,
+      isPro: PropTypes.bool.isRequired,
+      id: PropTypes.number.isRequired,
     }).isRequired,
-    location: PropTypes.arrayOf(PropTypes.number).isRequired,
-    reviews: PropTypes.arrayOf(PropTypes.shape({
-      avatar: PropTypes.string.isRequired,
+    location: PropTypes.shape({
+      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+      zoom: PropTypes.number.isRequired,
+    }).isRequired,
+    reviews: PropTypes.array,
+    city: PropTypes.shape({
       name: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-      date: PropTypes.instanceOf(Date).isRequired,
-      comment: PropTypes.string.isRequired,
-    }).isRequired).isRequired,
-    city: PropTypes.string.isRequired,
+      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+      zoom: PropTypes.number.isRequired,
+    }).isRequired,
   }).isRequired,
   onTitleClick: PropTypes.func.isRequired,
 };

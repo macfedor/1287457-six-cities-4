@@ -96,33 +96,6 @@ exports[`Should Property render correctly 1`] = `
               src="img/apartment-02.jpg"
             />
           </div>
-          <div
-            className="property__image-wrapper"
-          >
-            <img
-              alt="Photo studio"
-              className="property__image"
-              src="img/apartment-03.jpg"
-            />
-          </div>
-          <div
-            className="property__image-wrapper"
-          >
-            <img
-              alt="Photo studio"
-              className="property__image"
-              src="img/studio-01.jpg"
-            />
-          </div>
-          <div
-            className="property__image-wrapper"
-          >
-            <img
-              alt="Photo studio"
-              className="property__image"
-              src="img/studio-01.jpg"
-            />
-          </div>
         </div>
       </div>
       <div
@@ -138,7 +111,7 @@ exports[`Should Property render correctly 1`] = `
             <h1
               className="property__name"
             >
-              First
+              Secont
             </h1>
             <button
               className="property__bookmark-button button"
@@ -191,19 +164,19 @@ exports[`Should Property render correctly 1`] = `
             <li
               className="property__feature property__feature--entire"
             >
-              apartment
+              room
             </li>
             <li
               className="property__feature property__feature--bedrooms"
             >
-              2
+              3
                Bedrooms
             </li>
             <li
               className="property__feature property__feature--adults"
             >
               Max 
-              3
+              4
                adults
             </li>
           </ul>
@@ -214,7 +187,7 @@ exports[`Should Property render correctly 1`] = `
               className="property__price-value"
             >
               €
-              100
+              1000
             </b>
             <span
               className="property__price-text"
@@ -248,41 +221,6 @@ exports[`Should Property render correctly 1`] = `
               >
                 Towels
               </li>
-              <li
-                className="property__inside-item"
-              >
-                Heating
-              </li>
-              <li
-                className="property__inside-item"
-              >
-                Coffee machine
-              </li>
-              <li
-                className="property__inside-item"
-              >
-                Baby seat
-              </li>
-              <li
-                className="property__inside-item"
-              >
-                Kitchen
-              </li>
-              <li
-                className="property__inside-item"
-              >
-                Dishwasher
-              </li>
-              <li
-                className="property__inside-item"
-              >
-                Cabel TV
-              </li>
-              <li
-                className="property__inside-item"
-              >
-                Fridge
-              </li>
             </ul>
           </div>
           <div
@@ -297,7 +235,7 @@ exports[`Should Property render correctly 1`] = `
               className="property__host-user user"
             >
               <div
-                className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper"
+                className="property__avatar-wrapper user__avatar-wrapper"
               >
                 <img
                   alt="Host avatar"
@@ -319,7 +257,7 @@ exports[`Should Property render correctly 1`] = `
               <p
                 className="property__text"
               >
-                A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century. An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.
               </p>
             </div>
           </div>
@@ -474,233 +412,7 @@ exports[`Should Property render correctly 1`] = `
         />
       </section>
     </section>
-    <div
-      className="container"
-    >
-      <section
-        className="near-places places"
-      >
-        <h2
-          className="near-places__title"
-        >
-          Other places in the neighbourhood
-        </h2>
-        <div
-          className="places__list near-places__list"
-        >
-          <article
-            className="near-places__card place-card"
-            onMouseEnter={[Function]}
-            onMouseLeave={[Function]}
-          >
-            <div
-              className="place-card__mark"
-            >
-              <span>
-                Premium
-              </span>
-            </div>
-            <div
-              className="near-places__image-wrapper place-card__image-wrapper"
-            >
-              <a
-                href="#"
-              >
-                <img
-                  alt="Place image"
-                  className="place-card__image"
-                  height="200"
-                  src="img/apartment-03.jpg"
-                  width="260"
-                />
-              </a>
-            </div>
-            <div
-              className="place-card__info"
-            >
-              <div
-                className="place-card__price-wrapper"
-              >
-                <div
-                  className="place-card__price"
-                >
-                  <b
-                    className="place-card__price-value"
-                  >
-                    €
-                    2000
-                  </b>
-                  <span
-                    className="place-card__price-text"
-                  >
-                    / night
-                  </span>
-                </div>
-                <button
-                  className="place-card__bookmark-button button"
-                  type="button"
-                >
-                  <svg
-                    className="place-card__bookmark-icon"
-                    height="19"
-                    width="18"
-                  >
-                    <use
-                      xlinkHref="#icon-bookmark"
-                    />
-                  </svg>
-                  <span
-                    className="visually-hidden"
-                  >
-                    To bookmarks
-                  </span>
-                </button>
-              </div>
-              <div
-                className="place-card__rating rating"
-              >
-                <div
-                  className="place-card__stars rating__stars"
-                >
-                  <span
-                    style={
-                      Object {
-                        "width": "80%",
-                      }
-                    }
-                  />
-                  <span
-                    className="visually-hidden"
-                  >
-                    Rating
-                  </span>
-                </div>
-              </div>
-              <h2
-                className="place-card__name"
-              >
-                <a
-                  href="#"
-                  onClick={[Function]}
-                >
-                  Paris room
-                </a>
-              </h2>
-              <p
-                className="place-card__type"
-              >
-                Room
-              </p>
-            </div>
-          </article>
-          <article
-            className="near-places__card place-card"
-            onMouseEnter={[Function]}
-            onMouseLeave={[Function]}
-          >
-            <div
-              className="place-card__mark"
-            >
-              <span>
-                Premium
-              </span>
-            </div>
-            <div
-              className="near-places__image-wrapper place-card__image-wrapper"
-            >
-              <a
-                href="#"
-              >
-                <img
-                  alt="Place image"
-                  className="place-card__image"
-                  height="200"
-                  src="img/apartment-03.jpg"
-                  width="260"
-                />
-              </a>
-            </div>
-            <div
-              className="place-card__info"
-            >
-              <div
-                className="place-card__price-wrapper"
-              >
-                <div
-                  className="place-card__price"
-                >
-                  <b
-                    className="place-card__price-value"
-                  >
-                    €
-                    1000
-                  </b>
-                  <span
-                    className="place-card__price-text"
-                  >
-                    / night
-                  </span>
-                </div>
-                <button
-                  className="place-card__bookmark-button button"
-                  type="button"
-                >
-                  <svg
-                    className="place-card__bookmark-icon"
-                    height="19"
-                    width="18"
-                  >
-                    <use
-                      xlinkHref="#icon-bookmark"
-                    />
-                  </svg>
-                  <span
-                    className="visually-hidden"
-                  >
-                    To bookmarks
-                  </span>
-                </button>
-              </div>
-              <div
-                className="place-card__rating rating"
-              >
-                <div
-                  className="place-card__stars rating__stars"
-                >
-                  <span
-                    style={
-                      Object {
-                        "width": "60%",
-                      }
-                    }
-                  />
-                  <span
-                    className="visually-hidden"
-                  >
-                    Rating
-                  </span>
-                </div>
-              </div>
-              <h2
-                className="place-card__name"
-              >
-                <a
-                  href="#"
-                  onClick={[Function]}
-                >
-                  Paris room2
-                </a>
-              </h2>
-              <p
-                className="place-card__type"
-              >
-                Room
-              </p>
-            </div>
-          </article>
-        </div>
-      </section>
-    </div>
+    
   </main>
 </div>
 `;

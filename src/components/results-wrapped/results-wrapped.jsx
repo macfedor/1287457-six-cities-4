@@ -67,23 +67,28 @@ ResultsWrapped.propTypes = {
     host: PropTypes.shape({
       name: PropTypes.string.isRequired,
       avatar: PropTypes.string.isRequired,
-      pro: PropTypes.bool.isRequired,
+      isPro: PropTypes.bool.isRequired,
+      id: PropTypes.number.isRequired,
     }).isRequired,
-    location: PropTypes.arrayOf(PropTypes.number).isRequired,
-    reviews: PropTypes.arrayOf(PropTypes.shape({
-      avatar: PropTypes.string.isRequired,
+    location: PropTypes.shape({
+      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+      zoom: PropTypes.number.isRequired,
+    }).isRequired,
+    reviews: PropTypes.array,
+    city: PropTypes.shape({
       name: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-      date: PropTypes.instanceOf(Date).isRequired,
-      comment: PropTypes.string.isRequired,
-    }).isRequired).isRequired,
-    city: PropTypes.string.isRequired,
+      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+      zoom: PropTypes.number.isRequired,
+    }).isRequired,
   }).isRequired).isRequired,
   onTitleClick: PropTypes.func.isRequired,
   activeCity: PropTypes.string,
   onCityClick: PropTypes.func.isRequired,
   onCardHover: PropTypes.func.isRequired,
-  hoveredOffer: PropTypes.arrayOf(PropTypes.number),
+  hoveredOffer: PropTypes.shape({
+    coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+    zoom: PropTypes.number.isRequired,
+  }),
 };
 
 export default ResultsWrapped;

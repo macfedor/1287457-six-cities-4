@@ -1,16 +1,14 @@
-import {extend, sortPlaces, getCitiesList} from "./utils/common.js";
-import offers from "./mocks/offers.js";
-import {SortType} from "./consts.js";
-
-const citiesList = getCitiesList(offers);
+import {extend, sortPlaces, getCitiesList} from "../../utils/common.js";
+import {getAdaptedOffers} from "./adapter.js";
+import {SortType} from "../../consts.js";
 
 const initialState = {
   step: `main`,
-  activeCity: citiesList[0],
+  activeCity: ``,
   activeOffer: null,
   hoveredOffer: null,
-  cities: citiesList,
-  places: offers,
+  cities: [],
+  places: [],
   activeSortType: SortType.POPULAR
 };
 
@@ -19,6 +17,16 @@ const ActionType = {
   SHOW_CARD: `SHOW_CARD`,
   SORTING: `SORTING`,
   HOVER_CARD: `HOVER_CARD`,
+  LOAD_OFFERS: `LOAD_OFFERS`,
+};
+
+const Operation = {
+  loadOffers: () => (dispatch, getState, api) => {
+    return api.get(`/hotels`)
+      .then((response) => {
+        dispatch(ActionCreator.loadOffers(response.data));
+      });
+  },
 };
 
 const ActionCreator = {
@@ -45,7 +53,17 @@ const ActionCreator = {
     payload: result,
   }),
 
+  loadOffers: (result) => ({
+    type: ActionType.LOAD_OFFERS,
+    payload: {
+      places: getAdaptedOffers(result),
+      cities: getCitiesList(result),
+    },
+  }),
+
 };
+
+let defaultSortedOffers = [];
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -67,9 +85,16 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         hoveredOffer: action.payload
       });
+    case ActionType.LOAD_OFFERS:
+      defaultSortedOffers = action.payload.places;
+      return extend(state, {
+        places: action.payload.places,
+        cities: action.payload.cities,
+        activeCity: action.payload.cities[0],
+      });
     default:
       return state;
   }
 };
 
-export {reducer, ActionType, ActionCreator};
+export {reducer, Operation, ActionType, ActionCreator, defaultSortedOffers};
