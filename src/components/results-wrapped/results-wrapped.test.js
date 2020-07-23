@@ -10,7 +10,19 @@ const div = document.createElement(`div`);
 div.id = `map`;
 document.body.appendChild(div);
 
-const testData = [
+const mockCities = [
+  `Amsterdam`,
+  `Paris`,
+  `Cologne`,
+  `Brussels`,
+  `Hamburg`,
+  `Dusseldorf`,
+  `Omsk`,
+];
+
+const mockActiveCity = mockCities[0];
+
+const mockOffers = [
   {
     id: Math.random(),
     image: `img/apartment-01.jpg`,
@@ -71,25 +83,23 @@ const testData = [
   }
 ];
 
-const cities = [
-  `Amsterdam`,
-  `Paris`,
-  `Cologne`,
-  `Brussels`,
-  `Hamburg`,
-  `Dusseldorf`,
-  `Omsk`,
-];
-
 it(`Should ResultsWrapped render correctly`, () => {
   const store = mockStore({
-    activeSortType: `Popular`
+    DATA: {
+      step: `main`,
+      activeCity: mockActiveCity,
+      activeOffer: null,
+      hoveredOffer: null,
+      cities: mockCities,
+      places: mockOffers,
+      activeSortType: `popular`,
+    }
   });
   const tree = renderer
     .create(<Provider store={store}><ResultsWrapped
-      places={testData}
-      cities={cities}
-      activeCity={`Paris`}
+      places={mockOffers}
+      cities={mockCities}
+      activeCity={mockActiveCity}
       onTitleClick={() => {}}
       onCityClick={() => {}}
       onCardHover={() => {}}

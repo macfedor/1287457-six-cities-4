@@ -2,16 +2,9 @@ import React from "react";
 import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import App from "./app.jsx";
-import offers from "../../mocks/offers.js";
 import {Provider} from "react-redux";
-import {createStore} from "redux";
+import {createStore, applyMiddleware} from "redux";
 import reducer from "../../reducer/reducer";
-
-jest.mock(`../map/map.jsx`, () => `section`);
-
-Enzyme.configure({
-  adapter: new Adapter(),
-});
 
 const mockCities = [
   `Amsterdam`,
@@ -87,16 +80,28 @@ const mockOffers = [
 ];
 
 const initialState = {
-  step: `main`,
-  activeCity: mockActiveCity,
-  activeOffer: null,
-  hoveredOffer: null,
-  cities: mockCities,
-  places: mockOffers,
-  activeSortType: `popular`,
+  DATA: {
+    step: `main`,
+    activeCity: mockActiveCity,
+    activeOffer: null,
+    hoveredOffer: null,
+    cities: mockCities,
+    places: mockOffers,
+    activeSortType: `popular`,
+  }
 };
 
-const store = createStore(reducer, initialState);
+const store = createStore(
+    reducer,
+    initialState,
+    applyMiddleware()
+);
+
+jest.mock(`../map/map.jsx`, () => `section`);
+
+Enzyme.configure({
+  adapter: new Adapter(),
+});
 
 function getSortedDesc(array) {
   return array.slice().sort((a, b) => b - a);
@@ -158,15 +163,16 @@ function getNames(app) {
 }
 
 function getNamesInOffers() {
-  const currentCityOffers = offers.filter((item) => item.city === mockActiveCity);
+  const currentCityOffers = mockOffers.filter((item) => item.city === mockActiveCity);
   return currentCityOffers.map((item) => item.name);
 }
 
 describe(`Should sort item be clicked`, () => {
-
   const appWithProvider = mount(
-      <Provider store={store}><App /></Provider>
+      <Provider store={store}><App places={[{}, {}]}/></Provider>
   );
+  
+  console.log(appWithProvider.debug())
 
   const sort = appWithProvider.find(`.places__sorting .places__sorting-type`);
 

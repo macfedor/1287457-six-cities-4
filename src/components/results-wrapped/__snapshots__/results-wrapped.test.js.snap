@@ -22,7 +22,7 @@ exports[`Should ResultsWrapped render correctly 1`] = `
           className="locations__item"
         >
           <a
-            className="locations__item-link tabs__item "
+            className="locations__item-link tabs__item tabs__item--active"
             href="#"
             onClick={[Function]}
           >
@@ -35,7 +35,7 @@ exports[`Should ResultsWrapped render correctly 1`] = `
           className="locations__item"
         >
           <a
-            className="locations__item-link tabs__item tabs__item--active"
+            className="locations__item-link tabs__item "
             href="#"
             onClick={[Function]}
           >
@@ -118,7 +118,7 @@ exports[`Should ResultsWrapped render correctly 1`] = `
         >
           2
            places to stay in 
-          Paris
+          Amsterdam
         </b>
         <form
           action="#"
@@ -136,7 +136,7 @@ exports[`Should ResultsWrapped render correctly 1`] = `
             onKeyDown={[Function]}
             tabIndex="0"
           >
-            Popular
+            popular
             <svg
               className="places__sorting-arrow"
               height="4"
@@ -151,7 +151,7 @@ exports[`Should ResultsWrapped render correctly 1`] = `
             className="places__options places__options--custom "
           >
             <li
-              className="places__option places__option--active"
+              className="places__option "
               onClick={[Function]}
               onKeyDown={[Function]}
             >
