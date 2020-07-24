@@ -14,7 +14,6 @@ const iconActive = leaflet.icon({
 });
 
 const MapConfig = {
-  ZOOM: 11,
   ZOOM_CONTROL: false,
   MARKER: true
 };
@@ -33,18 +32,18 @@ class Map extends PureComponent {
   }
 
   _getMapCenter() {
-    return this.props.places[0] ? this.props.places[0].location : this.props.activePlace;
+    return this.props.places[0] ? this.props.places[0].city.coordinates : this.props.activePlace.coordinates;
   }
 
   _addPoints() {
     const markers = [];
     this.props.places.forEach((place) => {
-      const marker = leaflet.marker(place.location, {icon: iconDefault});
+      const marker = leaflet.marker(place.location.coordinates, {icon: iconDefault});
       markers.push(marker);
     });
 
     if (this.props.activePlace) {
-      const marker = leaflet.marker(this.props.activePlace, {icon: iconActive});
+      const marker = leaflet.marker(this.props.activePlace.coordinates, {icon: iconActive});
       markers.push(marker);
     }
 
@@ -60,11 +59,10 @@ class Map extends PureComponent {
   _initMap() {
     this._map = leaflet.map(`map`, {
       center: this._getMapCenter(),
-      zoom: MapConfig.ZOOM,
+      zoom: this.props.places[0] ? this.props.places[0].city.zoom : this.props.activePlace.zoom,
       zoomControl: MapConfig.ZOOM_CONTROL,
       marker: MapConfig.MARKER
     });
-    this._map.setView(this._getMapCenter(), MapConfig.ZOOM);
     leaflet
     .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
       attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
@@ -96,20 +94,25 @@ Map.propTypes = {
     host: PropTypes.shape({
       name: PropTypes.string.isRequired,
       avatar: PropTypes.string.isRequired,
-      pro: PropTypes.bool.isRequired,
+      isPro: PropTypes.bool.isRequired,
+      id: PropTypes.number.isRequired,
     }).isRequired,
-    location: PropTypes.arrayOf(PropTypes.number).isRequired,
-    reviews: PropTypes.arrayOf(PropTypes.shape({
-      avatar: PropTypes.string.isRequired,
+    location: PropTypes.shape({
+      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+      zoom: PropTypes.number.isRequired,
+    }).isRequired,
+    reviews: PropTypes.array,
+    city: PropTypes.shape({
       name: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-      date: PropTypes.instanceOf(Date).isRequired,
-      comment: PropTypes.string.isRequired,
-    }).isRequired).isRequired,
-    city: PropTypes.string.isRequired,
+      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+      zoom: PropTypes.number.isRequired,
+    }).isRequired,
   }).isRequired).isRequired,
   prefix: PropTypes.string.isRequired,
-  activePlace: PropTypes.arrayOf(PropTypes.number),
+  activePlace: PropTypes.shape({
+    coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+    zoom: PropTypes.number.isRequired,
+  }),
 };
 
 export default Map;

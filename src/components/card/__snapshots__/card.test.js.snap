@@ -35,7 +35,7 @@ exports[`Should Card render correctly 1`] = `
           className="place-card__price-value"
         >
           €
-          100
+          1000
         </b>
         <span
           className="place-card__price-text"
@@ -90,13 +90,13 @@ exports[`Should Card render correctly 1`] = `
         href="#"
         onClick={[Function]}
       >
-        First
+        Secont
       </a>
     </h2>
     <p
       className="place-card__type"
     >
-      Apartment
+      Room
     </p>
   </div>
 </article>

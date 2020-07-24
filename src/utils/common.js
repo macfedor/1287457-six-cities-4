@@ -1,5 +1,5 @@
 import {monthNames, SortType} from "../consts.js";
-import offers from "../mocks/offers.js";
+import {defaultSortedOffers} from "../reducer/data/data.js";
 
 const RATING_PITCH = 20;
 
@@ -38,10 +38,10 @@ export const sortPlaces = (array, sortType) => {
     case SortType.TOP_RATED:
       return array.slice().sort((a, b) => b.rating - a.rating);
     case SortType.POPULAR:
-      return offers;
+      return defaultSortedOffers;
     default:
       return array;
   }
 };
 
-export const getCitiesList = (places) => Array.from(new Set(places.map((item) => item.city)));
+export const getCitiesList = (places) => Array.from(new Set(places.map((item) => item.city.name)));

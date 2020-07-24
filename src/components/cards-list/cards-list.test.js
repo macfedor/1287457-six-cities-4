@@ -17,28 +17,20 @@ const testData = [
     guests: 3,
     description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century. An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.`,
     host: {
+      id: 1,
       name: `Angelina`,
       avatar: `img/avatar-angelina.jpg`,
-      pro: true,
+      isPro: true,
     },
-    location: [52.3909553943508, 4.929309666406198],
-    reviews: [
-      {
-        avatar: `img/avatar-max.jpg`,
-        name: `Max`,
-        rating: 2.4,
-        date: new Date(`2020-03-21`),
-        comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`
-      },
-      {
-        avatar: `img/avatar-angelina.jpg`,
-        name: `Angelina`,
-        rating: 5,
-        date: new Date(`2020-04-23`),
-        comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`
-      }
-    ],
-    city: `Paris`
+    location: {
+      coordinates: [52.3909553943508, 4.929309666406198],
+      zoom: 13,
+    },
+    city: {
+      coordinates: [52.3909553943508, 4.929309666406198],
+      zoom: 13,
+      name: `Paris`,
+    }
   },
   {
     id: Math.random(),
@@ -56,26 +48,18 @@ const testData = [
     host: {
       name: `Angelina`,
       avatar: `img/avatar-angelina.jpg`,
-      pro: true,
+      isPro: true,
+      id: 2,
     },
-    location: [52.3809553943508, 4.939309666406198],
-    reviews: [
-      {
-        avatar: `img/avatar-max.jpg`,
-        name: `Max`,
-        rating: 2.4,
-        date: new Date(`2020-03-21`),
-        comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`
-      },
-      {
-        avatar: `img/avatar-angelina.jpg`,
-        name: `Angelina`,
-        rating: 5,
-        date: new Date(`2020-04-23`),
-        comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`
-      }
-    ],
-    city: `Paris`
+    location: {
+      coordinates: [52.3909553943508, 4.929309666406198],
+      zoom: 13,
+    },
+    city: {
+      coordinates: [52.3909553943508, 4.929309666406198],
+      zoom: 13,
+      name: `Paris`,
+    }
   }
 ];
 

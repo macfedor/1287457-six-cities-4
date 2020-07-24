@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import ResultsWrapped from "../results-wrapped/results-wrapped.jsx";
 import NoResults from "../no-results/no-results.jsx";
 import {PlaceType} from "../../consts.js";
+import {connect} from "react-redux";
+import {getActiveCity, getHoveredOffer, getCityOffers, getCities} from "../../reducer/data/selectors.js";
 
 const Main = ({places, onTitleClick, cities, activeCity, onCityClick, onCardHover, hoveredOffer}) => {
 
@@ -42,6 +44,13 @@ const Main = ({places, onTitleClick, cities, activeCity, onCityClick, onCardHove
   </div>;
 };
 
+const mapStateToProps = (state) => ({
+  activeCity: getActiveCity(state),
+  cities: getCities(state),
+  places: getCityOffers(state),
+  hoveredOffer: getHoveredOffer(state),
+});
+
 Main.propTypes = {
   cities: PropTypes.arrayOf(PropTypes.string.isRequired),
   places: PropTypes.arrayOf(PropTypes.shape({
@@ -60,23 +69,29 @@ Main.propTypes = {
     host: PropTypes.shape({
       name: PropTypes.string.isRequired,
       avatar: PropTypes.string.isRequired,
-      pro: PropTypes.bool.isRequired,
+      isPro: PropTypes.bool.isRequired,
+      id: PropTypes.number.isRequired,
     }).isRequired,
-    location: PropTypes.arrayOf(PropTypes.number).isRequired,
-    reviews: PropTypes.arrayOf(PropTypes.shape({
-      avatar: PropTypes.string.isRequired,
+    location: PropTypes.shape({
+      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+      zoom: PropTypes.number.isRequired,
+    }).isRequired,
+    reviews: PropTypes.array,
+    city: PropTypes.shape({
       name: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-      date: PropTypes.instanceOf(Date).isRequired,
-      comment: PropTypes.string.isRequired,
-    }).isRequired).isRequired,
-    city: PropTypes.string.isRequired,
+      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+      zoom: PropTypes.number.isRequired,
+    }).isRequired,
   }).isRequired),
   onTitleClick: PropTypes.func.isRequired,
   activeCity: PropTypes.string,
   onCityClick: PropTypes.func.isRequired,
   onCardHover: PropTypes.func.isRequired,
-  hoveredOffer: PropTypes.arrayOf(PropTypes.number),
+  hoveredOffer: PropTypes.shape({
+    coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+    zoom: PropTypes.number.isRequired,
+  }),
 };
 
-export default Main;
+export {Main};
+export default connect(mapStateToProps)(Main);
