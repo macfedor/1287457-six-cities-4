@@ -96,7 +96,7 @@ it(`Should Main render correctly`, () => {
       activeSortType: `popular`,
     }
   });
-  
+
   const tree = renderer
     .create(<Provider store={store}><Main
       onTitleClick={() => {}}
