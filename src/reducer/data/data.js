@@ -18,6 +18,8 @@ const ActionType = {
   SORTING: `SORTING`,
   HOVER_CARD: `HOVER_CARD`,
   LOAD_OFFERS: `LOAD_OFFERS`,
+  SHOW_MAIN: `SHOW_MAIN`,
+  SHOW_SIGN_IN: `SHOW_SIGN_IN`,
 };
 
 const Operation = {
@@ -35,6 +37,20 @@ const ActionCreator = {
     payload: {
       step: `property`,
       activeOffer: result
+    }
+  }),
+
+  showMain: () => ({
+    type: ActionType.SHOW_MAIN,
+    payload: {
+      step: `main`
+    }
+  }),
+
+  showSignIn: () => ({
+    type: ActionType.SHOW_SIGN_IN,
+    payload: {
+      step: `sign-in`,
     }
   }),
 
@@ -75,6 +91,14 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         step: action.payload.step,
         activeOffer: action.payload.activeOffer,
+      });
+    case ActionType.SHOW_SIGN_IN:
+      return extend(state, {
+        step: action.payload.step,
+      });
+    case ActionType.SHOW_MAIN:
+      return extend(state, {
+        step: action.payload.step,
       });
     case ActionType.SORTING:
       return extend(state, {

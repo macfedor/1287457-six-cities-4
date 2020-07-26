@@ -94,6 +94,10 @@ it(`Should Main render correctly`, () => {
       cities: mockCities,
       places: mockOffers,
       activeSortType: `popular`,
+    },
+    USER: {
+      AuthorizationStatus: `NO_AUTH`,
+      userEmail: ``,
     }
   });
 

@@ -3,20 +3,25 @@ import PropTypes from "prop-types";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import Main from "../main/main.jsx";
 import Property from "../property/property.jsx";
+import SignIn from "../sign-in/sign-in.jsx";
 import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer/data/data.js";
 import {getActiveOffer, getStep} from "../../reducer/data/selectors.js";
 import {PlaceType} from "../../consts.js";
+import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
+import {Operation as UserOperation} from "../../reducer/user/user.js";
 
 class App extends PureComponent {
 
   _renderScreen() {
-    const {step, activeOffer, onTitleClick, onCityClick, onCardHover} = this.props;
+    const {step, activeOffer, onTitleClick, onCityClick, onCardHover, authorizationStatus, login} = this.props;
+
     if (step === `main`) {
       return <Main
         onTitleClick={onTitleClick}
         onCityClick={onCityClick}
         onCardHover={onCardHover}
+        authorizationStatus={authorizationStatus}
       />;
     }
 
@@ -25,6 +30,10 @@ class App extends PureComponent {
         property={activeOffer}
         onTitleClick={onTitleClick}
       />;
+    }
+
+    if (step === `sign-in`) {
+      return <SignIn onSubmit={login}/>;
     }
 
     return null;
@@ -46,6 +55,7 @@ class App extends PureComponent {
 const mapStateToProps = (state) => ({
   step: getStep(state),
   activeOffer: getActiveOffer(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -57,6 +67,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onCardHover(result) {
     dispatch(ActionCreator.hoverCard(result));
+  },
+  login(authData) {
+    dispatch(UserOperation.login(authData));
   },
 });
 
@@ -95,6 +108,8 @@ App.propTypes = {
   onTitleClick: PropTypes.func.isRequired,
   onCityClick: PropTypes.func,
   onCardHover: PropTypes.func,
+  authorizationStatus: PropTypes.string.isRequired,
+  login: PropTypes.func.isRequired,
 };
 
 export {App};
