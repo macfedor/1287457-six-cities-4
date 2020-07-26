@@ -1,14 +1,10 @@
 import React from "react";
 import renderer from "react-test-renderer";
+import SignIn from "./sign-in.jsx";
 import {Provider} from "react-redux";
-import {App} from "./app.jsx";
 import configureStore from "redux-mock-store";
 
 const mockStore = configureStore([]);
-
-const div = document.createElement(`div`);
-div.id = `map`;
-document.body.appendChild(div);
 
 const mockCities = [
   `Amsterdam`,
@@ -83,27 +79,28 @@ const mockOffers = [
   }
 ];
 
-it(`Render App`, () => {
-  const store = mockStore({
-    DATA: {
-      step: `main`,
-      activeCity: mockActiveCity,
-      activeOffer: null,
-      hoveredOffer: null,
-      cities: mockCities,
-      places: mockOffers,
-      activeSortType: `popular`,
-    },
-    USER: {
-      AuthorizationStatus: `NO_AUTH`,
-      userEmail: ``,
-    }
-  });
+const store = mockStore({
+  DATA: {
+    step: `main`,
+    activeCity: mockActiveCity,
+    activeOffer: null,
+    hoveredOffer: null,
+    cities: mockCities,
+    places: mockOffers,
+    activeSortType: `popular`,
+  },
+  USER: {
+    AuthorizationStatus: `NO_AUTH`,
+    userEmail: ``,
+  }
+});
 
-
+it(`SignIn component render correctly`, () => {
   const tree = renderer
     .create(<Provider store={store}>
-      <App />
+      <SignIn
+        onSubmit={() => {}}
+      />
     </Provider>)
     .toJSON();
 

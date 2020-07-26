@@ -1,6 +1,10 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import Property from "./property.jsx";
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
+
+const mockStore = configureStore([]);
 
 const div = document.createElement(`div`);
 div.id = `map`;
@@ -52,12 +56,28 @@ const testData = {
   ],
 };
 
+const store = mockStore({
+  DATA: {
+    step: `property`,
+    activeCity: null,
+    activeOffer: testData,
+    hoveredOffer: null,
+    cities: [],
+    places: [],
+    activeSortType: `popular`,
+  },
+  USER: {
+    AuthorizationStatus: `NO_AUTH`,
+    userEmail: ``,
+  }
+});
+
 it(`Should Property render correctly`, () => {
   const tree = renderer
-    .create(<Property
+    .create(<Provider store={store}><Property
       property={testData}
       onTitleClick={() => {}}
-    />)
+    /></Provider>)
     .toJSON();
 
   expect(tree).toMatchSnapshot();
