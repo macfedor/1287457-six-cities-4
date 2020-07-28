@@ -31,6 +31,10 @@ export const getActiveSortType = (state) => {
   return state[NAME_SPACE].activeSortType;
 };
 
+export const getReviewsList = (state) => {
+  return state[NAME_SPACE].reviews;
+};
+
 export const getCityOffers = createSelector(
     getOffers,
     getActiveCity,

@@ -1,5 +1,5 @@
 import {extend, sortPlaces, getCitiesList} from "../../utils/common.js";
-import {getAdaptedOffers} from "./adapter.js";
+import {getAdaptedOffers, getAdaptedReviews} from "./adapter.js";
 import {SortType} from "../../consts.js";
 
 const initialState = {
@@ -9,7 +9,8 @@ const initialState = {
   hoveredOffer: null,
   cities: [],
   places: [],
-  activeSortType: SortType.POPULAR
+  activeSortType: SortType.POPULAR,
+  reviews: [],
 };
 
 const ActionType = {
@@ -20,6 +21,7 @@ const ActionType = {
   LOAD_OFFERS: `LOAD_OFFERS`,
   SHOW_MAIN: `SHOW_MAIN`,
   SHOW_SIGN_IN: `SHOW_SIGN_IN`,
+  LOAD_REVIEWS: `LOAD_REVIEWS`,
 };
 
 const Operation = {
@@ -28,6 +30,30 @@ const Operation = {
       .then((response) => {
         dispatch(ActionCreator.loadOffers(response.data));
       });
+  },
+  loadReviews: (hotelId) => (dispatch, getState, api) => {
+    return api.get(`/comments/${hotelId}`)
+      .then((response) => {
+        dispatch(ActionCreator.loadReviews(response.data));
+      });
+  },
+  postReview: (hotelId, reviewRating, reviewComment, onSuccess, onError) => (dispatch, getState, api) => {
+    return api.post(`/comments/${hotelId}`, {
+      rating: reviewRating,
+      comment: reviewComment,
+    })
+    .then(({status, data}) => {
+      if (status === 200) {
+        dispatch(ActionCreator.loadReviews(data));
+        onSuccess();
+      } else {
+        onError();
+      }
+    })
+    .catch((err) => {
+      onError();
+      throw err;
+    });
   },
 };
 
@@ -77,6 +103,12 @@ const ActionCreator = {
     },
   }),
 
+  loadReviews: (result) => ({
+    type: ActionType.LOAD_REVIEWS,
+    payload: getAdaptedReviews(result),
+  }),
+
+
 };
 
 let defaultSortedOffers = [];
@@ -115,6 +147,10 @@ const reducer = (state = initialState, action) => {
         places: action.payload.places,
         cities: action.payload.cities,
         activeCity: action.payload.cities[0],
+      });
+    case ActionType.LOAD_REVIEWS:
+      return extend(state, {
+        reviews: action.payload
       });
     default:
       return state;

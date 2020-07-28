@@ -395,6 +395,7 @@ exports[`Should Property render correctly 1`] = `
                 </div>
               </li>
             </ul>
+            
           </section>
         </div>
       </div>

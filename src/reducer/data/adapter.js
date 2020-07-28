@@ -22,7 +22,6 @@ export const getAdaptedOffer = (offer) => {
       coordinates: [offer.location.latitude, offer.location.longitude],
       zoom: offer.location.zoom,
     },
-    reviews: [], // временно, чтоб не падало пока. потом уберу совсем - отзывы приезжают отдельно
     city: {
       name: offer.city.name,
       coordinates: [offer.city.location.latitude, offer.city.location.longitude],
@@ -33,4 +32,19 @@ export const getAdaptedOffer = (offer) => {
 
 export const getAdaptedOffers = (offers) => {
   return offers.map((offer) => getAdaptedOffer(offer));
+};
+
+export const getAdaptedReview = (review) => {
+  return {
+    avatar: review.user.avatar_url,
+    name: review.user.name,
+    rating: review.rating,
+    id: review.id,
+    date: review.date,
+    comment: review.comment
+  };
+};
+
+export const getAdaptedReviews = (reviews) => {
+  return reviews.map((review) => getAdaptedReview(review));
 };
