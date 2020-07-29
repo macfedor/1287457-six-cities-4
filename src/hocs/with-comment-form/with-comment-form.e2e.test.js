@@ -32,7 +32,7 @@ const store = mockStore({
 
 describe(`Should change state`, () => {
   const wrapper = mount(
-    <Provider store={store}><MockComponentWrapped /></Provider>
+      <Provider store={store}><MockComponentWrapped /></Provider>
   );
 
   it(`Should rating state change`, () => {
@@ -41,30 +41,37 @@ describe(`Should change state`, () => {
     item.simulate(`change`);
     expect(wrapper.find(MockComponentWrapped).childAt(0).state().rating).toEqual(item.getElement().props.value);
   });
-  
+
   it(`Should comment state change`, () => {
     const item = wrapper.find(`[name="review"]`);
 
-    item.simulate(`change`, { target: { value: `test text` } });
+    item.simulate(`change`, {target: {value: `test text`}});
     expect(wrapper.find(MockComponentWrapped).childAt(0).state().comment).toEqual(`test text`);
   });
 
 });
 
-fit(`Should call onSubmit with data`, () => {
+it(`Should call onSubmit with data`, () => {
   const wrapper = mount(
-    <Provider store={store}><MockComponentWrapped /></Provider>
+      <Provider store={store}><MockComponentWrapped /></Provider>
   );
 
   const wrappedComponent = wrapper.find(MockComponentWrapped).find(CommentForm);
   const commentText = `test text`;
   const rating = 5;
 
+  const onSubmitMock = jest.fn();
+
   wrappedComponent.props().onChangeComment(commentText);
   wrappedComponent.props().onChangeRating(rating);
-  wrappedComponent.props().onSubmit();
 
-  expect(onSubmit).toHaveBeenCalledTimes(1);
-  expect(onSubmit).toHaveBeenNthCalledWith(1, {commentText, rating});
+  const stateComment = wrapper.find(MockComponentWrapped).childAt(0).state().comment;
+  const stateRating = wrapper.find(MockComponentWrapped).childAt(0).state().rating;
+
+  wrappedComponent.props().onSubmit = onSubmitMock;
+  wrappedComponent.props().onSubmit(stateComment, stateRating);
+
+  expect(wrappedComponent.props().onSubmit).toHaveBeenCalledTimes(1);
+  expect(wrappedComponent.props().onSubmit).toHaveBeenCalledWith(commentText, rating);
 
 });

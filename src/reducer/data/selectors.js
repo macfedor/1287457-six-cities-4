@@ -37,7 +37,7 @@ export const getReviewsList = (state) => {
     const dateB = new Date(b.date);
     return dateB.getTime() - dateA.getTime();
   });
-  
+
   return sortedReviews;
 };
 

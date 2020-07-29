@@ -42,9 +42,9 @@ const Operation = {
       rating: reviewRating,
       comment: reviewComment,
     })
-    .then(({status, data}) => {
-        dispatch(ActionCreator.loadReviews(data));
-        onSuccess();
+    .then(({data}) => {
+      dispatch(ActionCreator.loadReviews(data));
+      onSuccess();
     })
     .catch((err) => {
       onError();
