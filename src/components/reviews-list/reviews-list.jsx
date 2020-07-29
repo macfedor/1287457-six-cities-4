@@ -9,15 +9,11 @@ import {AuthorizationStatus} from "../../reducer/user/user.js";
 const CommentFormWrapped = withCommentForm(CommentForm);
 
 const ReviewsList = ({reviews, authorizationStatus, propertyId}) => {
-  const sortedReviews = reviews.slice().sort(function (a, b) {
-    const dateA = new Date(a.date);
-    const dateB = new Date(b.date);
-    return dateB.getTime() - dateA.getTime();
-  }).slice(0, maxReviews);
+  const lastReviews = reviews.slice(0, maxReviews);
   return <section className="property__reviews reviews">
     <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
     <ul className="reviews__list">
-      {sortedReviews.map((review) => (
+      {lastReviews.map((review) => (
         <Review key={review.id}
           review={review}
         />

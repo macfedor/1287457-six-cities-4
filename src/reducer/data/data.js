@@ -43,12 +43,8 @@ const Operation = {
       comment: reviewComment,
     })
     .then(({status, data}) => {
-      if (status === 200) {
         dispatch(ActionCreator.loadReviews(data));
         onSuccess();
-      } else {
-        onError();
-      }
     })
     .catch((err) => {
       onError();

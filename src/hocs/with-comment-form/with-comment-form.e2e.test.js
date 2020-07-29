@@ -32,13 +32,39 @@ const store = mockStore({
 
 describe(`Should change state`, () => {
   const wrapper = mount(
-      <Provider store={store}><MockComponentWrapped /></Provider>
+    <Provider store={store}><MockComponentWrapped /></Provider>
   );
 
   it(`Should rating state change`, () => {
     const item = wrapper.find(`[name="rating"]`).first();
-    item.simulate(`click`);
-    expect(wrapper.state().rating).toBeEqual(item.value);
+
+    item.simulate(`change`);
+    expect(wrapper.find(MockComponentWrapped).childAt(0).state().rating).toEqual(item.getElement().props.value);
   });
+  
+  it(`Should comment state change`, () => {
+    const item = wrapper.find(`[name="review"]`);
+
+    item.simulate(`change`, { target: { value: `test text` } });
+    expect(wrapper.find(MockComponentWrapped).childAt(0).state().comment).toEqual(`test text`);
+  });
+
+});
+
+fit(`Should call onSubmit with data`, () => {
+  const wrapper = mount(
+    <Provider store={store}><MockComponentWrapped /></Provider>
+  );
+
+  const wrappedComponent = wrapper.find(MockComponentWrapped).find(CommentForm);
+  const commentText = `test text`;
+  const rating = 5;
+
+  wrappedComponent.props().onChangeComment(commentText);
+  wrappedComponent.props().onChangeRating(rating);
+  wrappedComponent.props().onSubmit();
+
+  expect(onSubmit).toHaveBeenCalledTimes(1);
+  expect(onSubmit).toHaveBeenNthCalledWith(1, {commentText, rating});
 
 });

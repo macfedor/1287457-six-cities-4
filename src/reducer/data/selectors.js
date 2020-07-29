@@ -32,7 +32,13 @@ export const getActiveSortType = (state) => {
 };
 
 export const getReviewsList = (state) => {
-  return state[NAME_SPACE].reviews;
+  const sortedReviews = state[NAME_SPACE].reviews.slice().sort(function (a, b) {
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+    return dateB.getTime() - dateA.getTime();
+  });
+  
+  return sortedReviews;
 };
 
 export const getCityOffers = createSelector(
