@@ -31,9 +31,10 @@ const Review = ({review}) => {
 Review.propTypes = {
   review: PropTypes.shape({
     avatar: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
-    date: PropTypes.instanceOf(Date).isRequired,
+    date: PropTypes.string.isRequired,
     comment: PropTypes.string.isRequired,
   }).isRequired,
 };

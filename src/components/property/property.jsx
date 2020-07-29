@@ -7,12 +7,20 @@ import NearbyPlaces from "../nearby-places/nearby-places.jsx";
 import Map from "../map/map.jsx";
 import offers from "../../mocks/offers.js";
 import Header from "../header/header.jsx";
+import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
+import {connect} from "react-redux";
+import {Operation as DataOperation} from "../../reducer/data/data.js";
+import {getReviewsList} from "../../reducer/data/selectors.js";
 
 class Property extends PureComponent {
+  componentDidMount() {
+    const {property, getReviews} = this.props;
+    getReviews(property.id);
+  }
 
   render() {
     const mapPrefix = `property`;
-    const {property, onTitleClick} = this.props;
+    const {property, onTitleClick, authorizationStatus, reviews} = this.props;
     const nearbyOffers = offers.filter((item) => item.id !== property.id && item.city === property.city);
 
     return (
@@ -95,7 +103,9 @@ class Property extends PureComponent {
                   </div>
                 </div>
                 <ReviewsList
-                  reviews={property.reviews}
+                  reviews={reviews}
+                  authorizationStatus={authorizationStatus}
+                  propertyId={property.id}
                 />
               </div>
             </div>
@@ -118,6 +128,17 @@ class Property extends PureComponent {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
+  reviews: getReviewsList(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getReviews(hotelId) {
+    dispatch(DataOperation.loadReviews(hotelId));
+  },
+});
 
 Property.propTypes = {
   property: PropTypes.shape({
@@ -143,7 +164,6 @@ Property.propTypes = {
       coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
       zoom: PropTypes.number.isRequired,
     }).isRequired,
-    reviews: PropTypes.array,
     city: PropTypes.shape({
       name: PropTypes.string.isRequired,
       coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
@@ -151,6 +171,17 @@ Property.propTypes = {
     }).isRequired,
   }).isRequired,
   onTitleClick: PropTypes.func.isRequired,
+  getReviews: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.shape({
+    avatar: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    rating: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
+    date: PropTypes.string.isRequired,
+    comment: PropTypes.string.isRequired
+  })),
 };
 
-export default Property;
+export {Property};
+export default connect(mapStateToProps, mapDispatchToProps)(Property);

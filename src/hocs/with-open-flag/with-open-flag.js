@@ -17,7 +17,7 @@ const withOpenFlag = (Component) => {
     }
 
     componentDidUpdate() {
-      if (this.state.isOpen) { // линтер ругается на версию с тернарным оператором
+      if (this.state.isOpen) {
         document.addEventListener(`click`, this._handleOpenChange);
       } else {
         document.removeEventListener(`click`, this._handleOpenChange);

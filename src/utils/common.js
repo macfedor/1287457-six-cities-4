@@ -11,9 +11,15 @@ export const capitalize = (string) => string[0].toUpperCase() + string.slice(1);
 
 export const formatRating = (rating) => String(Math.round(rating) * RATING_PITCH) + `%`;
 
-export const formatDate = (date) => monthNames[date.getMonth()] + ` ` + date.getFullYear();
+export const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return monthNames[date.getMonth()] + ` ` + date.getFullYear();
+};
 
-export const formatDateShort = (date) => date.getFullYear() + `-` + formatDozens(date.getMonth()) + `-` + formatDozens(date.getDate());
+export const formatDateShort = (dateString) => {
+  const date = new Date(dateString);
+  return date.getFullYear() + `-` + formatDozens(date.getMonth()) + `-` + formatDozens(date.getDate());
+};
 
 export const compareDates = (dateFirst, dateSecond) => {
   const firstDate = new Date(dateFirst);

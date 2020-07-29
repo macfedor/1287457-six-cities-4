@@ -33,6 +33,10 @@ export const maxCities = 6;
 
 export const maxReviews = 10;
 
+export const maxReviewLength = 300;
+
+export const minReviewLength = 50;
+
 export const monthNames = [
   `January`,
   `February`,
@@ -47,3 +51,5 @@ export const monthNames = [
   `November`,
   `December`,
 ];
+
+export const WARNING_TIMEOUT = 3000;

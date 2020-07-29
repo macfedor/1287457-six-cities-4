@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import Property from "./property.jsx";
+import {Property} from "./property.jsx";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 
@@ -38,23 +38,26 @@ const testData = {
     zoom: 13,
     name: `Paris`,
   },
-  reviews: [
-    {
-      avatar: `img/avatar-max.jpg`,
-      name: `Max`,
-      rating: 2.4,
-      date: new Date(`2020-03-21`),
-      comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`
-    },
-    {
-      avatar: `img/avatar-angelina.jpg`,
-      name: `Angelina`,
-      rating: 5,
-      date: new Date(`2020-04-23`),
-      comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`
-    }
-  ],
 };
+
+const mockReviews = [
+  {
+    id: 1,
+    avatar: `img/avatar-max.jpg`,
+    name: `Max`,
+    rating: 2.4,
+    date: String(new Date(`2020-03-21`)),
+    comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`
+  },
+  {
+    id: 2,
+    avatar: `img/avatar-angelina.jpg`,
+    name: `Angelina`,
+    rating: 5,
+    date: String(new Date(`2020-04-23`)),
+    comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.`
+  }
+];
 
 const store = mockStore({
   DATA: {
@@ -76,7 +79,9 @@ it(`Should Property render correctly`, () => {
   const tree = renderer
     .create(<Provider store={store}><Property
       property={testData}
+      reviews={mockReviews}
       onTitleClick={() => {}}
+      getReviews={() => {}}
     /></Provider>)
     .toJSON();
 

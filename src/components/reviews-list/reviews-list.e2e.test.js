@@ -131,5 +131,5 @@ it(`Should be sorted reviews`, () => {
   const reviewFirstDate = reviewsList.find(`.reviews__item`).first().find(`.reviews__time`).prop(`dateTime`);
   const reviewLastDate = reviewsList.find(`.reviews__item`).last().find(`.reviews__time`).prop(`dateTime`);
 
-  expect(compareDates(reviewFirstDate, reviewLastDate)).toBeGreaterThan(0);
+  expect(compareDates(reviewLastDate, reviewFirstDate)).toBeGreaterThan(0);
 });
