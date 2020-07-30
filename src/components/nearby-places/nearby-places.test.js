@@ -1,12 +1,28 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import NearbyPlaces from "./nearby-places.jsx";
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
 
-const testData = [
+const mockStore = configureStore([]);
+
+const mockCities = [
+  `Paris`,
+  `Cologne`,
+  `Brussels`,
+  `Hamburg`,
+  `Dusseldorf`,
+  `Omsk`,
+];
+
+const mockActiveCity = mockCities[0];
+
+const mockOffers = [
   {
     id: Math.random(),
     image: `img/apartment-01.jpg`,
     isPremium: false,
+    isFavorite: false,
     price: 100,
     name: `First`,
     type: `apartment`,
@@ -36,6 +52,7 @@ const testData = [
     id: Math.random(),
     image: `img/apartment-01.jpg`,
     isPremium: false,
+    isFavorite: false,
     price: 1000,
     name: `Secont`,
     type: `room`,
@@ -64,11 +81,27 @@ const testData = [
 ];
 
 it(`Should NearbyPlaces render correctly`, () => {
+  const store = mockStore({
+    DATA: {
+      step: `main`,
+      activeCity: mockActiveCity,
+      activeOffer: null,
+      hoveredOffer: null,
+      cities: mockCities,
+      places: mockOffers,
+      activeSortType: `popular`,
+    },
+    USER: {
+      AuthorizationStatus: `NO_AUTH`,
+      userEmail: ``,
+    }
+  });
+
   const tree = renderer
-    .create(<NearbyPlaces
-      places={testData}
+    .create(<Provider store={store}><NearbyPlaces
+      places={mockOffers}
       onTitleClick={() => {}}
-    />)
+    /></Provider>)
     .toJSON();
 
   expect(tree).toMatchSnapshot();

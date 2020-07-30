@@ -1,11 +1,12 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import Card from "./card.jsx";
+import {Card} from "./card.jsx";
 
 const testData = {
   id: Math.random(),
   image: `img/apartment-01.jpg`,
   isPremium: false,
+  isFavorite: false,
   price: 1000,
   name: `Secont`,
   type: `room`,

@@ -226,7 +226,8 @@ exports[`Should ResultsWrapped render correctly 1`] = `
                   </span>
                 </div>
                 <button
-                  className="place-card__bookmark-button button"
+                  className=" place-card__bookmark-button button"
+                  onClick={[Function]}
                   type="button"
                 >
                   <svg
@@ -325,7 +326,8 @@ exports[`Should ResultsWrapped render correctly 1`] = `
                   </span>
                 </div>
                 <button
-                  className="place-card__bookmark-button button"
+                  className=" place-card__bookmark-button button"
+                  onClick={[Function]}
                   type="button"
                 >
                   <svg

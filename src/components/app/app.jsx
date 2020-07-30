@@ -1,20 +1,21 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import {Switch, Route, BrowserRouter} from "react-router-dom";
+import {Switch, Route, Router} from "react-router-dom";
 import Main from "../main/main.jsx";
 import Property from "../property/property.jsx";
 import SignIn from "../sign-in/sign-in.jsx";
 import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer/data/data.js";
 import {getActiveOffer, getStep} from "../../reducer/data/selectors.js";
-import {PlaceType} from "../../consts.js";
+import {PlaceType, AppRoute} from "../../consts.js";
+import history from "../../history.js";
 import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 import {Operation as UserOperation} from "../../reducer/user/user.js";
 
 class App extends PureComponent {
 
   _renderScreen() {
-    const {step, activeOffer, onTitleClick, onCityClick, onCardHover, authorizationStatus, login} = this.props;
+    const {step, activeOffer, onTitleClick, onCityClick, onCardHover, authorizationStatus} = this.props;
 
     if (step === `main`) {
       return <Main
@@ -32,22 +33,24 @@ class App extends PureComponent {
       />;
     }
 
-    if (step === `sign-in`) {
-      return <SignIn onSubmit={login}/>;
-    }
-
     return null;
   }
 
   render() {
+    const {login} = this.props;
+
     return (
-      <BrowserRouter>
+      <Router history={history}>
         <Switch>
-          <Route exact path="/">
+          <Route exact path={AppRoute.ROOT}>
             {this._renderScreen()}
           </Route>
+          <Route exact path={AppRoute.LOGIN}>
+            <SignIn onSubmit={login}/>
+          </Route>
+
         </Switch>
-      </BrowserRouter>
+      </Router>
     );
   }
 }

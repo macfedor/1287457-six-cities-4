@@ -20,7 +20,7 @@ class Property extends PureComponent {
 
   render() {
     const mapPrefix = `property`;
-    const {property, onTitleClick, authorizationStatus, reviews} = this.props;
+    const {property, onTitleClick, authorizationStatus, reviews, onFavoriteToggle} = this.props;
     const nearbyOffers = offers.filter((item) => item.id !== property.id && item.city === property.city);
 
     return (
@@ -49,7 +49,9 @@ class Property extends PureComponent {
                   <h1 className="property__name">
                     {property.name}
                   </h1>
-                  <button className="property__bookmark-button button" type="button">
+                  <button onClick={() => {
+                    onFavoriteToggle(property.id, Number(!property.isFavorite));
+                  }} className={`${property.isFavorite ? `property__bookmark-button--active` : ``} property__bookmark-button button`} type="button">
                     <svg className="property__bookmark-icon" width="31" height="33">
                       <use xlinkHref="#icon-bookmark"></use>
                     </svg>
@@ -138,6 +140,9 @@ const mapDispatchToProps = (dispatch) => ({
   getReviews(hotelId) {
     dispatch(DataOperation.loadReviews(hotelId));
   },
+  onFavoriteToggle(id, status) {
+    dispatch(DataOperation.toggleFavorite(id, status));
+  },
 });
 
 Property.propTypes = {
@@ -145,6 +150,7 @@ Property.propTypes = {
     id: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
     isPremium: PropTypes.bool.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
     price: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     type: PropTypes.oneOf([PlaceType.APARTMENT, PlaceType.ROOM, PlaceType.HOUSE, PlaceType.HOTEL]).isRequired,
@@ -181,6 +187,7 @@ Property.propTypes = {
     date: PropTypes.string.isRequired,
     comment: PropTypes.string.isRequired
   })),
+  onFavoriteToggle: PropTypes.func.isRequired,
 };
 
 export {Property};

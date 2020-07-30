@@ -3,6 +3,7 @@ export const getAdaptedOffer = (offer) => {
     id: offer.id,
     image: offer.preview_image,
     isPremium: offer.is_premium,
+    isFavorite: offer.is_favorite,
     price: offer.price,
     name: offer.title,
     type: offer.type,

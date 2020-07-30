@@ -3,6 +3,8 @@ import renderer from "react-test-renderer";
 import Main from "./main.jsx";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
+import {Router} from "react-router-dom";
+import history from "../../history.js";
 
 const mockStore = configureStore([]);
 
@@ -102,11 +104,11 @@ it(`Should Main render correctly`, () => {
   });
 
   const tree = renderer
-    .create(<Provider store={store}><Main
+    .create(<Router history={history} ><Provider store={store}><Main
       onTitleClick={() => {}}
       onCityClick={() => {}}
       onCardHover={() => {}}
-    /></Provider>)
+    /></Provider></Router>)
     .toJSON();
 
   expect(tree).toMatchSnapshot();

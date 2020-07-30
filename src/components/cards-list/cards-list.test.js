@@ -1,12 +1,28 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import CardsList from "./cards-list.jsx";
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
 
-const testData = [
+const mockStore = configureStore([]);
+
+const mockCities = [
+  `Paris`,
+  `Cologne`,
+  `Brussels`,
+  `Hamburg`,
+  `Dusseldorf`,
+  `Omsk`,
+];
+
+const mockActiveCity = mockCities[0];
+
+const mockOffers = [
   {
     id: Math.random(),
     image: `img/apartment-01.jpg`,
     isPremium: false,
+    isFavorite: false,
     price: 100,
     name: `First`,
     type: `apartment`,
@@ -36,6 +52,7 @@ const testData = [
     id: Math.random(),
     image: `img/apartment-01.jpg`,
     isPremium: false,
+    isFavorite: false,
     price: 1000,
     name: `Secont`,
     type: `room`,
@@ -67,13 +84,29 @@ const cardsListClassName = `cities__places-list`;
 const cardType = `city`;
 
 it(`Should CardsList render correctly`, () => {
+  const store = mockStore({
+    DATA: {
+      step: `main`,
+      activeCity: mockActiveCity,
+      activeOffer: null,
+      hoveredOffer: null,
+      cities: mockCities,
+      places: mockOffers,
+      activeSortType: `popular`,
+    },
+    USER: {
+      AuthorizationStatus: `NO_AUTH`,
+      userEmail: ``,
+    }
+  });
+
   const tree = renderer
-    .create(<CardsList
-      cards={testData}
+    .create(<Provider store={store}><CardsList
+      cards={mockOffers}
       onTitleClick={() => {}}
       cardsListClassName={cardsListClassName}
       cardType={cardType}
-    />)
+    /></Provider>)
     .toJSON();
 
   expect(tree).toMatchSnapshot();

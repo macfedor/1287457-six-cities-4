@@ -5,6 +5,8 @@ import Main from "../main/main.jsx";
 import {Provider} from "react-redux";
 import {createStore} from "redux";
 import reducer from "../../reducer/reducer";
+import {Router} from "react-router-dom";
+import history from "../../history.js";
 
 Enzyme.configure({
   adapter: new Adapter(),
@@ -25,12 +27,17 @@ const initialState = {
 const store = createStore(reducer, initialState);
 
 it(`Should render no results page`, () => {
-  const main = mount(<Provider store={store}>
-    <Main
-      onTitleClick={() => {}}
-      onCityClick={() => {}}
-      onCardHover={() => {}}
-    /></Provider>);
+  const main = mount(
+      <Router history={history} >
+        <Provider store={store}>
+          <Main
+            onTitleClick={() => {}}
+            onCityClick={() => {}}
+            onCardHover={() => {}}
+          />
+        </Provider>
+      </Router>
+  );
 
   const citiesStatus = main.find(`.cities__status`);
   expect(citiesStatus.props().children).toEqual(`No places to stay available`);

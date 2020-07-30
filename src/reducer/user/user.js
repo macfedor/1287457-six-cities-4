@@ -1,5 +1,6 @@
 import {extend} from "../../utils/common.js";
-import {ActionCreator as DataActionCreator} from "../data/data.js";
+import history from "../../history.js";
+import {AppRoute} from "../../consts.js";
 
 const AuthorizationStatus = {
   AUTH: `AUTH`,
@@ -38,7 +39,7 @@ const Operation = {
       dispatch(ActionCreator.setUserEmail(response.data.email));
     })
     .then(() => {
-      dispatch(DataActionCreator.showMain());
+      return history.push(AppRoute.ROOT);
     })
     .catch((err) => {
       throw err;

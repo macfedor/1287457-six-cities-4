@@ -53,3 +53,9 @@ export const monthNames = [
 ];
 
 export const WARNING_TIMEOUT = 3000;
+
+export const AppRoute = {
+  ROOT: `/`,
+  LOGIN: `/login`,
+  FAVORITES: `/favorites`,
+};
