@@ -3,10 +3,24 @@ import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import NearbyPlaces from "./nearby-places";
 import {maxNearbyOffers} from "../../consts.js";
+import {Provider} from "react-redux";
+import {createStore} from "redux";
+import reducer from "../../reducer/reducer";
 
 Enzyme.configure({
   adapter: new Adapter(),
 });
+
+const mockCities = [
+  `Paris`,
+  `Cologne`,
+  `Brussels`,
+  `Hamburg`,
+  `Dusseldorf`,
+  `Omsk`,
+];
+
+const mockActiveCity = mockCities[0];
 
 const mockOffers = [
   {
@@ -127,13 +141,30 @@ const mockOffers = [
   }
 ];
 
+const initialState = {
+  DATA: {
+    step: `main`,
+    activeCity: mockActiveCity,
+    activeOffer: null,
+    hoveredOffer: null,
+    cities: mockCities,
+    places: mockOffers,
+    activeSortType: `popular`,
+  }
+};
+
+const store = createStore(
+    reducer,
+    initialState
+);
+
 it(`Should be max "maxNearbyOffers" places`, () => {
   const onTitleClick = () => {};
   const nearbyPlaces = mount(
-      <NearbyPlaces
+      <Provider store={store}><NearbyPlaces
         places={mockOffers}
         onTitleClick={onTitleClick}
-      />
+      /></Provider>
   );
 
   const cards = nearbyPlaces.find(`.near-places__card`);

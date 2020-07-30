@@ -5,6 +5,8 @@ import Main from "../main/main.jsx";
 import {Provider} from "react-redux";
 import {createStore} from "redux";
 import reducer from "../../reducer/reducer";
+import {Router} from "react-router-dom";
+import history from "../../history.js";
 
 Enzyme.configure({
   adapter: new Adapter(),
@@ -128,12 +130,12 @@ const initialState = {
 const store = createStore(reducer, initialState);
 
 it(`Should render places`, () => {
-  const main = mount(<Provider store={store}>
+  const main = mount(<Router history={history} ><Provider store={store}>
     <Main
       onTitleClick={() => {}}
       onCityClick={() => {}}
       onCardHover={() => {}}
-    /></Provider>);
+    /></Provider></Router>);
 
   const placesList = main.find(`.places__list`);
   const placesCards = main.find(`.place-card`);

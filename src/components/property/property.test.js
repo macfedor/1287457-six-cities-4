@@ -3,6 +3,8 @@ import renderer from "react-test-renderer";
 import {Property} from "./property.jsx";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
+import {Router} from "react-router-dom";
+import history from "../../history.js";
 
 const mockStore = configureStore([]);
 
@@ -77,12 +79,16 @@ const store = mockStore({
 
 it(`Should Property render correctly`, () => {
   const tree = renderer
-    .create(<Provider store={store}><Property
-      property={testData}
-      reviews={mockReviews}
-      onTitleClick={() => {}}
-      getReviews={() => {}}
-    /></Provider>)
+    .create(
+        <Router history={history} >
+          <Provider store={store}><Property
+            property={testData}
+            reviews={mockReviews}
+            onTitleClick={() => {}}
+            getReviews={() => {}}
+          /></Provider>
+        </Router>
+    )
     .toJSON();
 
   expect(tree).toMatchSnapshot();

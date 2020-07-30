@@ -2,10 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import {getAuthorizationStatus, getUserEmail} from "../../reducer/user/selectors.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
-import {ActionCreator} from "../../reducer/data/data.js";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom";
+import {AppRoute} from "../../consts.js";
 
-const Header = ({authorizationStatus, userEmail, onSignInClick}) => {
+const Header = ({authorizationStatus, userEmail}) => {
   return <header className="header">
     <div className="container">
       <div className="header__wrapper">
@@ -17,15 +18,17 @@ const Header = ({authorizationStatus, userEmail, onSignInClick}) => {
         <nav className="header__nav">
           <ul className="header__nav-list">
             <li className="header__nav-item user">
-              <a className="header__nav-link header__nav-link--profile" href="#">
-                <div className="header__avatar-wrapper user__avatar-wrapper">
-                </div>
-                {authorizationStatus === AuthorizationStatus.NO_AUTH ?
-                  <span onClick={onSignInClick} className="header__login">Sign in</span>
-                  :
+              {authorizationStatus === AuthorizationStatus.NO_AUTH ?
+                <Link to={AppRoute.LOGIN} className="header__nav-link header__nav-link--profile" href="#">
+                  <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                  <span className="header__login">Sign in</span>
+                </Link>
+                :
+                <Link to={AppRoute.FAVORITES} className="header__nav-link header__nav-link--profile" href="#">
+                  <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                   <span className="header__user-name user__name">{userEmail}</span>
-                }
-              </a>
+                </Link>
+              }
             </li>
           </ul>
         </nav>
@@ -39,17 +42,10 @@ const mapStateToProps = (state) => ({
   userEmail: getUserEmail(state),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onSignInClick() {
-    dispatch(ActionCreator.showSignIn());
-  },
-});
-
 Header.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
   userEmail: PropTypes.string.isRequired,
-  onSignInClick: PropTypes.func.isRequired,
 };
 
 export {Header};
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps)(Header);

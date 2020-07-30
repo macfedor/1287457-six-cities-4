@@ -1,6 +1,9 @@
 import {extend, sortPlaces, getCitiesList} from "../../utils/common.js";
-import {getAdaptedOffers, getAdaptedReviews} from "./adapter.js";
-import {SortType} from "../../consts.js";
+import {getAdaptedOffers, getAdaptedReviews, getAdaptedOffer} from "./adapter.js";
+import {AuthorizationStatus} from "../user/user.js";
+import {SortType, AppRoute} from "../../consts.js";
+import NameSpace from '../name-space.js';
+import history from "../../history.js";
 
 const initialState = {
   step: `main`,
@@ -22,6 +25,7 @@ const ActionType = {
   SHOW_MAIN: `SHOW_MAIN`,
   SHOW_SIGN_IN: `SHOW_SIGN_IN`,
   LOAD_REVIEWS: `LOAD_REVIEWS`,
+  RELOAD_OFFERS: `RELOAD_OFFERS`,
 };
 
 const Operation = {
@@ -51,6 +55,17 @@ const Operation = {
       throw err;
     });
   },
+  toggleFavorite: (hotelId, status) => (dispatch, getState, api) => {
+    if (getState()[NameSpace.USER].authorizationStatus === AuthorizationStatus.NO_AUTH) {
+      return history.push(AppRoute.LOGIN);
+    }
+    return api.post(`/favorite/${hotelId}/${status}`)
+      .then(({requestStatus, data}) => {
+        if (requestStatus === 200) {
+          dispatch(ActionCreator.reloadOffers(data));
+        }
+      });
+  },
 };
 
 const ActionCreator = {
@@ -66,13 +81,6 @@ const ActionCreator = {
     type: ActionType.SHOW_MAIN,
     payload: {
       step: `main`
-    }
-  }),
-
-  showSignIn: () => ({
-    type: ActionType.SHOW_SIGN_IN,
-    payload: {
-      step: `sign-in`,
     }
   }),
 
@@ -97,6 +105,11 @@ const ActionCreator = {
       places: getAdaptedOffers(result),
       cities: getCitiesList(result),
     },
+  }),
+
+  reloadOffers: (result) => ({
+    type: ActionType.RELOAD_OFFERS,
+    payload: result,
   }),
 
   loadReviews: (result) => ({
@@ -147,6 +160,17 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_REVIEWS:
       return extend(state, {
         reviews: action.payload
+      });
+    case ActionType.RELOAD_OFFERS:
+      return Object.assign({}, state, {
+        places: state.places.map((content) => {
+          if (content.id === action.payload.id) {
+            return getAdaptedOffer(action.payload);
+          } else {
+            return content;
+          }
+        }),
+        activeOffer: getAdaptedOffer(action.payload)
       });
     default:
       return state;

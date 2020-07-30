@@ -58,7 +58,7 @@ class SignIn extends PureComponent {
 }
 
 SignIn.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default SignIn;
