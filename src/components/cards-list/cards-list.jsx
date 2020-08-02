@@ -6,16 +6,15 @@ import {PlaceType} from "../../consts.js";
 class CardsList extends PureComponent {
 
   render() {
-    const {cards, onTitleClick, onCardHover, cardsListClassName, cardType} = this.props;
+    const {cards, onCardHover, cardsListClassName, cardType} = this.props;
     return (
       <div className={`places__list ${cardsListClassName}`}>
         {cards.map((card) => (
           <Card key={card.id}
             card={card}
             cardType={cardType}
-            onMouseEnter={() => onCardHover({coordinates: card.location.coordinates, zoom: card.location.zoom})}
+            onMouseEnter={() => onCardHover(card)}
             onMouseLeave={() => onCardHover(null)}
-            onTitleClick={() => onTitleClick(card)}
           />
         ))}
       </div>
@@ -54,7 +53,6 @@ CardsList.propTypes = {
       zoom: PropTypes.number.isRequired,
     }).isRequired,
   })).isRequired,
-  onTitleClick: PropTypes.func.isRequired,
   onCardHover: PropTypes.func,
   cardsListClassName: PropTypes.string.isRequired,
   cardType: PropTypes.string.isRequired,

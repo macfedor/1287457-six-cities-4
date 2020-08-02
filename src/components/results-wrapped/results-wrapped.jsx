@@ -9,7 +9,7 @@ import withOpenFlag from '../../hocs/with-open-flag/with-open-flag';
 
 const SortWrapped = withOpenFlag(Sort);
 
-const ResultsWrapped = ({places, onTitleClick, cities, activeCity, onCityClick, onCardHover, hoveredOffer}) => {
+const ResultsWrapped = ({places, cities, activeCity, onCityClick, onCardHover, activeOffer}) => {
   const cardsListClassName = `cities__places-list tabs__content`;
   const mapPrefix = `cities`;
 
@@ -30,7 +30,6 @@ const ResultsWrapped = ({places, onTitleClick, cities, activeCity, onCityClick, 
           <SortWrapped />
           <CardsList
             cards={places}
-            onTitleClick={onTitleClick}
             cardsListClassName={cardsListClassName}
             cardType={CardType.CITY}
             onCardHover={onCardHover}
@@ -41,7 +40,7 @@ const ResultsWrapped = ({places, onTitleClick, cities, activeCity, onCityClick, 
             places={places}
             prefix={mapPrefix}
             activeCity={activeCity}
-            activePlace={hoveredOffer}
+            activePlace={activeOffer}
           />
         </div>
       </div>
@@ -81,7 +80,6 @@ ResultsWrapped.propTypes = {
       zoom: PropTypes.number.isRequired,
     }).isRequired,
   }).isRequired).isRequired,
-  onTitleClick: PropTypes.func.isRequired,
   activeCity: PropTypes.string,
   onCityClick: PropTypes.func.isRequired,
   onCardHover: PropTypes.func.isRequired,

@@ -13,19 +13,20 @@ const initialState = {
   cities: [],
   places: [],
   activeSortType: SortType.POPULAR,
-  reviews: [],
+  reviews: null,
+  nearbyPlaces: null,
 };
 
 const ActionType = {
   CHANGE_CITY: `CHANGE_CITY`,
-  SHOW_CARD: `SHOW_CARD`,
   SORTING: `SORTING`,
+  SET_ACTIVE_OFFER: `SET_ACTIVE_OFFER`,
   HOVER_CARD: `HOVER_CARD`,
   LOAD_OFFERS: `LOAD_OFFERS`,
-  SHOW_MAIN: `SHOW_MAIN`,
-  SHOW_SIGN_IN: `SHOW_SIGN_IN`,
   LOAD_REVIEWS: `LOAD_REVIEWS`,
   RELOAD_OFFERS: `RELOAD_OFFERS`,
+  GET_OFFER_BY_ID: `GET_OFFER_BY_ID`,
+  LOAD_NEARBY_PLACES: `LOAD_NEARBY_PLACES`,
 };
 
 const Operation = {
@@ -39,6 +40,12 @@ const Operation = {
     return api.get(`/comments/${hotelId}`)
       .then((response) => {
         dispatch(ActionCreator.loadReviews(response.data));
+      });
+  },
+  loadNearbyPlaces: (hotelId) => (dispatch, getState, api) => {
+    return api.get(`/hotels/${hotelId}/nearby/`)
+      .then((response) => {
+        dispatch(ActionCreator.loadNearbyPlaces(response.data));
       });
   },
   postReview: (hotelId, reviewRating, reviewComment, onSuccess, onError) => (dispatch, getState, api) => {
@@ -66,26 +73,23 @@ const Operation = {
         }
       });
   },
+  getOfferById: (offerId) => (dispatch, getState, api) => {
+    return api.get(`/hotels`)
+      .then((response) => {
+        dispatch(ActionCreator.getOfferById(response.data, offerId));
+      })
+  }, 
 };
 
 const ActionCreator = {
-  showCard: (result) => ({
-    type: ActionType.SHOW_CARD,
-    payload: {
-      step: `property`,
-      activeOffer: result
-    }
-  }),
-
-  showMain: () => ({
-    type: ActionType.SHOW_MAIN,
-    payload: {
-      step: `main`
-    }
-  }),
 
   changeCity: (result) => ({
     type: ActionType.CHANGE_CITY,
+    payload: result,
+  }),
+  
+  setActiveOffer: (result) => ({
+    type: ActionType.SET_ACTIVE_OFFER,
     payload: result,
   }),
 
@@ -116,7 +120,19 @@ const ActionCreator = {
     type: ActionType.LOAD_REVIEWS,
     payload: getAdaptedReviews(result),
   }),
-
+  
+  loadNearbyPlaces: (result) => ({
+    type: ActionType.LOAD_NEARBY_PLACES,
+    payload: getAdaptedOffers(result),
+  }),
+  
+  getOfferById: (result, offerId) => ({
+    type: ActionType.GET_OFFER_BY_ID,
+    payload: {
+      places: result,
+      currentId: offerId,
+    },
+  }),
 
 };
 
@@ -128,18 +144,10 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         activeCity: action.payload
       });
-    case ActionType.SHOW_CARD:
+    case ActionType.SET_ACTIVE_OFFER:
+    console.log(action.payload)
       return extend(state, {
-        step: action.payload.step,
-        activeOffer: action.payload.activeOffer,
-      });
-    case ActionType.SHOW_SIGN_IN:
-      return extend(state, {
-        step: action.payload.step,
-      });
-    case ActionType.SHOW_MAIN:
-      return extend(state, {
-        step: action.payload.step,
+        activeOffer: action.payload,
       });
     case ActionType.SORTING:
       return extend(state, {
@@ -148,7 +156,7 @@ const reducer = (state = initialState, action) => {
       });
     case ActionType.HOVER_CARD:
       return extend(state, {
-        hoveredOffer: action.payload
+        activeOffer: action.payload
       });
     case ActionType.LOAD_OFFERS:
       defaultSortedOffers = action.payload.places;
@@ -161,7 +169,12 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         reviews: action.payload
       });
+    case ActionType.LOAD_NEARBY_PLACES:
+      return extend(state, {
+        nearbyPlaces: action.payload
+      });  
     case ActionType.RELOAD_OFFERS:
+      console.log(123);
       return Object.assign({}, state, {
         places: state.places.map((content) => {
           if (content.id === action.payload.id) {
@@ -171,6 +184,10 @@ const reducer = (state = initialState, action) => {
           }
         }),
         activeOffer: getAdaptedOffer(action.payload)
+      });
+    case ActionType.GET_OFFER_BY_ID:
+      return extend(state, {
+        activeOffer: getAdaptedOffer(action.payload.places.find((place) => place.id === Number(action.payload.currentId)))
       });
     default:
       return state;

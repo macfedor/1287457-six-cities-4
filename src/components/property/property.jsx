@@ -10,18 +10,41 @@ import Header from "../header/header.jsx";
 import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 import {connect} from "react-redux";
 import {Operation as DataOperation} from "../../reducer/data/data.js";
-import {getReviewsList} from "../../reducer/data/selectors.js";
+import {getReviewsList, getActiveOffer, getNearbyPlacesList} from "../../reducer/data/selectors.js";
 
 class Property extends PureComponent {
+
   componentDidMount() {
-    const {property, getReviews} = this.props;
-    getReviews(property.id);
+    const {property, getReviews, getNearbyPlaces} = this.props;
+
+    if (property) {
+      getReviews(property.id);
+      getNearbyPlaces(property.id);
+    }
+  }
+
+  componentDidUpdate() {
+    const {property, getReviews, getNearbyPlaces, reviews, nearbyPlaces} = this.props;
+
+    if (property) {
+      if (reviews === null) {
+        getReviews(property.id);
+      } 
+      if (nearbyPlaces === null) {
+        getNearbyPlaces(property.id);
+      }
+    }
   }
 
   render() {
     const mapPrefix = `property`;
-    const {property, onTitleClick, authorizationStatus, reviews, onFavoriteToggle} = this.props;
-    const nearbyOffers = offers.filter((item) => item.id !== property.id && item.city === property.city);
+    const {property, authorizationStatus, reviews, onFavoriteToggle, getOfferById, nearbyPlaces, onCardHover} = this.props;
+    if (!property && this.props.routerProps.match.params.id) {
+      getOfferById(this.props.routerProps.match.params.id);
+    }
+    if (!property) {
+      return null;
+    }
 
     return (
       <div className="page">
@@ -94,7 +117,7 @@ class Property extends PureComponent {
                   <h2 className="property__host-title">Meet the host</h2>
                   <div className="property__host-user user">
                     <div className={property.host.isPro ? `property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper` : `property__avatar-wrapper user__avatar-wrapper`}>
-                      <img className="property__avatar user__avatar" src={property.host.avatar} width="74" height="74" alt="Host avatar"/>
+                      <img className="property__avatar user__avatar" src={`/${property.host.avatar}`} width="74" height="74" alt="Host avatar"/>
                     </div>
                     <span className="property__user-name">
                       {property.host.name}
@@ -104,24 +127,26 @@ class Property extends PureComponent {
                     <p className="property__text">{property.description}</p>
                   </div>
                 </div>
-                <ReviewsList
-                  reviews={reviews}
-                  authorizationStatus={authorizationStatus}
-                  propertyId={property.id}
-                />
+                {reviews !== null ?
+                  <ReviewsList
+                    reviews={reviews}
+                    authorizationStatus={authorizationStatus}
+                    propertyId={property.id}
+                  />
+                : ``}
               </div>
             </div>
             <Map
-              places={nearbyOffers}
+              places={nearbyPlaces}
               prefix={mapPrefix}
-              activePlace={{coordinates: property.location.coordinates, zoom: property.location.zoom}}
+              activePlace={property}
             />
           </section>
-          {nearbyOffers.length ?
+          {nearbyPlaces !== null ?
             <div className="container">
               <NearbyPlaces
-                places={nearbyOffers}
-                onTitleClick={onTitleClick}
+                places={nearbyPlaces}
+                onCardHover={onCardHover}
               />
             </div>
             : ``}
@@ -133,16 +158,24 @@ class Property extends PureComponent {
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
+  property: getActiveOffer(state),
   reviews: getReviewsList(state),
+  nearbyPlaces: getNearbyPlacesList(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getReviews(hotelId) {
     dispatch(DataOperation.loadReviews(hotelId));
   },
+  getNearbyPlaces(hotelId) {
+    dispatch(DataOperation.loadNearbyPlaces(hotelId));
+  },
   onFavoriteToggle(id, status) {
     dispatch(DataOperation.toggleFavorite(id, status));
   },
+  getOfferById(offerId) {
+    dispatch(DataOperation.getOfferById(offerId));
+  }
 });
 
 Property.propTypes = {
@@ -175,9 +208,9 @@ Property.propTypes = {
       coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
       zoom: PropTypes.number.isRequired,
     }).isRequired,
-  }).isRequired,
-  onTitleClick: PropTypes.func.isRequired,
+  }),
   getReviews: PropTypes.func.isRequired,
+  getOfferById: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape({
     avatar: PropTypes.string.isRequired,

@@ -250,15 +250,6 @@ it(`Reducer should change state by a given value`, () => {
 });
 
 describe(`Action creators work correctly`, () => {
-  it(`Action creator for showCard returns correct action`, () => {
-    expect(ActionCreator.showCard(mockOffer)).toEqual({
-      type: ActionType.SHOW_CARD,
-      payload: {
-        step: `property`,
-        activeOffer: mockOffer
-      },
-    });
-  });
 
   it(`Action creator for changeCity returns correct action`, () => {
     expect(ActionCreator.changeCity(`Paris`)).toEqual({

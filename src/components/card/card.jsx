@@ -1,9 +1,10 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {capitalize, formatRating} from "../../utils/common.js";
-import {PlaceType, CardClassName, ImageWrapperClassName} from "../../consts.js";
-import {Operation} from "../../reducer/data/data.js";
+import {PlaceType, CardClassName, ImageWrapperClassName, AppRoute} from "../../consts.js";
+import {Operation, ActionCreator} from "../../reducer/data/data.js";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom";
 
 class Card extends PureComponent {
 
@@ -45,7 +46,7 @@ class Card extends PureComponent {
             </div>
           </div>
           <h2 className="place-card__name">
-            <a onClick={onTitleClick} href="#">{card.name}</a>
+            <Link to={`${AppRoute.OFFER_LINK}${card.id}`} onClick={() => {onTitleClick(card)}} >{card.name}</Link>
           </h2>
           <p className="place-card__type">{placeTypeName}</p>
         </div>
@@ -57,6 +58,9 @@ class Card extends PureComponent {
 const mapDispatchToProps = (dispatch) => ({
   onFavoriteToggle(id, status) {
     dispatch(Operation.toggleFavorite(id, status));
+  },
+  onTitleClick(offer) {
+    dispatch(ActionCreator.setActiveOffer(offer));
   },
 });
 

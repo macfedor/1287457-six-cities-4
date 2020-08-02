@@ -32,13 +32,20 @@ export const getActiveSortType = (state) => {
 };
 
 export const getReviewsList = (state) => {
-  const sortedReviews = state[NAME_SPACE].reviews.slice().sort(function (a, b) {
-    const dateA = new Date(a.date);
-    const dateB = new Date(b.date);
-    return dateB.getTime() - dateA.getTime();
-  });
+  if (state[NAME_SPACE].reviews) {
+    const sortedReviews = state[NAME_SPACE].reviews.slice().sort(function (a, b) {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateB.getTime() - dateA.getTime();
+    });
 
-  return sortedReviews;
+    return sortedReviews;
+  }
+  return state[NAME_SPACE].reviews;
+};
+
+export const getNearbyPlacesList = (state) => {
+  return state[NAME_SPACE].nearbyPlaces;
 };
 
 export const getCityOffers = createSelector(
@@ -48,4 +55,3 @@ export const getCityOffers = createSelector(
       return offers.filter((offer) => offer.city.name === city);
     }
 );
-

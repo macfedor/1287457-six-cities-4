@@ -4,20 +4,19 @@ import ResultsWrapped from "../results-wrapped/results-wrapped.jsx";
 import NoResults from "../no-results/no-results.jsx";
 import {PlaceType} from "../../consts.js";
 import {connect} from "react-redux";
-import {getActiveCity, getHoveredOffer, getCityOffers, getCities} from "../../reducer/data/selectors.js";
+import {getActiveCity, getActiveOffer, getCityOffers, getCities} from "../../reducer/data/selectors.js";
 import Header from "../header/header.jsx";
 
-const Main = ({places, onTitleClick, cities, activeCity, onCityClick, onCardHover, hoveredOffer}) => {
+const Main = ({places, cities, activeCity, onCityClick, onCardHover, activeOffer}) => {
   return <div className="page page--gray page--main">
     <Header />
     {places.length ? <ResultsWrapped
       places={places}
-      onTitleClick={onTitleClick}
       cities={cities}
       activeCity={activeCity}
       onCityClick={onCityClick}
       onCardHover={onCardHover}
-      hoveredOffer={hoveredOffer}
+      activeOffer={activeOffer}
     />
       : <NoResults />}
   </div>;
@@ -27,7 +26,7 @@ const mapStateToProps = (state) => ({
   activeCity: getActiveCity(state),
   cities: getCities(state),
   places: getCityOffers(state),
-  hoveredOffer: getHoveredOffer(state),
+  activeOffer: getActiveOffer(state),
 });
 
 Main.propTypes = {
@@ -62,7 +61,6 @@ Main.propTypes = {
       zoom: PropTypes.number.isRequired,
     }).isRequired,
   }).isRequired),
-  onTitleClick: PropTypes.func.isRequired,
   activeCity: PropTypes.string,
   onCityClick: PropTypes.func.isRequired,
   onCardHover: PropTypes.func.isRequired,

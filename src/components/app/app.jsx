@@ -15,30 +15,16 @@ import {Operation as UserOperation} from "../../reducer/user/user.js";
 class App extends PureComponent {
 
   _renderScreen() {
-    const {step, activeOffer, onTitleClick, onCityClick, onCardHover, authorizationStatus} = this.props;
-
-    if (step === `main`) {
-      return <Main
-        onTitleClick={onTitleClick}
-        onCityClick={onCityClick}
-        onCardHover={onCardHover}
-        authorizationStatus={authorizationStatus}
-      />;
-    }
-
-    if (step === `property`) {
-      return <Property
-        property={activeOffer}
-        onTitleClick={onTitleClick}
-      />;
-    }
-
-    return null;
+    const {onTitleClick, onCityClick, onCardHover, authorizationStatus} = this.props;
+    return <Main
+      onCityClick={onCityClick}
+      onCardHover={onCardHover}
+      authorizationStatus={authorizationStatus}
+    />;
   }
 
   render() {
-    const {login} = this.props;
-
+    const {login, activeOffer, onCardHover} = this.props;
     return (
       <Router history={history}>
         <Switch>
@@ -48,7 +34,15 @@ class App extends PureComponent {
           <Route exact path={AppRoute.LOGIN}>
             <SignIn onSubmit={login}/>
           </Route>
-
+          <Route exact path={AppRoute.OFFER}
+            render={(props) => (
+              <Property
+                routerProps={props}
+                property={activeOffer}
+                onCardHover={onCardHover}
+              />
+            )}
+          />
         </Switch>
       </Router>
     );
@@ -62,9 +56,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onTitleClick(result) {
-    dispatch(ActionCreator.showCard(result));
-  },
   onCityClick(evt) {
     dispatch(ActionCreator.changeCity(evt.target.innerText));
   },
@@ -108,7 +99,6 @@ App.propTypes = {
       zoom: PropTypes.number.isRequired,
     }).isRequired,
   }),
-  onTitleClick: PropTypes.func.isRequired,
   onCityClick: PropTypes.func,
   onCardHover: PropTypes.func,
   authorizationStatus: PropTypes.string.isRequired,
