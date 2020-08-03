@@ -11,6 +11,10 @@ export const getCities = (state) => {
   return state[NAME_SPACE].cities;
 };
 
+export const getFavorites = (state) => {
+  return state[NAME_SPACE].favorites;
+};
+
 export const getStep = (state) => {
   return state[NAME_SPACE].step;
 };

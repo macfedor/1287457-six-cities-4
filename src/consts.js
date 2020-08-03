@@ -8,6 +8,7 @@ export const PlaceType = {
 export const CardType = {
   CITY: `city`,
   NEAR: `near`,
+  FAVORITE: `favorite`,
 };
 
 export const SortType = {
@@ -20,11 +21,13 @@ export const SortType = {
 export const CardClassName = {
   [CardType.CITY]: `cities__place-card`,
   [CardType.NEAR]: `near-places__card`,
+  [CardType.FAVORITE]: `favorites__card`,
 };
 
 export const ImageWrapperClassName = {
   [CardType.CITY]: `cities__image-wrapper`,
   [CardType.NEAR]: `near-places__image-wrapper`,
+  [CardType.FAVORITE]: `favorites__image-wrapper`,
 };
 
 export const maxNearbyOffers = 3;

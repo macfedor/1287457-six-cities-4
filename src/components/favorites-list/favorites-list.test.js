@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import ResultsWrapped from "./results-wrapped.jsx";
+import FavoritesList from "./favorites-list.jsx";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import {Router} from "react-router-dom";
@@ -8,27 +8,12 @@ import history from "../../history.js";
 
 const mockStore = configureStore([]);
 
-const div = document.createElement(`div`);
-div.id = `map`;
-document.body.appendChild(div);
-
-const mockCities = [
-  `Amsterdam`,
-  `Paris`,
-  `Cologne`,
-  `Brussels`,
-  `Hamburg`,
-  `Dusseldorf`,
-  `Omsk`,
-];
-
-const mockActiveCity = mockCities[0];
-
 const mockOffers = [
   {
     id: 1,
     image: `img/apartment-01.jpg`,
     isPremium: false,
+    isFavorite: false,
     price: 100,
     name: `First`,
     type: `apartment`,
@@ -58,6 +43,7 @@ const mockOffers = [
     id: 2,
     image: `img/apartment-01.jpg`,
     isPremium: false,
+    isFavorite: false,
     price: 1000,
     name: `Secont`,
     type: `room`,
@@ -80,31 +66,31 @@ const mockOffers = [
     city: {
       coordinates: [52.3909553943508, 4.929309666406198],
       zoom: 13,
-      name: `Paris`,
+      name: `Amsterdam`,
     }
   }
 ];
 
-it(`Should ResultsWrapped render correctly`, () => {
-  const store = mockStore({
-    DATA: {
-      step: `main`,
-      activeCity: mockActiveCity,
-      activeOffer: null,
-      hoveredOffer: null,
-      cities: mockCities,
-      places: mockOffers,
-      activeSortType: `popular`,
-    }
-  });
+const store = mockStore({
+  DATA: {
+    step: `property`,
+    activeCity: null,
+    activeOffer: null,
+    hoveredOffer: null,
+    cities: [],
+    nearbyPlaces: null,
+    activeSortType: `popular`,
+  },
+  USER: {
+    AuthorizationStatus: `NO_AUTH`,
+    userEmail: ``,
+  }
+});
+
+it(`Should FavoritesList render correctly`, () => {
   const tree = renderer
-    .create(<Router history={history} ><Provider store={store}><ResultsWrapped
-      places={mockOffers}
-      cities={mockCities}
-      activeCity={mockActiveCity}
-      onTitleClick={() => {}}
-      onCityClick={() => {}}
-      onCardHover={() => {}}
+    .create(<Router history={history} ><Provider store={store}><FavoritesList
+      offers={mockOffers}
     /></Provider></Router>)
     .toJSON();
 

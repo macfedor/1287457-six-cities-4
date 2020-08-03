@@ -1,9 +1,11 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import {Card} from "./card.jsx";
+import {Router} from "react-router-dom";
+import history from "../../history.js";
 
 const testData = {
-  id: Math.random(),
+  id: 1,
   image: `img/apartment-01.jpg`,
   isPremium: false,
   isFavorite: false,
@@ -37,13 +39,13 @@ const cardType = `city`;
 
 it(`Should Card render correctly`, () => {
   const tree = renderer
-    .create(<Card
+    .create(<Router history={history} ><Card
       card={testData}
       cardType={cardType}
       onMouseEnter={() => {}}
       onMouseLeave={() => {}}
       onTitleClick={() => {}}
-    />)
+    /></Router>)
     .toJSON();
 
   expect(tree).toMatchSnapshot();

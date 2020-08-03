@@ -5,7 +5,6 @@ import {PlaceType} from "../../consts.js";
 import ReviewsList from "../reviews-list/reviews-list.jsx";
 import NearbyPlaces from "../nearby-places/nearby-places.jsx";
 import Map from "../map/map.jsx";
-import offers from "../../mocks/offers.js";
 import Header from "../header/header.jsx";
 import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 import {connect} from "react-redux";
@@ -23,16 +22,20 @@ class Property extends PureComponent {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const {property, getReviews, getNearbyPlaces, reviews, nearbyPlaces} = this.props;
 
     if (property) {
-      if (reviews === null) {
+      if (reviews === null || prevProps.property && property.id !== prevProps.property.id) {
         getReviews(property.id);
-      } 
-      if (nearbyPlaces === null) {
+      }
+      if (nearbyPlaces === null || prevProps.property && property.id !== prevProps.property.id) {
         getNearbyPlaces(property.id);
       }
+    }
+
+    if (prevProps.property && property.id !== prevProps.property.id) {
+      window.scrollTo(0, 0);
     }
   }
 
@@ -133,7 +136,7 @@ class Property extends PureComponent {
                     authorizationStatus={authorizationStatus}
                     propertyId={property.id}
                   />
-                : ``}
+                  : ``}
               </div>
             </div>
             <Map
@@ -210,6 +213,8 @@ Property.propTypes = {
     }).isRequired,
   }),
   getReviews: PropTypes.func.isRequired,
+  onCardHover: PropTypes.func.isRequired,
+  getNearbyPlaces: PropTypes.func.isRequired,
   getOfferById: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape({
@@ -221,6 +226,37 @@ Property.propTypes = {
     comment: PropTypes.string.isRequired
   })),
   onFavoriteToggle: PropTypes.func.isRequired,
+  nearbyPlaces: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    isPremium: PropTypes.bool.isRequired,
+    price: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.oneOf([PlaceType.APARTMENT, PlaceType.ROOM, PlaceType.HOUSE, PlaceType.HOTEL]).isRequired,
+    rating: PropTypes.number.isRequired,
+    images: PropTypes.arrayOf(PropTypes.string).isRequired,
+    insideItems: PropTypes.arrayOf(PropTypes.string).isRequired,
+    bedrooms: PropTypes.number.isRequired,
+    guests: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    host: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      avatar: PropTypes.string.isRequired,
+      isPro: PropTypes.bool.isRequired,
+      id: PropTypes.number.isRequired,
+    }).isRequired,
+    location: PropTypes.shape({
+      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+      zoom: PropTypes.number.isRequired,
+    }).isRequired,
+    reviews: PropTypes.array,
+    city: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+      zoom: PropTypes.number.isRequired,
+    }).isRequired,
+  }).isRequired),
+  routerProps: PropTypes.shape,
 };
 
 export {Property};

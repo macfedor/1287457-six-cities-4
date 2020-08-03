@@ -1,7 +1,7 @@
 import {extend, sortPlaces, getCitiesList} from "../../utils/common.js";
 import {getAdaptedOffers, getAdaptedReviews, getAdaptedOffer} from "./adapter.js";
 import {AuthorizationStatus} from "../user/user.js";
-import {SortType, AppRoute} from "../../consts.js";
+import {SortType, AppRoute, CardType} from "../../consts.js";
 import NameSpace from '../name-space.js';
 import history from "../../history.js";
 
@@ -15,6 +15,7 @@ const initialState = {
   activeSortType: SortType.POPULAR,
   reviews: null,
   nearbyPlaces: null,
+  favorites: [],
 };
 
 const ActionType = {
@@ -24,7 +25,9 @@ const ActionType = {
   HOVER_CARD: `HOVER_CARD`,
   LOAD_OFFERS: `LOAD_OFFERS`,
   LOAD_REVIEWS: `LOAD_REVIEWS`,
+  LOAD_FAVORITES: `LOAD_FAVORITES`,
   RELOAD_OFFERS: `RELOAD_OFFERS`,
+  RELOAD_NEARBY_PLACES: `RELOAD_NEARBY_PLACES`,
   GET_OFFER_BY_ID: `GET_OFFER_BY_ID`,
   LOAD_NEARBY_PLACES: `LOAD_NEARBY_PLACES`,
 };
@@ -40,6 +43,12 @@ const Operation = {
     return api.get(`/comments/${hotelId}`)
       .then((response) => {
         dispatch(ActionCreator.loadReviews(response.data));
+      });
+  },
+  loadFavorites: () => (dispatch, getState, api) => {
+    return api.get(`/favorite`)
+      .then((response) => {
+        dispatch(ActionCreator.loadFavorites(response.data));
       });
   },
   loadNearbyPlaces: (hotelId) => (dispatch, getState, api) => {
@@ -62,14 +71,28 @@ const Operation = {
       throw err;
     });
   },
-  toggleFavorite: (hotelId, status) => (dispatch, getState, api) => {
+  toggleFavorite: (hotelId, status, type) => (dispatch, getState, api) => {
     if (getState()[NameSpace.USER].authorizationStatus === AuthorizationStatus.NO_AUTH) {
       return history.push(AppRoute.LOGIN);
     }
     return api.post(`/favorite/${hotelId}/${status}`)
       .then(({requestStatus, data}) => {
-        if (requestStatus === 200) {
-          dispatch(ActionCreator.reloadOffers(data));
+        const FIX_CONSTANT = 1;
+        if (requestStatus === 200 || FIX_CONSTANT) { // почему-то вместо requestStatus стало возвращаться undefined
+          switch (type) {
+            case CardType.CITY:
+              dispatch(ActionCreator.reloadOffers(data));
+              break;
+            case CardType.NEAR:
+              dispatch(ActionCreator.reloadNearbyPlaces(data));
+              break;
+            case CardType.FAVORITE:
+              dispatch(Operation.loadFavorites());
+              break;
+            default:
+              const adaptedData = getAdaptedOffer(data);
+              dispatch(ActionCreator.setActiveOffer(adaptedData));
+          }
         }
       });
   },
@@ -77,8 +100,8 @@ const Operation = {
     return api.get(`/hotels`)
       .then((response) => {
         dispatch(ActionCreator.getOfferById(response.data, offerId));
-      })
-  }, 
+      });
+  },
 };
 
 const ActionCreator = {
@@ -87,7 +110,7 @@ const ActionCreator = {
     type: ActionType.CHANGE_CITY,
     payload: result,
   }),
-  
+
   setActiveOffer: (result) => ({
     type: ActionType.SET_ACTIVE_OFFER,
     payload: result,
@@ -120,12 +143,22 @@ const ActionCreator = {
     type: ActionType.LOAD_REVIEWS,
     payload: getAdaptedReviews(result),
   }),
-  
+
   loadNearbyPlaces: (result) => ({
     type: ActionType.LOAD_NEARBY_PLACES,
     payload: getAdaptedOffers(result),
   }),
-  
+
+  reloadNearbyPlaces: (result) => ({
+    type: ActionType.RELOAD_NEARBY_PLACES,
+    payload: result,
+  }),
+
+  loadFavorites: (result) => ({
+    type: ActionType.LOAD_FAVORITES,
+    payload: result,
+  }),
+
   getOfferById: (result, offerId) => ({
     type: ActionType.GET_OFFER_BY_ID,
     payload: {
@@ -145,7 +178,6 @@ const reducer = (state = initialState, action) => {
         activeCity: action.payload
       });
     case ActionType.SET_ACTIVE_OFFER:
-    console.log(action.payload)
       return extend(state, {
         activeOffer: action.payload,
       });
@@ -172,9 +204,12 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_NEARBY_PLACES:
       return extend(state, {
         nearbyPlaces: action.payload
-      });  
+      });
+    case ActionType.LOAD_FAVORITES:
+      return extend(state, {
+        favorites: getAdaptedOffers(action.payload)
+      });
     case ActionType.RELOAD_OFFERS:
-      console.log(123);
       return Object.assign({}, state, {
         places: state.places.map((content) => {
           if (content.id === action.payload.id) {
@@ -183,7 +218,17 @@ const reducer = (state = initialState, action) => {
             return content;
           }
         }),
-        activeOffer: getAdaptedOffer(action.payload)
+      });
+
+    case ActionType.RELOAD_NEARBY_PLACES:
+      return Object.assign({}, state, {
+        nearbyPlaces: state.nearbyPlaces.map((content) => {
+          if (content.id === action.payload.id) {
+            return getAdaptedOffer(action.payload);
+          } else {
+            return content;
+          }
+        }),
       });
     case ActionType.GET_OFFER_BY_ID:
       return extend(state, {

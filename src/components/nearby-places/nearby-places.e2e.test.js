@@ -6,6 +6,8 @@ import {maxNearbyOffers} from "../../consts.js";
 import {Provider} from "react-redux";
 import {createStore} from "redux";
 import reducer from "../../reducer/reducer";
+import {Router} from "react-router-dom";
+import history from "../../history.js";
 
 Enzyme.configure({
   adapter: new Adapter(),
@@ -161,10 +163,10 @@ const store = createStore(
 it(`Should be max "maxNearbyOffers" places`, () => {
   const onTitleClick = () => {};
   const nearbyPlaces = mount(
-      <Provider store={store}><NearbyPlaces
+      <Router history={history} ><Provider store={store}><NearbyPlaces
         places={mockOffers}
         onTitleClick={onTitleClick}
-      /></Provider>
+      /></Provider></Router>
   );
 
   const cards = nearbyPlaces.find(`.near-places__card`);

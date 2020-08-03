@@ -91,7 +91,7 @@ exports[`Should CardsList render correctly 1`] = `
         className="place-card__name"
       >
         <a
-          href="#"
+          href="/offer/1"
           onClick={[Function]}
         >
           First
@@ -191,7 +191,7 @@ exports[`Should CardsList render correctly 1`] = `
         className="place-card__name"
       >
         <a
-          href="#"
+          href="/offer/2"
           onClick={[Function]}
         >
           Secont

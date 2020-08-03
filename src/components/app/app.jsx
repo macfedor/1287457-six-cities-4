@@ -4,6 +4,7 @@ import {Switch, Route, Router} from "react-router-dom";
 import Main from "../main/main.jsx";
 import Property from "../property/property.jsx";
 import SignIn from "../sign-in/sign-in.jsx";
+import Favorites from "../favorites/favorites.jsx";
 import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer/data/data.js";
 import {getActiveOffer, getStep} from "../../reducer/data/selectors.js";
@@ -14,25 +15,23 @@ import {Operation as UserOperation} from "../../reducer/user/user.js";
 
 class App extends PureComponent {
 
-  _renderScreen() {
-    const {onTitleClick, onCityClick, onCardHover, authorizationStatus} = this.props;
-    return <Main
-      onCityClick={onCityClick}
-      onCardHover={onCardHover}
-      authorizationStatus={authorizationStatus}
-    />;
-  }
-
   render() {
-    const {login, activeOffer, onCardHover} = this.props;
+    const {login, activeOffer, onCardHover, onCityClick, authorizationStatus} = this.props;
     return (
       <Router history={history}>
         <Switch>
           <Route exact path={AppRoute.ROOT}>
-            {this._renderScreen()}
+            <Main
+              onCityClick={onCityClick}
+              onCardHover={onCardHover}
+              authorizationStatus={authorizationStatus}
+            />
           </Route>
           <Route exact path={AppRoute.LOGIN}>
             <SignIn onSubmit={login}/>
+          </Route>
+          <Route exact path={AppRoute.FAVORITES}>
+            <Favorites />
           </Route>
           <Route exact path={AppRoute.OFFER}
             render={(props) => (

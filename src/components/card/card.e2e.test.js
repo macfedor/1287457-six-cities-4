@@ -54,11 +54,10 @@ it(`Should place's title be pressed`, () => {
       />
   );
 
-  const cardTitle = card.find(`.place-card__name a`);
+  const cardTitle = card.find(`.place-card__name Link`);
   cardTitle.simulate(`click`, {activeCard: mock});
-
   expect(onTitleClick).toHaveBeenCalledTimes(1);
-  expect(onTitleClick.mock.calls[0][0].activeCard).toMatchObject(mock);
+  expect(onTitleClick.mock.calls[0][0]).toMatchObject(mock);
 });
 
 it(`Should card be hovered`, () => {
