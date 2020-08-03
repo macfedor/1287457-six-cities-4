@@ -50,4 +50,17 @@ export const sortPlaces = (array, sortType) => {
   }
 };
 
+export const sortOffersByCity = (offers) => {
+  const citiesOffers = {};
+  offers.forEach((offer) => {
+    const cityName = offer.city.name;
+    if (!citiesOffers[cityName]) {
+      citiesOffers[cityName] = [];
+    }
+    citiesOffers[cityName].push(offer);
+  });
+
+  return citiesOffers;
+};
+
 export const getCitiesList = (places) => Array.from(new Set(places.map((item) => item.city.name)));

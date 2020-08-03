@@ -1,7 +1,7 @@
 import {extend, sortPlaces, getCitiesList} from "../../utils/common.js";
 import {getAdaptedOffers, getAdaptedReviews, getAdaptedOffer} from "./adapter.js";
 import {AuthorizationStatus} from "../user/user.js";
-import {SortType, AppRoute} from "../../consts.js";
+import {SortType, AppRoute, CardType} from "../../consts.js";
 import NameSpace from '../name-space.js';
 import history from "../../history.js";
 
@@ -13,19 +13,23 @@ const initialState = {
   cities: [],
   places: [],
   activeSortType: SortType.POPULAR,
-  reviews: [],
+  reviews: null,
+  nearbyPlaces: null,
+  favorites: [],
 };
 
 const ActionType = {
   CHANGE_CITY: `CHANGE_CITY`,
-  SHOW_CARD: `SHOW_CARD`,
   SORTING: `SORTING`,
+  SET_ACTIVE_OFFER: `SET_ACTIVE_OFFER`,
   HOVER_CARD: `HOVER_CARD`,
   LOAD_OFFERS: `LOAD_OFFERS`,
-  SHOW_MAIN: `SHOW_MAIN`,
-  SHOW_SIGN_IN: `SHOW_SIGN_IN`,
   LOAD_REVIEWS: `LOAD_REVIEWS`,
+  LOAD_FAVORITES: `LOAD_FAVORITES`,
   RELOAD_OFFERS: `RELOAD_OFFERS`,
+  RELOAD_NEARBY_PLACES: `RELOAD_NEARBY_PLACES`,
+  GET_OFFER_BY_ID: `GET_OFFER_BY_ID`,
+  LOAD_NEARBY_PLACES: `LOAD_NEARBY_PLACES`,
 };
 
 const Operation = {
@@ -39,6 +43,18 @@ const Operation = {
     return api.get(`/comments/${hotelId}`)
       .then((response) => {
         dispatch(ActionCreator.loadReviews(response.data));
+      });
+  },
+  loadFavorites: () => (dispatch, getState, api) => {
+    return api.get(`/favorite`)
+      .then((response) => {
+        dispatch(ActionCreator.loadFavorites(response.data));
+      });
+  },
+  loadNearbyPlaces: (hotelId) => (dispatch, getState, api) => {
+    return api.get(`/hotels/${hotelId}/nearby/`)
+      .then((response) => {
+        dispatch(ActionCreator.loadNearbyPlaces(response.data));
       });
   },
   postReview: (hotelId, reviewRating, reviewComment, onSuccess, onError) => (dispatch, getState, api) => {
@@ -55,37 +71,48 @@ const Operation = {
       throw err;
     });
   },
-  toggleFavorite: (hotelId, status) => (dispatch, getState, api) => {
+  toggleFavorite: (hotelId, status, type) => (dispatch, getState, api) => {
     if (getState()[NameSpace.USER].authorizationStatus === AuthorizationStatus.NO_AUTH) {
       return history.push(AppRoute.LOGIN);
     }
     return api.post(`/favorite/${hotelId}/${status}`)
       .then(({requestStatus, data}) => {
-        if (requestStatus === 200) {
-          dispatch(ActionCreator.reloadOffers(data));
+        const FIX_CONSTANT = 1;
+        if (requestStatus === 200 || FIX_CONSTANT) { // почему-то вместо requestStatus стало возвращаться undefined
+          switch (type) {
+            case CardType.CITY:
+              dispatch(ActionCreator.reloadOffers(data));
+              break;
+            case CardType.NEAR:
+              dispatch(ActionCreator.reloadNearbyPlaces(data));
+              break;
+            case CardType.FAVORITE:
+              dispatch(Operation.loadFavorites());
+              break;
+            default:
+              const adaptedData = getAdaptedOffer(data);
+              dispatch(ActionCreator.setActiveOffer(adaptedData));
+          }
         }
+      });
+  },
+  getOfferById: (offerId) => (dispatch, getState, api) => {
+    return api.get(`/hotels`)
+      .then((response) => {
+        dispatch(ActionCreator.getOfferById(response.data, offerId));
       });
   },
 };
 
 const ActionCreator = {
-  showCard: (result) => ({
-    type: ActionType.SHOW_CARD,
-    payload: {
-      step: `property`,
-      activeOffer: result
-    }
-  }),
-
-  showMain: () => ({
-    type: ActionType.SHOW_MAIN,
-    payload: {
-      step: `main`
-    }
-  }),
 
   changeCity: (result) => ({
     type: ActionType.CHANGE_CITY,
+    payload: result,
+  }),
+
+  setActiveOffer: (result) => ({
+    type: ActionType.SET_ACTIVE_OFFER,
     payload: result,
   }),
 
@@ -117,6 +144,28 @@ const ActionCreator = {
     payload: getAdaptedReviews(result),
   }),
 
+  loadNearbyPlaces: (result) => ({
+    type: ActionType.LOAD_NEARBY_PLACES,
+    payload: getAdaptedOffers(result),
+  }),
+
+  reloadNearbyPlaces: (result) => ({
+    type: ActionType.RELOAD_NEARBY_PLACES,
+    payload: result,
+  }),
+
+  loadFavorites: (result) => ({
+    type: ActionType.LOAD_FAVORITES,
+    payload: result,
+  }),
+
+  getOfferById: (result, offerId) => ({
+    type: ActionType.GET_OFFER_BY_ID,
+    payload: {
+      places: result,
+      currentId: offerId,
+    },
+  }),
 
 };
 
@@ -128,18 +177,9 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         activeCity: action.payload
       });
-    case ActionType.SHOW_CARD:
+    case ActionType.SET_ACTIVE_OFFER:
       return extend(state, {
-        step: action.payload.step,
-        activeOffer: action.payload.activeOffer,
-      });
-    case ActionType.SHOW_SIGN_IN:
-      return extend(state, {
-        step: action.payload.step,
-      });
-    case ActionType.SHOW_MAIN:
-      return extend(state, {
-        step: action.payload.step,
+        activeOffer: action.payload,
       });
     case ActionType.SORTING:
       return extend(state, {
@@ -148,7 +188,7 @@ const reducer = (state = initialState, action) => {
       });
     case ActionType.HOVER_CARD:
       return extend(state, {
-        hoveredOffer: action.payload
+        activeOffer: action.payload
       });
     case ActionType.LOAD_OFFERS:
       defaultSortedOffers = action.payload.places;
@@ -161,6 +201,14 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         reviews: action.payload
       });
+    case ActionType.LOAD_NEARBY_PLACES:
+      return extend(state, {
+        nearbyPlaces: action.payload
+      });
+    case ActionType.LOAD_FAVORITES:
+      return extend(state, {
+        favorites: getAdaptedOffers(action.payload)
+      });
     case ActionType.RELOAD_OFFERS:
       return Object.assign({}, state, {
         places: state.places.map((content) => {
@@ -170,7 +218,21 @@ const reducer = (state = initialState, action) => {
             return content;
           }
         }),
-        activeOffer: getAdaptedOffer(action.payload)
+      });
+
+    case ActionType.RELOAD_NEARBY_PLACES:
+      return Object.assign({}, state, {
+        nearbyPlaces: state.nearbyPlaces.map((content) => {
+          if (content.id === action.payload.id) {
+            return getAdaptedOffer(action.payload);
+          } else {
+            return content;
+          }
+        }),
+      });
+    case ActionType.GET_OFFER_BY_ID:
+      return extend(state, {
+        activeOffer: getAdaptedOffer(action.payload.places.find((place) => place.id === Number(action.payload.currentId)))
       });
     default:
       return state;

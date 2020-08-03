@@ -31,7 +31,7 @@ ReviewsList.propTypes = {
     rating: PropTypes.number.isRequired,
     date: PropTypes.string.isRequired,
     comment: PropTypes.string.isRequired,
-  })).isRequired,
+  })),
   authorizationStatus: PropTypes.string.isRequired,
   propertyId: PropTypes.number.isRequired,
 };

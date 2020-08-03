@@ -4,6 +4,7 @@ import {Switch, Route, Router} from "react-router-dom";
 import Main from "../main/main.jsx";
 import Property from "../property/property.jsx";
 import SignIn from "../sign-in/sign-in.jsx";
+import Favorites from "../favorites/favorites.jsx";
 import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer/data/data.js";
 import {getActiveOffer, getStep} from "../../reducer/data/selectors.js";
@@ -14,41 +15,33 @@ import {Operation as UserOperation} from "../../reducer/user/user.js";
 
 class App extends PureComponent {
 
-  _renderScreen() {
-    const {step, activeOffer, onTitleClick, onCityClick, onCardHover, authorizationStatus} = this.props;
-
-    if (step === `main`) {
-      return <Main
-        onTitleClick={onTitleClick}
-        onCityClick={onCityClick}
-        onCardHover={onCardHover}
-        authorizationStatus={authorizationStatus}
-      />;
-    }
-
-    if (step === `property`) {
-      return <Property
-        property={activeOffer}
-        onTitleClick={onTitleClick}
-      />;
-    }
-
-    return null;
-  }
-
   render() {
-    const {login} = this.props;
-
+    const {login, activeOffer, onCardHover, onCityClick, authorizationStatus} = this.props;
     return (
       <Router history={history}>
         <Switch>
           <Route exact path={AppRoute.ROOT}>
-            {this._renderScreen()}
+            <Main
+              onCityClick={onCityClick}
+              onCardHover={onCardHover}
+              authorizationStatus={authorizationStatus}
+            />
           </Route>
           <Route exact path={AppRoute.LOGIN}>
             <SignIn onSubmit={login}/>
           </Route>
-
+          <Route exact path={AppRoute.FAVORITES}>
+            <Favorites />
+          </Route>
+          <Route exact path={AppRoute.OFFER}
+            render={(props) => (
+              <Property
+                routerProps={props}
+                property={activeOffer}
+                onCardHover={onCardHover}
+              />
+            )}
+          />
         </Switch>
       </Router>
     );
@@ -62,9 +55,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onTitleClick(result) {
-    dispatch(ActionCreator.showCard(result));
-  },
   onCityClick(evt) {
     dispatch(ActionCreator.changeCity(evt.target.innerText));
   },
@@ -108,7 +98,6 @@ App.propTypes = {
       zoom: PropTypes.number.isRequired,
     }).isRequired,
   }),
-  onTitleClick: PropTypes.func.isRequired,
   onCityClick: PropTypes.func,
   onCardHover: PropTypes.func,
   authorizationStatus: PropTypes.string.isRequired,

@@ -5,23 +5,49 @@ import {PlaceType} from "../../consts.js";
 import ReviewsList from "../reviews-list/reviews-list.jsx";
 import NearbyPlaces from "../nearby-places/nearby-places.jsx";
 import Map from "../map/map.jsx";
-import offers from "../../mocks/offers.js";
 import Header from "../header/header.jsx";
 import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 import {connect} from "react-redux";
 import {Operation as DataOperation} from "../../reducer/data/data.js";
-import {getReviewsList} from "../../reducer/data/selectors.js";
+import {getReviewsList, getActiveOffer, getNearbyPlacesList} from "../../reducer/data/selectors.js";
 
 class Property extends PureComponent {
+
   componentDidMount() {
-    const {property, getReviews} = this.props;
-    getReviews(property.id);
+    const {property, getReviews, getNearbyPlaces} = this.props;
+
+    if (property) {
+      getReviews(property.id);
+      getNearbyPlaces(property.id);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const {property, getReviews, getNearbyPlaces, reviews, nearbyPlaces} = this.props;
+
+    if (property) {
+      if (reviews === null || prevProps.property && property.id !== prevProps.property.id) {
+        getReviews(property.id);
+      }
+      if (nearbyPlaces === null || prevProps.property && property.id !== prevProps.property.id) {
+        getNearbyPlaces(property.id);
+      }
+    }
+
+    if (prevProps.property && property.id !== prevProps.property.id) {
+      window.scrollTo(0, 0);
+    }
   }
 
   render() {
     const mapPrefix = `property`;
-    const {property, onTitleClick, authorizationStatus, reviews, onFavoriteToggle} = this.props;
-    const nearbyOffers = offers.filter((item) => item.id !== property.id && item.city === property.city);
+    const {property, authorizationStatus, reviews, onFavoriteToggle, getOfferById, nearbyPlaces, onCardHover} = this.props;
+    if (!property && this.props.routerProps.match.params.id) {
+      getOfferById(this.props.routerProps.match.params.id);
+    }
+    if (!property) {
+      return null;
+    }
 
     return (
       <div className="page">
@@ -94,7 +120,7 @@ class Property extends PureComponent {
                   <h2 className="property__host-title">Meet the host</h2>
                   <div className="property__host-user user">
                     <div className={property.host.isPro ? `property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper` : `property__avatar-wrapper user__avatar-wrapper`}>
-                      <img className="property__avatar user__avatar" src={property.host.avatar} width="74" height="74" alt="Host avatar"/>
+                      <img className="property__avatar user__avatar" src={`/${property.host.avatar}`} width="74" height="74" alt="Host avatar"/>
                     </div>
                     <span className="property__user-name">
                       {property.host.name}
@@ -104,24 +130,26 @@ class Property extends PureComponent {
                     <p className="property__text">{property.description}</p>
                   </div>
                 </div>
-                <ReviewsList
-                  reviews={reviews}
-                  authorizationStatus={authorizationStatus}
-                  propertyId={property.id}
-                />
+                {reviews !== null ?
+                  <ReviewsList
+                    reviews={reviews}
+                    authorizationStatus={authorizationStatus}
+                    propertyId={property.id}
+                  />
+                  : ``}
               </div>
             </div>
             <Map
-              places={nearbyOffers}
+              places={nearbyPlaces}
               prefix={mapPrefix}
-              activePlace={{coordinates: property.location.coordinates, zoom: property.location.zoom}}
+              activePlace={property}
             />
           </section>
-          {nearbyOffers.length ?
+          {nearbyPlaces !== null ?
             <div className="container">
               <NearbyPlaces
-                places={nearbyOffers}
-                onTitleClick={onTitleClick}
+                places={nearbyPlaces}
+                onCardHover={onCardHover}
               />
             </div>
             : ``}
@@ -133,16 +161,24 @@ class Property extends PureComponent {
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
+  property: getActiveOffer(state),
   reviews: getReviewsList(state),
+  nearbyPlaces: getNearbyPlacesList(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getReviews(hotelId) {
     dispatch(DataOperation.loadReviews(hotelId));
   },
+  getNearbyPlaces(hotelId) {
+    dispatch(DataOperation.loadNearbyPlaces(hotelId));
+  },
   onFavoriteToggle(id, status) {
     dispatch(DataOperation.toggleFavorite(id, status));
   },
+  getOfferById(offerId) {
+    dispatch(DataOperation.getOfferById(offerId));
+  }
 });
 
 Property.propTypes = {
@@ -175,9 +211,11 @@ Property.propTypes = {
       coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
       zoom: PropTypes.number.isRequired,
     }).isRequired,
-  }).isRequired,
-  onTitleClick: PropTypes.func.isRequired,
+  }),
   getReviews: PropTypes.func.isRequired,
+  onCardHover: PropTypes.func.isRequired,
+  getNearbyPlaces: PropTypes.func.isRequired,
+  getOfferById: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape({
     avatar: PropTypes.string.isRequired,
@@ -188,6 +226,37 @@ Property.propTypes = {
     comment: PropTypes.string.isRequired
   })),
   onFavoriteToggle: PropTypes.func.isRequired,
+  nearbyPlaces: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    isPremium: PropTypes.bool.isRequired,
+    price: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.oneOf([PlaceType.APARTMENT, PlaceType.ROOM, PlaceType.HOUSE, PlaceType.HOTEL]).isRequired,
+    rating: PropTypes.number.isRequired,
+    images: PropTypes.arrayOf(PropTypes.string).isRequired,
+    insideItems: PropTypes.arrayOf(PropTypes.string).isRequired,
+    bedrooms: PropTypes.number.isRequired,
+    guests: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    host: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      avatar: PropTypes.string.isRequired,
+      isPro: PropTypes.bool.isRequired,
+      id: PropTypes.number.isRequired,
+    }).isRequired,
+    location: PropTypes.shape({
+      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+      zoom: PropTypes.number.isRequired,
+    }).isRequired,
+    reviews: PropTypes.array,
+    city: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+      zoom: PropTypes.number.isRequired,
+    }).isRequired,
+  }).isRequired),
+  routerProps: PropTypes.shape,
 };
 
 export {Property};

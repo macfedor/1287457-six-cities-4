@@ -88,7 +88,7 @@ exports[`Should Card render correctly 1`] = `
       className="place-card__name"
     >
       <a
-        href="#"
+        href="/offer/1"
         onClick={[Function]}
       >
         Secont

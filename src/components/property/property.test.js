@@ -68,7 +68,7 @@ const store = mockStore({
     activeOffer: testData,
     hoveredOffer: null,
     cities: [],
-    places: [],
+    nearbyPlaces: null,
     activeSortType: `popular`,
   },
   USER: {
@@ -84,8 +84,10 @@ it(`Should Property render correctly`, () => {
           <Provider store={store}><Property
             property={testData}
             reviews={mockReviews}
+            nearbyPlaces={null}
             onTitleClick={() => {}}
             getReviews={() => {}}
+            getNearbyPlaces={() => {}}
           /></Provider>
         </Router>
     )

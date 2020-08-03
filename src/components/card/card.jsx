@@ -1,9 +1,10 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {capitalize, formatRating} from "../../utils/common.js";
-import {PlaceType, CardClassName, ImageWrapperClassName} from "../../consts.js";
-import {Operation} from "../../reducer/data/data.js";
+import {PlaceType, CardClassName, ImageWrapperClassName, AppRoute} from "../../consts.js";
+import {Operation, ActionCreator} from "../../reducer/data/data.js";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom";
 
 class Card extends PureComponent {
 
@@ -30,7 +31,7 @@ class Card extends PureComponent {
               <span className="place-card__price-text">&#47;&nbsp;night</span>
             </div>
             <button onClick={() => {
-              onFavoriteToggle(card.id, Number(!card.isFavorite));
+              onFavoriteToggle(card.id, Number(!card.isFavorite), cardType);
             }} className={`${card.isFavorite ? `place-card__bookmark-button--active` : ``} place-card__bookmark-button button`} type="button">
               <svg className="place-card__bookmark-icon" width="18" height="19">
                 <use xlinkHref="#icon-bookmark"></use>
@@ -45,7 +46,9 @@ class Card extends PureComponent {
             </div>
           </div>
           <h2 className="place-card__name">
-            <a onClick={onTitleClick} href="#">{card.name}</a>
+            <Link to={`${AppRoute.OFFER_LINK}${card.id}`} onClick={ () => {
+              onTitleClick(card);
+            }} >{card.name}</Link>
           </h2>
           <p className="place-card__type">{placeTypeName}</p>
         </div>
@@ -55,8 +58,11 @@ class Card extends PureComponent {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  onFavoriteToggle(id, status) {
-    dispatch(Operation.toggleFavorite(id, status));
+  onFavoriteToggle(id, status, cardType) {
+    dispatch(Operation.toggleFavorite(id, status, cardType));
+  },
+  onTitleClick(offer) {
+    dispatch(ActionCreator.setActiveOffer(offer));
   },
 });
 
@@ -93,8 +99,8 @@ Card.propTypes = {
     }).isRequired,
   }).isRequired,
   cardType: PropTypes.string.isRequired,
-  onMouseEnter: PropTypes.func.isRequired,
-  onMouseLeave: PropTypes.func.isRequired,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
   onTitleClick: PropTypes.func.isRequired,
   onFavoriteToggle: PropTypes.func.isRequired,
 };

@@ -4,12 +4,12 @@ import {PlaceType} from "../../consts.js";
 import leaflet from "leaflet";
 
 const iconDefault = leaflet.icon({
-  iconUrl: `img/pin.svg`,
+  iconUrl: `/img/pin.svg`,
   iconSize: [27, 41],
 });
 
 const iconActive = leaflet.icon({
-  iconUrl: `img/pin-active.svg`,
+  iconUrl: `/img/pin-active.svg`,
   iconSize: [27, 41],
 });
 
@@ -32,18 +32,20 @@ class Map extends PureComponent {
   }
 
   _getMapCenter() {
-    return this.props.places[0] ? this.props.places[0].city.coordinates : this.props.activePlace.coordinates;
+    return this.props.activePlace ? this.props.activePlace.location.coordinates : this.props.places[0].city.coordinates;
   }
 
   _addPoints() {
     const markers = [];
-    this.props.places.forEach((place) => {
-      const marker = leaflet.marker(place.location.coordinates, {icon: iconDefault});
-      markers.push(marker);
-    });
+    if (this.props.places) {
+      this.props.places.forEach((place) => {
+        const marker = leaflet.marker(place.location.coordinates, {icon: iconDefault});
+        markers.push(marker);
+      });
+    }
 
     if (this.props.activePlace) {
-      const marker = leaflet.marker(this.props.activePlace.coordinates, {icon: iconActive});
+      const marker = leaflet.marker(this.props.activePlace.location.coordinates, {icon: iconActive});
       markers.push(marker);
     }
 
@@ -59,7 +61,7 @@ class Map extends PureComponent {
   _initMap() {
     this._map = leaflet.map(`map`, {
       center: this._getMapCenter(),
-      zoom: this.props.places[0] ? this.props.places[0].city.zoom : this.props.activePlace.zoom,
+      zoom: this.props.activePlace ? this.props.activePlace.location.zoom : this.props.places[0].city.zoom,
       zoomControl: MapConfig.ZOOM_CONTROL,
       marker: MapConfig.MARKER
     });
@@ -107,11 +109,37 @@ Map.propTypes = {
       coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
       zoom: PropTypes.number.isRequired,
     }).isRequired,
-  }).isRequired).isRequired,
+  }).isRequired),
   prefix: PropTypes.string.isRequired,
   activePlace: PropTypes.shape({
-    coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-    zoom: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    isPremium: PropTypes.bool.isRequired,
+    price: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.oneOf([PlaceType.APARTMENT, PlaceType.ROOM, PlaceType.HOUSE, PlaceType.HOTEL]).isRequired,
+    rating: PropTypes.number.isRequired,
+    images: PropTypes.arrayOf(PropTypes.string).isRequired,
+    insideItems: PropTypes.arrayOf(PropTypes.string).isRequired,
+    bedrooms: PropTypes.number.isRequired,
+    guests: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    host: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      avatar: PropTypes.string.isRequired,
+      isPro: PropTypes.bool.isRequired,
+      id: PropTypes.number.isRequired,
+    }).isRequired,
+    location: PropTypes.shape({
+      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+      zoom: PropTypes.number.isRequired,
+    }).isRequired,
+    reviews: PropTypes.array,
+    city: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+      zoom: PropTypes.number.isRequired,
+    }).isRequired,
   }),
 };
 

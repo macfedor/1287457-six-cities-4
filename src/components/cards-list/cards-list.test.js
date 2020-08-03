@@ -3,6 +3,8 @@ import renderer from "react-test-renderer";
 import CardsList from "./cards-list.jsx";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
+import {Router} from "react-router-dom";
+import history from "../../history.js";
 
 const mockStore = configureStore([]);
 
@@ -19,7 +21,7 @@ const mockActiveCity = mockCities[0];
 
 const mockOffers = [
   {
-    id: Math.random(),
+    id: 1,
     image: `img/apartment-01.jpg`,
     isPremium: false,
     isFavorite: false,
@@ -49,7 +51,7 @@ const mockOffers = [
     }
   },
   {
-    id: Math.random(),
+    id: 2,
     image: `img/apartment-01.jpg`,
     isPremium: false,
     isFavorite: false,
@@ -101,12 +103,12 @@ it(`Should CardsList render correctly`, () => {
   });
 
   const tree = renderer
-    .create(<Provider store={store}><CardsList
+    .create(<Router history={history} ><Provider store={store}><CardsList
       cards={mockOffers}
       onTitleClick={() => {}}
       cardsListClassName={cardsListClassName}
       cardType={cardType}
-    /></Provider>)
+    /></Provider></Router>)
     .toJSON();
 
   expect(tree).toMatchSnapshot();

@@ -1,6 +1,11 @@
 import React, {PureComponent, createRef} from "react";
 import PropTypes from "prop-types";
 import Header from "../header/header.jsx";
+import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
+import history from "../../history.js";
+import {AppRoute} from "../../consts.js";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
+import {connect} from "react-redux";
 
 class SignIn extends PureComponent {
   constructor(props) {
@@ -21,6 +26,14 @@ class SignIn extends PureComponent {
       email: this.emailRef.current.value,
       password: this.passwordRef.current.value,
     });
+  }
+
+  componentDidUpdate() {
+    if (this.props.authorizationStatus === AuthorizationStatus.AUTH) {
+      return history.push(AppRoute.ROOT);
+    }
+
+    return true;
   }
 
   render() {
@@ -57,8 +70,14 @@ class SignIn extends PureComponent {
   }
 }
 
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
+});
+
 SignIn.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
-export default SignIn;
+export {SignIn};
+export default connect(mapStateToProps)(SignIn);

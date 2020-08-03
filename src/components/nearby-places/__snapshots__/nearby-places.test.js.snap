@@ -14,8 +14,6 @@ exports[`Should NearbyPlaces render correctly 1`] = `
   >
     <article
       className="near-places__card place-card"
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
     >
       
       <div
@@ -99,7 +97,7 @@ exports[`Should NearbyPlaces render correctly 1`] = `
           className="place-card__name"
         >
           <a
-            href="#"
+            href="/offer/1"
             onClick={[Function]}
           >
             First
@@ -114,8 +112,6 @@ exports[`Should NearbyPlaces render correctly 1`] = `
     </article>
     <article
       className="near-places__card place-card"
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
     >
       
       <div
@@ -199,7 +195,7 @@ exports[`Should NearbyPlaces render correctly 1`] = `
           className="place-card__name"
         >
           <a
-            href="#"
+            href="/offer/2"
             onClick={[Function]}
           >
             Secont

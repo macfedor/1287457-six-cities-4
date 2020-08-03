@@ -1,20 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
-import CardsList from "../cards-list/cards-list.jsx";
+import Card from "../card/card.jsx";
 import {CardType, PlaceType, maxNearbyOffers} from "../../consts.js";
 
-const NearbyPlaces = ({places, onTitleClick}) => {
-  const cardsListClassName = `near-places__list`;
+const NearbyPlaces = ({places}) => {
   const offers = places.slice(0, maxNearbyOffers);
 
   return <section className="near-places places">
     <h2 className="near-places__title">Other places in the neighbourhood</h2>
-    <CardsList
-      cards={offers}
-      onTitleClick={onTitleClick}
-      cardsListClassName={cardsListClassName}
-      cardType={CardType.NEAR}
-    />
+    <div className="places__list near-places__list">
+      {offers.map((card) => (
+        <Card key={card.id}
+          card={card}
+          cardType={CardType.NEAR}
+        />
+      ))}
+    </div>
   </section>;
 };
 
@@ -49,7 +50,6 @@ NearbyPlaces.propTypes = {
       zoom: PropTypes.number.isRequired,
     }).isRequired,
   }).isRequired).isRequired,
-  onTitleClick: PropTypes.func.isRequired,
 };
 
 export default NearbyPlaces;
