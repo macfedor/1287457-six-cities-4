@@ -256,7 +256,7 @@ Property.propTypes = {
       zoom: PropTypes.number.isRequired,
     }).isRequired,
   }).isRequired),
-  routerProps: PropTypes.shape,
+  routerProps: PropTypes.object,
 };
 
 export {Property};

@@ -1,6 +1,6 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import {maxReviewLength, minReviewLength, WARNING_TIMEOUT} from "../../consts.js";
+import {MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH, WARNING_TIMEOUT} from "../../consts.js";
 import {Operation} from "../../reducer/data/data.js";
 import {connect} from "react-redux";
 
@@ -69,7 +69,7 @@ const withCommentForm = (Component) => {
     }
 
     componentDidUpdate() {
-      if (this.state.rating && (this.state.comment.length >= minReviewLength && this.state.comment.length <= maxReviewLength)) {
+      if (this.state.rating && (this.state.comment.length >= MIN_REVIEW_LENGTH && this.state.comment.length <= MAX_REVIEW_LENGTH)) {
         this.setState({activeSubmit: true});
       } else {
         this.setState({activeSubmit: false});

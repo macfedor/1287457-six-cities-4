@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Card from "../card/card.jsx";
-import {CardType, PlaceType, maxNearbyOffers} from "../../consts.js";
+import {CardType, PlaceType, MAX_NEARBY_OFFERS} from "../../consts.js";
 
 const NearbyPlaces = ({places}) => {
-  const offers = places.slice(0, maxNearbyOffers);
+  const offers = places.slice(0, MAX_NEARBY_OFFERS);
 
   return <section className="near-places places">
     <h2 className="near-places__title">Other places in the neighbourhood</h2>

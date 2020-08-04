@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {maxReviewLength, minReviewLength} from "../../consts.js";
+import {MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH} from "../../consts.js";
 
 const CommentForm = ({activeSubmit, onChangeRating, onChangeComment, onSubmit}) => {
   return <form className="reviews__form form" action="#" method="post" onSubmit={(evt) => {
@@ -44,10 +44,10 @@ const CommentForm = ({activeSubmit, onChangeRating, onChangeComment, onSubmit}) 
         </svg>
       </label>
     </div>
-    <textarea onChange={(evt) => onChangeComment(evt.target.value)} maxLength={maxReviewLength} minLength={minReviewLength} className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
+    <textarea onChange={(evt) => onChangeComment(evt.target.value)} maxLength={MAX_REVIEW_LENGTH} minLength={MIN_REVIEW_LENGTH} className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
     <div className="reviews__button-wrapper">
       <p className="reviews__help">
-        To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{minReviewLength} characters</b>.
+        To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{MIN_REVIEW_LENGTH} characters</b>.
       </p>
       <button className="reviews__submit form__submit button" type="submit" disabled={activeSubmit ? false : true}>Submit</button>
     </div>

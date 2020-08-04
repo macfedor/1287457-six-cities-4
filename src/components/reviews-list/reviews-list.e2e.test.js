@@ -2,7 +2,7 @@ import React from "react";
 import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import ReviewsList from "./reviews-list";
-import {maxReviews} from "../../consts.js";
+import {MAX_REVIEWS} from "../../consts.js";
 import {compareDates} from "../../utils/common.js";
 
 Enzyme.configure({
@@ -96,7 +96,7 @@ const mockReviews = [
   },
 ];
 
-it(`Should be max "maxReviews" reviews`, () => {
+it(`Should be max "MAX_REVIEWS" reviews`, () => {
 
   const reviewsList = mount(
       <ReviewsList
@@ -105,7 +105,7 @@ it(`Should be max "maxReviews" reviews`, () => {
   );
 
   const reviews = reviewsList.find(`.reviews__item`);
-  expect(reviews.length).toBeLessThanOrEqual(maxReviews);
+  expect(reviews.length).toBeLessThanOrEqual(MAX_REVIEWS);
 });
 
 it(`Should be correct number of reviews`, () => {
