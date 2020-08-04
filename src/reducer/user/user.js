@@ -21,8 +21,10 @@ const Operation = {
   checkAuth: () => (dispatch, getState, api) => {
     return api.get(`/login`)
       .then((response) => {
-        dispatch(ActionCreator.requiredAuthorization(AuthorizationStatus.AUTH));
-        dispatch(ActionCreator.setUserEmail(response.data.email));
+        if (response.status === 200) {
+          dispatch(ActionCreator.requiredAuthorization(AuthorizationStatus.AUTH));
+          dispatch(ActionCreator.setUserEmail(response.data.email));
+        }
       })
       .catch((err) => {
         throw err;

@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {maxCities} from "../../consts.js";
+import {MAX_CITIES} from "../../consts.js";
 
 
 const CitiesList = ({cities, activeCity, onCityClick}) => {
-  const formatedCities = cities.slice(0, maxCities);
+  const formatedCities = cities.slice(0, MAX_CITIES);
 
   return <section className="locations container">
     <ul className="locations__list tabs__list">

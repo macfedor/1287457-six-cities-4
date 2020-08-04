@@ -2,7 +2,7 @@ import React from "react";
 import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import NearbyPlaces from "./nearby-places";
-import {maxNearbyOffers} from "../../consts.js";
+import {MAX_NEARBY_OFFERS} from "../../consts.js";
 import {Provider} from "react-redux";
 import {createStore} from "redux";
 import reducer from "../../reducer/reducer";
@@ -160,7 +160,7 @@ const store = createStore(
     initialState
 );
 
-it(`Should be max "maxNearbyOffers" places`, () => {
+it(`Should be max "MAX_NEARBY_OFFERS" places`, () => {
   const onTitleClick = () => {};
   const nearbyPlaces = mount(
       <Router history={history} ><Provider store={store}><NearbyPlaces
@@ -170,5 +170,5 @@ it(`Should be max "maxNearbyOffers" places`, () => {
   );
 
   const cards = nearbyPlaces.find(`.near-places__card`);
-  expect(cards.length).toBeLessThanOrEqual(maxNearbyOffers);
+  expect(cards.length).toBeLessThanOrEqual(MAX_NEARBY_OFFERS);
 });

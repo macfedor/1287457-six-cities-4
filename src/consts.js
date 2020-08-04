@@ -30,17 +30,17 @@ export const ImageWrapperClassName = {
   [CardType.FAVORITE]: `favorites__image-wrapper`,
 };
 
-export const maxNearbyOffers = 3;
+export const MAX_NEARBY_OFFERS = 3;
 
-export const maxCities = 6;
+export const MAX_CITIES = 6;
 
-export const maxReviews = 10;
+export const MAX_REVIEWS = 10;
 
-export const maxReviewLength = 300;
+export const MAX_REVIEW_LENGTH = 300;
 
-export const minReviewLength = 50;
+export const MIN_REVIEW_LENGTH = 50;
 
-export const monthNames = [
+export const MONTH_NAMES = [
   `January`,
   `February`,
   `March`,

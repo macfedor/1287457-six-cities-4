@@ -2,7 +2,7 @@ import React from "react";
 import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import CitiesList from "./cities-list";
-import {maxCities} from "../../consts.js";
+import {MAX_CITIES} from "../../consts.js";
 
 Enzyme.configure({
   adapter: new Adapter(),
@@ -18,7 +18,7 @@ const mockCities = [
   `Omsk`,
 ];
 
-it(`Should be max "maxCities" cities`, () => {
+it(`Should be max "MAX_CITIES" cities`, () => {
 
   const citiesList = mount(
       <CitiesList
@@ -29,7 +29,7 @@ it(`Should be max "maxCities" cities`, () => {
   );
 
   const citiesElements = citiesList.find(`.locations__item`);
-  expect(citiesElements.length).toBeLessThanOrEqual(maxCities);
+  expect(citiesElements.length).toBeLessThanOrEqual(MAX_CITIES);
 });
 
 it(`Should be unique cities`, () => {

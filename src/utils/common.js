@@ -1,4 +1,4 @@
-import {monthNames, SortType} from "../consts.js";
+import {MONTH_NAMES, SortType} from "../consts.js";
 import {defaultSortedOffers} from "../reducer/data/data.js";
 
 const RATING_PITCH = 20;
@@ -13,7 +13,7 @@ export const formatRating = (rating) => String(Math.round(rating) * RATING_PITCH
 
 export const formatDate = (dateString) => {
   const date = new Date(dateString);
-  return monthNames[date.getMonth()] + ` ` + date.getFullYear();
+  return MONTH_NAMES[date.getMonth()] + ` ` + date.getFullYear();
 };
 
 export const formatDateShort = (dateString) => {
