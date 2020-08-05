@@ -1,5 +1,4 @@
-import React, {PureComponent} from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
 import Header from "../header/header";
 import FavoritesEmpty from "../favorites-empty/favorites-empty";
 import FavoritesList from "../favorites-list/favorites-list";
@@ -10,8 +9,15 @@ import {PlaceType, AppRoute} from "../../consts";
 import {getAuthorizationStatus} from "../../reducer/user/selectors";
 import {AuthorizationStatus} from "../../reducer/user/user";
 import history from "../../history";
+import {Offer} from "../../types";
 
-class Favorites extends PureComponent {
+interface Props {
+  loadFavorites: () => void;
+  authorizationStatus: string;
+  offers: Offer[];
+}
+
+class Favorites extends React.PureComponent<Props, {}> {
 
   componentDidMount() {
     const {loadFavorites} = this.props;
@@ -59,41 +65,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(DataOperation.loadFavorites());
   },
 });
-
-Favorites.propTypes = {
-  loadFavorites: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-  offers: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    isPremium: PropTypes.bool.isRequired,
-    price: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.oneOf([PlaceType.APARTMENT, PlaceType.ROOM, PlaceType.HOUSE, PlaceType.HOTEL]).isRequired,
-    rating: PropTypes.number.isRequired,
-    images: PropTypes.arrayOf(PropTypes.string).isRequired,
-    insideItems: PropTypes.arrayOf(PropTypes.string).isRequired,
-    bedrooms: PropTypes.number.isRequired,
-    guests: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    host: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      avatar: PropTypes.string.isRequired,
-      isPro: PropTypes.bool.isRequired,
-      id: PropTypes.number.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-      zoom: PropTypes.number.isRequired,
-    }).isRequired,
-    reviews: PropTypes.array,
-    city: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-      zoom: PropTypes.number.isRequired,
-    }).isRequired,
-  })),
-};
 
 export {Favorites};
 export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

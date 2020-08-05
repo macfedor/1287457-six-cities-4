@@ -1,10 +1,15 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 import {sortOffersByCity} from "../../utils/common";
 import Card from "../card/card";
 import {CardType, PlaceType} from "../../consts";
+import {Offer} from "../../types";
 
-const FavoritesList = ({offers}) => {
+interface Props {
+  offers: Offer[];
+}
+
+const FavoritesList: React.FunctionComponent<Props> = (props: Props) => {
+  const {offers} = props;
   const citiesOffers = sortOffersByCity(offers);
 
   return (
@@ -37,39 +42,6 @@ const FavoritesList = ({offers}) => {
       </div>
     </main>
   );
-};
-
-FavoritesList.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    isPremium: PropTypes.bool.isRequired,
-    price: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.oneOf([PlaceType.APARTMENT, PlaceType.ROOM, PlaceType.HOUSE, PlaceType.HOTEL]).isRequired,
-    rating: PropTypes.number.isRequired,
-    images: PropTypes.arrayOf(PropTypes.string).isRequired,
-    insideItems: PropTypes.arrayOf(PropTypes.string).isRequired,
-    bedrooms: PropTypes.number.isRequired,
-    guests: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    host: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      avatar: PropTypes.string.isRequired,
-      isPro: PropTypes.bool.isRequired,
-      id: PropTypes.number.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-      zoom: PropTypes.number.isRequired,
-    }).isRequired,
-    reviews: PropTypes.array,
-    city: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-      zoom: PropTypes.number.isRequired,
-    }).isRequired,
-  })),
 };
 
 export default FavoritesList;

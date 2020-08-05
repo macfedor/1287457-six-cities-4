@@ -1,7 +1,13 @@
-import React, {PureComponent} from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
 import {PlaceType} from "../../consts";
 import leaflet from "leaflet";
+import {Offer} from "../../types";
+
+interface Props {
+  places: Offer[];
+  prefix: string;
+  activePlace: Offer;
+}
 
 const iconDefault = leaflet.icon({
   iconUrl: `/img/pin.svg`,
@@ -18,7 +24,7 @@ const MapConfig = {
   MARKER: true
 };
 
-class Map extends PureComponent {
+class Map extends React.PureComponent<Props, {}> {
 
   componentDidMount() {
     this._initMap();
@@ -78,69 +84,5 @@ class Map extends PureComponent {
     );
   }
 }
-
-Map.propTypes = {
-  places: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    isPremium: PropTypes.bool.isRequired,
-    price: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.oneOf([PlaceType.APARTMENT, PlaceType.ROOM, PlaceType.HOUSE, PlaceType.HOTEL]).isRequired,
-    rating: PropTypes.number.isRequired,
-    images: PropTypes.arrayOf(PropTypes.string).isRequired,
-    insideItems: PropTypes.arrayOf(PropTypes.string).isRequired,
-    bedrooms: PropTypes.number.isRequired,
-    guests: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    host: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      avatar: PropTypes.string.isRequired,
-      isPro: PropTypes.bool.isRequired,
-      id: PropTypes.number.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-      zoom: PropTypes.number.isRequired,
-    }).isRequired,
-    reviews: PropTypes.array,
-    city: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-      zoom: PropTypes.number.isRequired,
-    }).isRequired,
-  }).isRequired),
-  prefix: PropTypes.string.isRequired,
-  activePlace: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    isPremium: PropTypes.bool.isRequired,
-    price: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.oneOf([PlaceType.APARTMENT, PlaceType.ROOM, PlaceType.HOUSE, PlaceType.HOTEL]).isRequired,
-    rating: PropTypes.number.isRequired,
-    images: PropTypes.arrayOf(PropTypes.string).isRequired,
-    insideItems: PropTypes.arrayOf(PropTypes.string).isRequired,
-    bedrooms: PropTypes.number.isRequired,
-    guests: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    host: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      avatar: PropTypes.string.isRequired,
-      isPro: PropTypes.bool.isRequired,
-      id: PropTypes.number.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-      zoom: PropTypes.number.isRequired,
-    }).isRequired,
-    reviews: PropTypes.array,
-    city: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-      zoom: PropTypes.number.isRequired,
-    }).isRequired,
-  }),
-};
 
 export default Map;

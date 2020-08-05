@@ -1,11 +1,32 @@
-import React, {PureComponent} from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
 import {MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH, WARNING_TIMEOUT} from "../../consts";
 import {Operation} from "../../reducer/data/data";
 import {connect} from "react-redux";
+import {Subtract} from 'utility-types';
+
+interface InjectedProps {
+  activeSubmit: boolean;
+  onChangeRating: () => void;
+  onChangeComment: () => void;
+  onSubmit: () => void;
+}
+
+interface Props {
+  postReview: () => void;
+  hotelId: number;
+}
+
+interface State {
+  rating: number;
+  comment: string;
+  activeSubmit: boolean;
+}
 
 const withCommentForm = (Component) => {
-  class CommentForm extends PureComponent {
+  type P = React.ComponentProps<typeof Component>;
+  type T = Props & Subtract<P, InjectedProps>;
+  
+  class CommentForm extends React.PureComponent<T, State> {
     constructor(props) {
       super(props);
 
@@ -99,11 +120,6 @@ const withCommentForm = (Component) => {
       dispatch(Operation.postReview(hotelId, comment, rating, onSuccess, onError));
     },
   });
-
-  CommentForm.propTypes = {
-    postReview: PropTypes.func.isRequired,
-    hotelId: PropTypes.number.isRequired,
-  };
 
   return connect(null, mapDispatchToProps)(CommentForm);
 };

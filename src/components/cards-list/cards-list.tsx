@@ -1,9 +1,16 @@
-import React, {PureComponent} from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
 import Card from "../card/card";
 import {PlaceType} from "../../consts";
+import {Offer} from "../../types";
 
-class CardsList extends PureComponent {
+interface Props {
+  cards: Offer[];
+  onCardHover: () => void;
+  cardsListClassName: string;
+  cardType: string;
+}
+
+class CardsList extends React.PureComponent<Props, {}> {
 
   render() {
     const {cards, onCardHover, cardsListClassName, cardType} = this.props;
@@ -21,41 +28,5 @@ class CardsList extends PureComponent {
     );
   }
 }
-
-CardsList.propTypes = {
-  cards: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    isPremium: PropTypes.bool.isRequired,
-    price: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.oneOf([PlaceType.APARTMENT, PlaceType.ROOM, PlaceType.HOUSE, PlaceType.HOTEL]).isRequired,
-    rating: PropTypes.number.isRequired,
-    images: PropTypes.arrayOf(PropTypes.string).isRequired,
-    insideItems: PropTypes.arrayOf(PropTypes.string).isRequired,
-    bedrooms: PropTypes.number.isRequired,
-    guests: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    host: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      avatar: PropTypes.string.isRequired,
-      isPro: PropTypes.bool.isRequired,
-      id: PropTypes.number.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-      zoom: PropTypes.number.isRequired,
-    }).isRequired,
-    reviews: PropTypes.array,
-    city: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-      zoom: PropTypes.number.isRequired,
-    }).isRequired,
-  })).isRequired,
-  onCardHover: PropTypes.func,
-  cardsListClassName: PropTypes.string.isRequired,
-  cardType: PropTypes.string.isRequired,
-};
 
 export default CardsList;

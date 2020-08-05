@@ -1,8 +1,15 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 import {MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH} from "../../consts";
 
-const CommentForm = ({activeSubmit, onChangeRating, onChangeComment, onSubmit}) => {
+interface Props {
+  activeSubmit: boolean;
+  onChangeRating: () => void;
+  onChangeComment: () => void;
+  onSubmit: () => void;
+}
+
+const CommentForm: React.FunctionComponent<Props> = (props: Props) => {
+  const {activeSubmit, onChangeRating, onChangeComment, onSubmit} = props;
   return <form className="reviews__form form" action="#" method="post" onSubmit={(evt) => {
     evt.preventDefault();
     onSubmit(evt);
@@ -52,13 +59,6 @@ const CommentForm = ({activeSubmit, onChangeRating, onChangeComment, onSubmit}) 
       <button className="reviews__submit form__submit button" type="submit" disabled={activeSubmit ? false : true}>Submit</button>
     </div>
   </form>;
-};
-
-CommentForm.propTypes = {
-  activeSubmit: PropTypes.bool.isRequired,
-  onChangeRating: PropTypes.func.isRequired,
-  onChangeComment: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
 };
 
 export default CommentForm;

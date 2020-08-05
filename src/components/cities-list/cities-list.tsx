@@ -1,9 +1,14 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 import {MAX_CITIES} from "../../consts";
 
+interface Props {
+  cities: string[];
+  activeCity: string;
+  onCityClick: () => void;
+}
 
-const CitiesList = ({cities, activeCity, onCityClick}) => {
+const CitiesList: React.FunctionComponent<Props> = (props: Props) => { 
+  const {cities, activeCity, onCityClick} = props;
   const formatedCities = cities.slice(0, MAX_CITIES);
 
   return <section className="locations container">
@@ -17,12 +22,6 @@ const CitiesList = ({cities, activeCity, onCityClick}) => {
       ))}
     </ul>
   </section>;
-};
-
-CitiesList.propTypes = {
-  cities: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  activeCity: PropTypes.string.isRequired,
-  onCityClick: PropTypes.func.isRequired,
 };
 
 export default CitiesList;

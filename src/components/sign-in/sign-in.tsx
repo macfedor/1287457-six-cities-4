@@ -1,5 +1,4 @@
-import React, {PureComponent, createRef} from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
 import Header from "../header/header";
 import {getAuthorizationStatus} from "../../reducer/user/selectors";
 import history from "../../history";
@@ -7,12 +6,17 @@ import {AppRoute} from "../../consts";
 import {AuthorizationStatus} from "../../reducer/user/user";
 import {connect} from "react-redux";
 
-class SignIn extends PureComponent {
+interface Props {
+  onSubmit: () => void;
+  authorizationStatus: string,
+}
+
+class SignIn extends React.PureComponent<Props, {}> {
   constructor(props) {
     super(props);
 
-    this.emailRef = createRef();
-    this.passwordRef = createRef();
+    this.emailRef = React.createRef();
+    this.passwordRef = React.createRef();
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -73,11 +77,6 @@ class SignIn extends PureComponent {
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
 });
-
-SignIn.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-};
 
 export {SignIn};
 export default connect(mapStateToProps)(SignIn);

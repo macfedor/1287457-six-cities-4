@@ -1,12 +1,17 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 import {getAuthorizationStatus, getUserEmail} from "../../reducer/user/selectors";
 import {AuthorizationStatus} from "../../reducer/user/user";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import {AppRoute} from "../../consts";
 
-const Header = ({authorizationStatus, userEmail}) => {
+interface Props {
+  authorizationStatus: strinig;
+  userEmail: strinig;
+}
+
+const Header: React.FunctionComponent<Props> = (props: Props) => {
+  const {authorizationStatus, userEmail} = props;
   return <header className="header">
     <div className="container">
       <div className="header__wrapper">
@@ -41,11 +46,6 @@ const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
   userEmail: getUserEmail(state),
 });
-
-Header.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-  userEmail: PropTypes.string.isRequired,
-};
 
 export {Header};
 export default connect(mapStateToProps)(Header);

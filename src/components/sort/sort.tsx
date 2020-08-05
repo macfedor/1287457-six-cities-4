@@ -1,11 +1,17 @@
-import React, {PureComponent} from "react";
+import * as React from "react";
 import {connect} from "react-redux";
-import PropTypes from "prop-types";
 import {SortType} from "../../consts";
 import {ActionCreator} from "../../reducer/data/data";
 import {getActiveSortType} from "../../reducer/data/selectors";
 
-class Sort extends PureComponent {
+interface Props {
+  activeSortType: string;
+  onSortItemClick: () => void;
+  isOpen: boolean;
+  onOpenChange: () => void;
+}
+
+class Sort extends React.PureComponent<Props, {}> {
   constructor(props) {
     super(props);
   }
@@ -55,13 +61,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(ActionCreator.changeSortType(result));
   },
 });
-
-Sort.propTypes = {
-  activeSortType: PropTypes.string.isRequired,
-  onSortItemClick: PropTypes.func.isRequired,
-  isOpen: PropTypes.bool.isRequired,
-  onOpenChange: PropTypes.func.isRequired,
-};
 
 export {Sort};
 export default connect(mapStateToProps, mapDispatchToProps)(Sort);

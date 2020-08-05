@@ -1,13 +1,27 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 import ResultsWrapped from "../results-wrapped/results-wrapped";
 import NoResults from "../no-results/no-results";
 import {PlaceType} from "../../consts";
 import {connect} from "react-redux";
 import {getActiveCity, getActiveOffer, getCityOffers, getCities} from "../../reducer/data/selectors";
 import Header from "../header/header";
+import {Offer} from "../../types";
 
-const Main = ({places, cities, activeCity, onCityClick, onCardHover, activeOffer}) => {
+interface Props {
+  cities: string[];
+  places: Offer[];
+  activeCity: string;
+  onCityClick: () => void;
+  onCardHover: () => void;
+  hoveredOffer: {
+    coordinates: number[],
+    zoom: number,
+  },
+  activeOffer: Offer;
+}
+
+const Main: React.FunctionComponent<Props> = (props: Props) => {
+  const {places, cities, activeCity, onCityClick, onCardHover, activeOffer} = props;
   return <div className="page page--gray page--main">
     <Header />
     {places.length ? <ResultsWrapped
@@ -28,77 +42,6 @@ const mapStateToProps = (state) => ({
   places: getCityOffers(state),
   activeOffer: getActiveOffer(state),
 });
-
-Main.propTypes = {
-  cities: PropTypes.arrayOf(PropTypes.string.isRequired),
-  places: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    isPremium: PropTypes.bool.isRequired,
-    price: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.oneOf([PlaceType.APARTMENT, PlaceType.ROOM, PlaceType.HOUSE, PlaceType.HOTEL]).isRequired,
-    rating: PropTypes.number.isRequired,
-    images: PropTypes.arrayOf(PropTypes.string).isRequired,
-    insideItems: PropTypes.arrayOf(PropTypes.string).isRequired,
-    bedrooms: PropTypes.number.isRequired,
-    guests: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    host: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      avatar: PropTypes.string.isRequired,
-      isPro: PropTypes.bool.isRequired,
-      id: PropTypes.number.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-      zoom: PropTypes.number.isRequired,
-    }).isRequired,
-    reviews: PropTypes.array,
-    city: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-      zoom: PropTypes.number.isRequired,
-    }).isRequired,
-  }).isRequired),
-  activeCity: PropTypes.string,
-  onCityClick: PropTypes.func.isRequired,
-  onCardHover: PropTypes.func.isRequired,
-  hoveredOffer: PropTypes.shape({
-    coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-    zoom: PropTypes.number.isRequired,
-  }),
-  activeOffer: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    isPremium: PropTypes.bool.isRequired,
-    price: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.oneOf([PlaceType.APARTMENT, PlaceType.ROOM, PlaceType.HOUSE, PlaceType.HOTEL]).isRequired,
-    rating: PropTypes.number.isRequired,
-    images: PropTypes.arrayOf(PropTypes.string).isRequired,
-    insideItems: PropTypes.arrayOf(PropTypes.string).isRequired,
-    bedrooms: PropTypes.number.isRequired,
-    guests: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    host: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      avatar: PropTypes.string.isRequired,
-      isPro: PropTypes.bool.isRequired,
-      id: PropTypes.number.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-      zoom: PropTypes.number.isRequired,
-    }).isRequired,
-    reviews: PropTypes.array,
-    city: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
-      zoom: PropTypes.number.isRequired,
-    }).isRequired,
-  })
-};
 
 export {Main};
 export default connect(mapStateToProps)(Main);
