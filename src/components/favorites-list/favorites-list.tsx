@@ -1,8 +1,8 @@
-import React from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
-import {sortOffersByCity} from "../../utils/common.js";
-import Card from "../card/card.jsx";
-import {CardType, PlaceType} from "../../consts.js";
+import {sortOffersByCity} from "../../utils/common";
+import Card from "../card/card";
+import {CardType, PlaceType} from "../../consts";
 
 const FavoritesList = ({offers}) => {
   const citiesOffers = sortOffersByCity(offers);

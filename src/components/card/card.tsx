@@ -1,8 +1,8 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import {capitalize, formatRating} from "../../utils/common.js";
-import {PlaceType, CardClassName, ImageWrapperClassName, AppRoute} from "../../consts.js";
-import {Operation, ActionCreator} from "../../reducer/data/data.js";
+import {capitalize, formatRating} from "../../utils/common";
+import {PlaceType, CardClassName, ImageWrapperClassName, AppRoute} from "../../consts";
+import {Operation, ActionCreator} from "../../reducer/data/data";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 

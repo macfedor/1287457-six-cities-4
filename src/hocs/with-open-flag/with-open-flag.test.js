@@ -1,6 +1,6 @@
-import React from "react";
+import * as React from "react";
 import renderer from "react-test-renderer";
-import withOpenFlag from "./with-open-flag.js";
+import withOpenFlag from "./with-open-flag";
 
 const MockComponent = () => <div />;
 const MockComponentWrapped = withOpenFlag(MockComponent);

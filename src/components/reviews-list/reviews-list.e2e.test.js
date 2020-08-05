@@ -1,9 +1,9 @@
-import React from "react";
+import * as React from "react";
 import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import ReviewsList from "./reviews-list";
-import {MAX_REVIEWS} from "../../consts.js";
-import {compareDates} from "../../utils/common.js";
+import {MAX_REVIEWS} from "../../consts";
+import {compareDates} from "../../utils/common";
 
 Enzyme.configure({
   adapter: new Adapter(),

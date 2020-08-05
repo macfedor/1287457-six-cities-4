@@ -1,9 +1,9 @@
-import {extend, sortPlaces, getCitiesList} from "../../utils/common.js";
-import {getAdaptedOffers, getAdaptedReviews, getAdaptedOffer} from "./adapter.js";
-import {AuthorizationStatus} from "../user/user.js";
-import {SortType, AppRoute, CardType} from "../../consts.js";
+import {extend, sortPlaces, getCitiesList} from "../../utils/common";
+import {getAdaptedOffers, getAdaptedReviews, getAdaptedOffer} from "./adapter";
+import {AuthorizationStatus} from "../user/user";
+import {SortType, AppRoute, CardType} from "../../consts";
 import NameSpace from '../name-space.js';
-import history from "../../history.js";
+import history from "../../history";
 
 const initialState = {
   step: `main`,

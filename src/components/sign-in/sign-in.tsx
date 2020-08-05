@@ -1,10 +1,10 @@
 import React, {PureComponent, createRef} from "react";
 import PropTypes from "prop-types";
-import Header from "../header/header.jsx";
-import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
-import history from "../../history.js";
-import {AppRoute} from "../../consts.js";
-import {AuthorizationStatus} from "../../reducer/user/user.js";
+import Header from "../header/header";
+import {getAuthorizationStatus} from "../../reducer/user/selectors";
+import history from "../../history";
+import {AppRoute} from "../../consts";
+import {AuthorizationStatus} from "../../reducer/user/user";
 import {connect} from "react-redux";
 
 class SignIn extends PureComponent {

@@ -1,15 +1,15 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import Header from "../header/header.jsx";
-import FavoritesEmpty from "../favorites-empty/favorites-empty.jsx";
-import FavoritesList from "../favorites-list/favorites-list.jsx";
-import {Operation as DataOperation} from "../../reducer/data/data.js";
-import {getFavorites} from "../../reducer/data/selectors.js";
+import Header from "../header/header";
+import FavoritesEmpty from "../favorites-empty/favorites-empty";
+import FavoritesList from "../favorites-list/favorites-list";
+import {Operation as DataOperation} from "../../reducer/data/data";
+import {getFavorites} from "../../reducer/data/selectors";
 import {connect} from "react-redux";
-import {PlaceType, AppRoute} from "../../consts.js";
-import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
-import {AuthorizationStatus} from "../../reducer/user/user.js";
-import history from "../../history.js";
+import {PlaceType, AppRoute} from "../../consts";
+import {getAuthorizationStatus} from "../../reducer/user/selectors";
+import {AuthorizationStatus} from "../../reducer/user/user";
+import history from "../../history";
 
 class Favorites extends PureComponent {
 

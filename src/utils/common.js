@@ -1,5 +1,5 @@
-import {MONTH_NAMES, SortType} from "../consts.js";
-import {defaultSortedOffers} from "../reducer/data/data.js";
+import {MONTH_NAMES, SortType} from "../consts";
+import {defaultSortedOffers} from "../reducer/data/data";
 
 const RATING_PITCH = 20;
 

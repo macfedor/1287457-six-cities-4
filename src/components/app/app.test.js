@@ -1,7 +1,7 @@
-import React from "react";
+import * as React from "react";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
-import {App} from "./app.jsx";
+import {App} from "./app";
 import configureStore from "redux-mock-store";
 
 const mockStore = configureStore([]);

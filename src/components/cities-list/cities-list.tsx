@@ -1,6 +1,6 @@
-import React from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
-import {MAX_CITIES} from "../../consts.js";
+import {MAX_CITIES} from "../../consts";
 
 
 const CitiesList = ({cities, activeCity, onCityClick}) => {

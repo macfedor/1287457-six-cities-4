@@ -1,6 +1,6 @@
-import React from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
-import {formatRating, formatDate, formatDateShort} from "../../utils/common.js";
+import {formatRating, formatDate, formatDateShort} from "../../utils/common";
 
 const Review = ({review}) => {
 

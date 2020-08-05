@@ -1,11 +1,11 @@
-import React from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
-import ResultsWrapped from "../results-wrapped/results-wrapped.jsx";
-import NoResults from "../no-results/no-results.jsx";
-import {PlaceType} from "../../consts.js";
+import ResultsWrapped from "../results-wrapped/results-wrapped";
+import NoResults from "../no-results/no-results";
+import {PlaceType} from "../../consts";
 import {connect} from "react-redux";
-import {getActiveCity, getActiveOffer, getCityOffers, getCities} from "../../reducer/data/selectors.js";
-import Header from "../header/header.jsx";
+import {getActiveCity, getActiveOffer, getCityOffers, getCities} from "../../reducer/data/selectors";
+import Header from "../header/header";
 
 const Main = ({places, cities, activeCity, onCityClick, onCardHover, activeOffer}) => {
   return <div className="page page--gray page--main">

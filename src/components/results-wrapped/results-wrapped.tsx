@@ -1,85 +1,55 @@
-import React, {PureComponent} from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
-import {PlaceType} from "../../consts.js";
-import leaflet from "leaflet";
+import CardsList from "../cards-list/cards-list";
+import CitiesList from "../cities-list/cities-list";
+import Map from "../map/map";
+import Sort from "../sort/sort";
+import {PlaceType, CardType} from "../../consts";
+import withOpenFlag from '../../hocs/with-open-flag/with-open-flag';
 
-const iconDefault = leaflet.icon({
-  iconUrl: `/img/pin.svg`,
-  iconSize: [27, 41],
-});
+const SortWrapped = withOpenFlag(Sort);
 
-const iconActive = leaflet.icon({
-  iconUrl: `/img/pin-active.svg`,
-  iconSize: [27, 41],
-});
+const ResultsWrapped = ({places, cities, activeCity, onCityClick, onCardHover, activeOffer}) => {
+  const cardsListClassName = `cities__places-list tabs__content`;
+  const mapPrefix = `cities`;
 
-const MapConfig = {
-  ZOOM_CONTROL: false,
-  MARKER: true
+  return <main className="page__main page__main--index">
+    <h1 className="visually-hidden">Cities</h1>
+    <div className="tabs">
+      <CitiesList
+        cities={cities}
+        activeCity={activeCity}
+        onCityClick={onCityClick}
+      />
+    </div>
+    <div className="cities">
+      <div className="cities__places-container container">
+        <section className="cities__places places">
+          <h2 className="visually-hidden">Places</h2>
+          <b className="places__found">{places.length} places to stay in {activeCity}</b>
+          <SortWrapped />
+          <CardsList
+            cards={places}
+            cardsListClassName={cardsListClassName}
+            cardType={CardType.CITY}
+            onCardHover={onCardHover}
+          />
+        </section>
+        <div className="cities__right-section">
+          <Map
+            places={places}
+            prefix={mapPrefix}
+            activeCity={activeCity}
+            activePlace={activeOffer}
+          />
+        </div>
+      </div>
+    </div>
+  </main>;
 };
 
-class Map extends PureComponent {
-
-  componentDidMount() {
-    this._initMap();
-    this._addPoints();
-  }
-
-  componentDidUpdate() {
-    this._removePoints();
-    this._addPoints();
-    this._map.panTo(this._getMapCenter());
-  }
-
-  _getMapCenter() {
-    return this.props.activePlace ? this.props.activePlace.location.coordinates : this.props.places[0].city.coordinates;
-  }
-
-  _addPoints() {
-    const markers = [];
-    if (this.props.places) {
-      this.props.places.forEach((place) => {
-        const marker = leaflet.marker(place.location.coordinates, {icon: iconDefault});
-        markers.push(marker);
-      });
-    }
-
-    if (this.props.activePlace) {
-      const marker = leaflet.marker(this.props.activePlace.location.coordinates, {icon: iconActive});
-      markers.push(marker);
-    }
-
-    this._markersGroup = leaflet.layerGroup(markers);
-    this._markersGroup.addTo(this._map);
-  }
-
-  _removePoints() {
-    this._markersGroup.clearLayers();
-    this._markersGroup = null;
-  }
-
-  _initMap() {
-    this._map = leaflet.map(`map`, {
-      center: this._getMapCenter(),
-      zoom: this.props.activePlace ? this.props.activePlace.location.zoom : this.props.places[0].city.zoom,
-      zoomControl: MapConfig.ZOOM_CONTROL,
-      marker: MapConfig.MARKER
-    });
-    leaflet
-    .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
-      attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
-    })
-    .addTo(this._map);
-  }
-
-  render() {
-    return (
-      <section className={`${this.props.prefix}__map map`}><div id="map" style={{height: `100%`}}></div></section>
-    );
-  }
-}
-
-Map.propTypes = {
+ResultsWrapped.propTypes = {
+  cities: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   places: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
@@ -109,12 +79,19 @@ Map.propTypes = {
       coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
       zoom: PropTypes.number.isRequired,
     }).isRequired,
-  }).isRequired),
-  prefix: PropTypes.string.isRequired,
-  activePlace: PropTypes.shape({
+  }).isRequired).isRequired,
+  activeCity: PropTypes.string,
+  onCityClick: PropTypes.func.isRequired,
+  onCardHover: PropTypes.func.isRequired,
+  hoveredOffer: PropTypes.shape({
+    coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
+    zoom: PropTypes.number.isRequired,
+  }),
+  activeOffer: PropTypes.shape({
     id: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
     isPremium: PropTypes.bool.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
     price: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     type: PropTypes.oneOf([PlaceType.APARTMENT, PlaceType.ROOM, PlaceType.HOUSE, PlaceType.HOTEL]).isRequired,
@@ -134,13 +111,12 @@ Map.propTypes = {
       coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
       zoom: PropTypes.number.isRequired,
     }).isRequired,
-    reviews: PropTypes.array,
     city: PropTypes.shape({
       name: PropTypes.string.isRequired,
       coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
       zoom: PropTypes.number.isRequired,
     }).isRequired,
-  }),
+  })
 };
 
-export default Map;
+export default ResultsWrapped;

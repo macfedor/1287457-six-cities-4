@@ -1,15 +1,15 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import {formatRating} from "../../utils/common.js";
-import {PlaceType} from "../../consts.js";
-import ReviewsList from "../reviews-list/reviews-list.jsx";
-import NearbyPlaces from "../nearby-places/nearby-places.jsx";
-import Map from "../map/map.jsx";
-import Header from "../header/header.jsx";
-import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
+import {formatRating} from "../../utils/common";
+import {PlaceType} from "../../consts";
+import ReviewsList from "../reviews-list/reviews-list";
+import NearbyPlaces from "../nearby-places/nearby-places";
+import Map from "../map/map";
+import Header from "../header/header";
+import {getAuthorizationStatus} from "../../reducer/user/selectors";
 import {connect} from "react-redux";
-import {Operation as DataOperation} from "../../reducer/data/data.js";
-import {getReviewsList, getActiveOffer, getNearbyPlacesList} from "../../reducer/data/selectors.js";
+import {Operation as DataOperation} from "../../reducer/data/data";
+import {getReviewsList, getActiveOffer, getNearbyPlacesList} from "../../reducer/data/selectors";
 
 class Property extends PureComponent {
 

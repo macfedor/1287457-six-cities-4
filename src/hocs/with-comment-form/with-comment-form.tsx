@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import {MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH, WARNING_TIMEOUT} from "../../consts.js";
-import {Operation} from "../../reducer/data/data.js";
+import {MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH, WARNING_TIMEOUT} from "../../consts";
+import {Operation} from "../../reducer/data/data";
 import {connect} from "react-redux";
 
 const withCommentForm = (Component) => {

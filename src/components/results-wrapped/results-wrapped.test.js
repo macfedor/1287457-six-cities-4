@@ -1,10 +1,10 @@
-import React from "react";
+import * as React from "react";
 import renderer from "react-test-renderer";
-import ResultsWrapped from "./results-wrapped.jsx";
+import ResultsWrapped from "./results-wrapped";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import {Router} from "react-router-dom";
-import history from "../../history.js";
+import history from "../../history";
 
 const mockStore = configureStore([]);
 

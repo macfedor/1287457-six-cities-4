@@ -1,13 +1,13 @@
-import React from "react";
+import * as React from "react";
 import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import NearbyPlaces from "./nearby-places";
-import {MAX_NEARBY_OFFERS} from "../../consts.js";
+import {MAX_NEARBY_OFFERS} from "../../consts";
 import {Provider} from "react-redux";
 import {createStore} from "redux";
 import reducer from "../../reducer/reducer";
 import {Router} from "react-router-dom";
-import history from "../../history.js";
+import history from "../../history";
 
 Enzyme.configure({
   adapter: new Adapter(),

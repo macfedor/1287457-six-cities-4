@@ -1,10 +1,10 @@
-import React from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
-import Review from "../review/review.jsx";
-import {MAX_REVIEWS} from "../../consts.js";
-import withCommentForm from "../../hocs/with-comment-form/with-comment-form.js";
-import CommentForm from "../comment-form/comment-form.jsx";
-import {AuthorizationStatus} from "../../reducer/user/user.js";
+import Review from "../review/review";
+import {MAX_REVIEWS} from "../../consts";
+import withCommentForm from "../../hocs/with-comment-form/with-comment-form";
+import CommentForm from "../comment-form/comment-form";
+import {AuthorizationStatus} from "../../reducer/user/user";
 
 const CommentFormWrapped = withCommentForm(CommentForm);
 

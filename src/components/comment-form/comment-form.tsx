@@ -1,6 +1,6 @@
-import React from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
-import {MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH} from "../../consts.js";
+import {MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH} from "../../consts";
 
 const CommentForm = ({activeSubmit, onChangeRating, onChangeComment, onSubmit}) => {
   return <form className="reviews__form form" action="#" method="post" onSubmit={(evt) => {

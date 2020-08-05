@@ -1,17 +1,17 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {Switch, Route, Router} from "react-router-dom";
-import Main from "../main/main.jsx";
-import Property from "../property/property.jsx";
-import SignIn from "../sign-in/sign-in.jsx";
-import Favorites from "../favorites/favorites.jsx";
+import Main from "../main/main";
+import Property from "../property/property";
+import SignIn from "../sign-in/sign-in";
+import Favorites from "../favorites/favorites";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../reducer/data/data.js";
-import {getActiveOffer, getStep} from "../../reducer/data/selectors.js";
-import {PlaceType, AppRoute} from "../../consts.js";
-import history from "../../history.js";
-import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
-import {Operation as UserOperation} from "../../reducer/user/user.js";
+import {ActionCreator} from "../../reducer/data/data";
+import {getActiveOffer, getStep} from "../../reducer/data/selectors";
+import {PlaceType, AppRoute} from "../../consts";
+import history from "../../history";
+import {getAuthorizationStatus} from "../../reducer/user/selectors";
+import {Operation as UserOperation} from "../../reducer/user/user";
 
 class App extends PureComponent {
 

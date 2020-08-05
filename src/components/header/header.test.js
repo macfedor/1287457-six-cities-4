@@ -1,8 +1,8 @@
-import React from "react";
+import * as React from "react";
 import renderer from "react-test-renderer";
-import {Header} from "./header.jsx";
+import {Header} from "./header";
 import {Router} from "react-router-dom";
-import history from "../../history.js";
+import history from "../../history";
 
 it(`Header component render correctly`, () => {
   const tree = renderer

@@ -1,8 +1,8 @@
-import React from "react";
+import * as React from "react";
 import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import withCommentForm from "./with-comment-form.js";
-import CommentForm from "../../components/comment-form/comment-form.jsx";
+import withCommentForm from "./with-comment-form";
+import CommentForm from "../../components/comment-form/comment-form";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 

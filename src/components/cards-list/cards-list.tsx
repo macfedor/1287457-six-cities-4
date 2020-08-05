@@ -1,26 +1,29 @@
-import React from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import Card from "../card/card.jsx";
-import {CardType, PlaceType, MAX_NEARBY_OFFERS} from "../../consts.js";
+import Card from "../card/card";
+import {PlaceType} from "../../consts";
 
-const NearbyPlaces = ({places}) => {
-  const offers = places.slice(0, MAX_NEARBY_OFFERS);
+class CardsList extends PureComponent {
 
-  return <section className="near-places places">
-    <h2 className="near-places__title">Other places in the neighbourhood</h2>
-    <div className="places__list near-places__list">
-      {offers.map((card) => (
-        <Card key={card.id}
-          card={card}
-          cardType={CardType.NEAR}
-        />
-      ))}
-    </div>
-  </section>;
-};
+  render() {
+    const {cards, onCardHover, cardsListClassName, cardType} = this.props;
+    return (
+      <div className={`places__list ${cardsListClassName}`}>
+        {cards.map((card) => (
+          <Card key={card.id}
+            card={card}
+            cardType={cardType}
+            onMouseEnter={() => onCardHover(card)}
+            onMouseLeave={() => onCardHover(null)}
+          />
+        ))}
+      </div>
+    );
+  }
+}
 
-NearbyPlaces.propTypes = {
-  places: PropTypes.arrayOf(PropTypes.shape({
+CardsList.propTypes = {
+  cards: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
     isPremium: PropTypes.bool.isRequired,
@@ -49,7 +52,10 @@ NearbyPlaces.propTypes = {
       coordinates: PropTypes.arrayOf(PropTypes.number).isRequired,
       zoom: PropTypes.number.isRequired,
     }).isRequired,
-  }).isRequired).isRequired,
+  })).isRequired,
+  onCardHover: PropTypes.func,
+  cardsListClassName: PropTypes.string.isRequired,
+  cardType: PropTypes.string.isRequired,
 };
 
-export default NearbyPlaces;
+export default CardsList;

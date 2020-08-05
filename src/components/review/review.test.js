@@ -1,6 +1,6 @@
-import React from "react";
+import * as React from "react";
 import renderer from "react-test-renderer";
-import Review from "./review.jsx";
+import Review from "./review";
 
 const testData = {
   avatar: `img/avatar-max.jpg`,
