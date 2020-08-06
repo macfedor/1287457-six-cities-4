@@ -6,13 +6,13 @@ import {Subtract} from 'utility-types';
 
 interface InjectedProps {
   activeSubmit: boolean;
-  onChangeRating: ({rating}: {rating: number}) => void;
-  onChangeComment: ({comment}: {comment: string}) => void;
-  onSubmit: ({evt}: {evt: EventTarget}) => void;
+  onChangeRating: (rating: number) => void;
+  onChangeComment: (comment: string) => void;
+  onSubmit: (evt: EventTarget) => void;
 }
 
 interface Props {
-  postReview: ({hotelId, comment, rating, onSuccess, onError}: {hotelId: number; comment: string; rating: number; onSuccess: Function; onError: Function}) => void;
+  postReview: (hotelId: number, rating: number, comment: string, onSuccess: Function, onError: Function) => void;
   hotelId: number;
 }
 
@@ -116,8 +116,8 @@ const withCommentForm = (Component) => {
   }
 
   const mapDispatchToProps = (dispatch) => ({
-    postReview(hotelId, comment, rating, onSuccess, onError) {
-      dispatch(Operation.postReview(hotelId, comment, rating, onSuccess, onError));
+    postReview(hotelId, rating, comment, onSuccess, onError) {
+      dispatch(Operation.postReview(hotelId, rating, comment, onSuccess, onError));
     },
   });
 
