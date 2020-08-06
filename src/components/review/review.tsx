@@ -1,12 +1,12 @@
 import * as React from "react";
 import {formatRating, formatDate, formatDateShort} from "../../utils/common";
-import {Review} from "../../types";
+import {ReviewInterface} from "../../types";
 
 interface Props {
-  review: Review;
+  review: ReviewInterface;
 }
 
-const Review: React.FunctionComponent<Props> = (props: Props) => { 
+const Review: React.FunctionComponent<Props> = (props: Props) => {
   const {review} = props;
   return <li className="reviews__item">
     <div className="reviews__user user">

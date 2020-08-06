@@ -6,8 +6,8 @@ import {Link} from "react-router-dom";
 import {AppRoute} from "../../consts";
 
 interface Props {
-  authorizationStatus: strinig;
-  userEmail: strinig;
+  authorizationStatus: string;
+  userEmail: string;
 }
 
 const Header: React.FunctionComponent<Props> = (props: Props) => {

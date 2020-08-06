@@ -4,10 +4,10 @@ import {MAX_REVIEWS} from "../../consts";
 import withCommentForm from "../../hocs/with-comment-form/with-comment-form";
 import CommentForm from "../comment-form/comment-form";
 import {AuthorizationStatus} from "../../reducer/user/user";
-import {Review} from "../../types";
+import {ReviewInterface} from "../../types";
 
 interface Props {
-  reviews: Review[];
+  reviews: ReviewInterface[];
   authorizationStatus: string;
   propertyId: number;
 }

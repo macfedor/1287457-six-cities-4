@@ -7,7 +7,7 @@ interface Props {
   onCityClick: () => void;
 }
 
-const CitiesList: React.FunctionComponent<Props> = (props: Props) => { 
+const CitiesList: React.FunctionComponent<Props> = (props: Props) => {
   const {cities, activeCity, onCityClick} = props;
   const formatedCities = cities.slice(0, MAX_CITIES);
 

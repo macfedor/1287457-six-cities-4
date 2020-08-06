@@ -6,7 +6,6 @@ import NameSpace from '../name-space.js';
 import history from "../../history";
 
 const initialState = {
-  step: `main`,
   activeCity: ``,
   activeOffer: null,
   hoveredOffer: null,

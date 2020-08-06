@@ -6,7 +6,7 @@ import SignIn from "../sign-in/sign-in";
 import Favorites from "../favorites/favorites";
 import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer/data/data";
-import {getActiveOffer, getStep} from "../../reducer/data/selectors";
+import {getActiveOffer} from "../../reducer/data/selectors";
 import {AppRoute} from "../../consts";
 import history from "../../history";
 import {getAuthorizationStatus} from "../../reducer/user/selectors";
@@ -57,7 +57,6 @@ class App extends React.PureComponent<Props, {}> {
 }
 
 const mapStateToProps = (state) => ({
-  step: getStep(state),
   activeOffer: getActiveOffer(state),
   authorizationStatus: getAuthorizationStatus(state),
 });

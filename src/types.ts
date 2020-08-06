@@ -1,14 +1,15 @@
 export enum PlaceType {
-  APARTMENT: `apartment`,
-  ROOM: `room`,
-  HOUSE: `house`,
-  HOTEL: `hotel`
+  APARTMENT = `apartment`,
+  ROOM = `room`,
+  HOUSE = `house`,
+  HOTEL = `hotel`
 };
 
 export interface Offer {
   id: number,
   image: string,
   isPremium: boolean,
+  isFavorite: boolean,
   price: number,
   name: string,
   type: PlaceType,
@@ -36,7 +37,7 @@ export interface Offer {
   },
 };
 
-export interface Review {
+export interface ReviewInterface {
   avatar: string,
   name: string,
   rating: number,

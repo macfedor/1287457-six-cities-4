@@ -1,16 +1,15 @@
 import * as React from "react";
 import Card from "../card/card";
-import {PlaceType} from "../../consts";
 import {Offer} from "../../types";
 
 interface Props {
   cards: Offer[];
-  onCardHover: () => void;
+  onCardHover: (card: Offer) => void;
   cardsListClassName: string;
   cardType: string;
 }
 
-class CardsList extends React.PureComponent<Props, {}> {
+class CardsList extends React.PureComponent<Props, Record<string, unknown>> {
 
   render() {
     const {cards, onCardHover, cardsListClassName, cardType} = this.props;

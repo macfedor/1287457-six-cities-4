@@ -15,10 +15,6 @@ export const getFavorites = (state) => {
   return state[NAME_SPACE].favorites;
 };
 
-export const getStep = (state) => {
-  return state[NAME_SPACE].step;
-};
-
 export const getActiveCity = (state) => {
   return state[NAME_SPACE].activeCity;
 };

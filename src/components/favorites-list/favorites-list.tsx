@@ -1,7 +1,7 @@
 import * as React from "react";
 import {sortOffersByCity} from "../../utils/common";
 import Card from "../card/card";
-import {CardType, PlaceType} from "../../consts";
+import {CardType} from "../../consts";
 import {Offer} from "../../types";
 
 interface Props {

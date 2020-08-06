@@ -6,13 +6,13 @@ import {Subtract} from 'utility-types';
 
 interface InjectedProps {
   activeSubmit: boolean;
-  onChangeRating: () => void;
-  onChangeComment: () => void;
-  onSubmit: () => void;
+  onChangeRating: ({rating}: {rating: number}) => void;
+  onChangeComment: ({comment}: {comment: string}) => void;
+  onSubmit: ({evt}: {evt: EventTarget}) => void;
 }
 
 interface Props {
-  postReview: () => void;
+  postReview: ({hotelId, comment, rating, onSuccess, onError}: {hotelId: number; comment: string; rating: number; onSuccess: Function; onError: Function}) => void;
   hotelId: number;
 }
 
@@ -25,7 +25,7 @@ interface State {
 const withCommentForm = (Component) => {
   type P = React.ComponentProps<typeof Component>;
   type T = Props & Subtract<P, InjectedProps>;
-  
+
   class CommentForm extends React.PureComponent<T, State> {
     constructor(props) {
       super(props);

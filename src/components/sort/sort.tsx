@@ -6,23 +6,23 @@ import {getActiveSortType} from "../../reducer/data/selectors";
 
 interface Props {
   activeSortType: string;
-  onSortItemClick: () => void;
+  onSortItemClick: (item: string) => void;
   isOpen: boolean;
   onOpenChange: () => void;
 }
 
-class Sort extends React.PureComponent<Props, {}> {
+class Sort extends React.PureComponent<Props, Record<string, unknown>> {
   constructor(props) {
     super(props);
   }
 
   _renderSortItems() {
     const sortTypes = Object.values(SortType);
-    return sortTypes.map((item) => {
+    return sortTypes.map((item, index) => {
       const activeClass = item === this.props.activeSortType ? `places__option--active` : ``;
       return (
         <li
-          key={item}
+          key={index}
           className={`places__option ${activeClass}`}
           onClick={() => this.props.onSortItemClick(item)}
           onKeyDown={() => this.props.onSortItemClick(item)}

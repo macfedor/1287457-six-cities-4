@@ -1,6 +1,6 @@
 import * as React from "react";
 import Card from "../card/card";
-import {CardType, PlaceType, MAX_NEARBY_OFFERS} from "../../consts";
+import {CardType, MAX_NEARBY_OFFERS} from "../../consts";
 import {Offer} from "../../types";
 
 interface Props {

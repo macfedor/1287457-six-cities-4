@@ -1,7 +1,6 @@
 import * as React from "react";
 import ResultsWrapped from "../results-wrapped/results-wrapped";
 import NoResults from "../no-results/no-results";
-import {PlaceType} from "../../consts";
 import {connect} from "react-redux";
 import {getActiveCity, getActiveOffer, getCityOffers, getCities} from "../../reducer/data/selectors";
 import Header from "../header/header";
@@ -13,10 +12,6 @@ interface Props {
   activeCity: string;
   onCityClick: () => void;
   onCardHover: () => void;
-  hoveredOffer: {
-    coordinates: number[],
-    zoom: number,
-  },
   activeOffer: Offer;
 }
 

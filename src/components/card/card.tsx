@@ -1,6 +1,6 @@
 import * as React from "react";
 import {capitalize, formatRating} from "../../utils/common";
-import {PlaceType, CardClassName, ImageWrapperClassName, AppRoute} from "../../consts";
+import {CardClassName, ImageWrapperClassName, AppRoute} from "../../consts";
 import {Operation, ActionCreator} from "../../reducer/data/data";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
@@ -11,11 +11,11 @@ interface Props {
   cardType: string;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
-  onTitleClick: () => void;
-  onFavoriteToggle: () => void;
+  onTitleClick: (card: Offer) => void;
+  onFavoriteToggle: (id: number, status: number, cardType: string) => void;
 }
 
-class Card extends React.PureComponent<Props, {}> {
+class Card extends React.PureComponent<Props, Record<string, unknown>> {
 
   render() {
     const {card, cardType, onMouseEnter, onMouseLeave, onTitleClick, onFavoriteToggle} = this.props;

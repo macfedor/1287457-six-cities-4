@@ -1,5 +1,4 @@
 import * as React from "react";
-import {PlaceType} from "../../consts";
 import leaflet from "leaflet";
 import {Offer} from "../../types";
 
@@ -24,7 +23,7 @@ const MapConfig = {
   MARKER: true
 };
 
-class Map extends React.PureComponent<Props, {}> {
+class Map extends React.PureComponent<Props, Record<string, unknown>> {
 
   componentDidMount() {
     this._initMap();

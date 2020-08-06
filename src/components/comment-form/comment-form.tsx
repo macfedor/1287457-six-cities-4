@@ -3,9 +3,9 @@ import {MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH} from "../../consts";
 
 interface Props {
   activeSubmit: boolean;
-  onChangeRating: () => void;
-  onChangeComment: () => void;
-  onSubmit: () => void;
+  onChangeRating: ({rating}: {rating: number}) => void;
+  onChangeComment: ({comment}: {comment: string}) => void;
+  onSubmit: ({evt}: {evt: EventTarget}) => void;
 }
 
 const CommentForm: React.FunctionComponent<Props> = (props: Props) => {

@@ -7,18 +7,19 @@ import {AuthorizationStatus} from "../../reducer/user/user";
 import {connect} from "react-redux";
 
 interface Props {
-  onSubmit: () => void;
-  authorizationStatus: string,
+  onSubmit: ({login, password}: {login: string; password: string}) => void;
+  authorizationStatus: string;
 }
 
-class SignIn extends React.PureComponent<Props, {}> {
+class SignIn extends React.PureComponent<Props, Record<string, unknown>> {
+  private emailRef: React.RefObject<HTMLInputElement>;
+  private passwordRef: React.RefObject<HTMLInputElement>;
+  
   constructor(props) {
     super(props);
-
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.emailRef = React.createRef();
     this.passwordRef = React.createRef();
-
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(evt) {
@@ -27,7 +28,7 @@ class SignIn extends React.PureComponent<Props, {}> {
     evt.preventDefault();
 
     onSubmit({
-      email: this.emailRef.current.value,
+      login: this.emailRef.current.value,
       password: this.passwordRef.current.value,
     });
   }
@@ -51,11 +52,11 @@ class SignIn extends React.PureComponent<Props, {}> {
               <form className="login__form form" action="#" method="post" onSubmit={this.handleSubmit}>
                 <div className="login__input-wrapper form__input-wrapper">
                   <label className="visually-hidden">E-mail</label>
-                  <input className="login__input form__input" type="email" name="email" placeholder="Email" required="" ref={this.emailRef} />
+                  <input className="login__input form__input" type="email" name="email" placeholder="Email" required ref={this.emailRef} />
                 </div>
                 <div className="login__input-wrapper form__input-wrapper">
                   <label className="visually-hidden">Password</label>
-                  <input className="login__input form__input" type="password" name="password" placeholder="Password" required="" ref={this.passwordRef} />
+                  <input className="login__input form__input" type="password" name="password" placeholder="Password" required ref={this.passwordRef} />
                 </div>
                 <button className="login__submit form__submit button" type="submit">Sign in</button>
               </form>

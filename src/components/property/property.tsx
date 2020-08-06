@@ -1,6 +1,5 @@
 import * as React from "react";
 import {formatRating} from "../../utils/common";
-import {PlaceType} from "../../consts";
 import ReviewsList from "../reviews-list/reviews-list";
 import NearbyPlaces from "../nearby-places/nearby-places";
 import Map from "../map/map";
@@ -9,22 +8,22 @@ import {getAuthorizationStatus} from "../../reducer/user/selectors";
 import {connect} from "react-redux";
 import {Operation as DataOperation} from "../../reducer/data/data";
 import {getReviewsList, getActiveOffer, getNearbyPlacesList} from "../../reducer/data/selectors";
-import {Offer, Review} from "../../types";
+import {Offer, ReviewInterface} from "../../types";
 
 interface Props {
   property: Offer;
-  getReviews: () => void;
+  getReviews: (id: number) => void;
   onCardHover: () => void;
-  getNearbyPlaces: () => void;
-  getOfferById: () => void;
+  getNearbyPlaces: (id: number) => void;
+  getOfferById: (id: number) => void;
   authorizationStatus: string;
-  reviews: Review[];
-  onFavoriteToggle: () => void;
+  reviews: ReviewInterface[];
+  onFavoriteToggle: (id: number, status: number) => void;
   nearbyPlaces: Offer[];
-  routerProps: object,
+  routerProps: object;
 }
 
-class Property extends React.PureComponent<Props, {}> {
+class Property extends React.PureComponent<Props, Record<string, unknown>> {
 
   componentDidMount() {
     const {property, getReviews, getNearbyPlaces} = this.props;
@@ -162,7 +161,6 @@ class Property extends React.PureComponent<Props, {}> {
             <div className="container">
               <NearbyPlaces
                 places={nearbyPlaces}
-                onCardHover={onCardHover}
               />
             </div>
             : ``}

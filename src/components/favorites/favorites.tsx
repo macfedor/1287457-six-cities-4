@@ -5,7 +5,7 @@ import FavoritesList from "../favorites-list/favorites-list";
 import {Operation as DataOperation} from "../../reducer/data/data";
 import {getFavorites} from "../../reducer/data/selectors";
 import {connect} from "react-redux";
-import {PlaceType, AppRoute} from "../../consts";
+import {AppRoute} from "../../consts";
 import {getAuthorizationStatus} from "../../reducer/user/selectors";
 import {AuthorizationStatus} from "../../reducer/user/user";
 import history from "../../history";
@@ -17,7 +17,7 @@ interface Props {
   offers: Offer[];
 }
 
-class Favorites extends React.PureComponent<Props, {}> {
+class Favorites extends React.PureComponent<Props, Record<string, unknown>> {
 
   componentDidMount() {
     const {loadFavorites} = this.props;

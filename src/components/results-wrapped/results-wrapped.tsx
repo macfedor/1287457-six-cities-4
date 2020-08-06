@@ -3,26 +3,22 @@ import CardsList from "../cards-list/cards-list";
 import CitiesList from "../cities-list/cities-list";
 import Map from "../map/map";
 import Sort from "../sort/sort";
-import {PlaceType, CardType} from "../../consts";
+import {CardType} from "../../consts";
 import withOpenFlag from '../../hocs/with-open-flag/with-open-flag';
 import {Offer} from "../../types";
 
 interface Props {
   cities: string[];
   places: Offer[];
-  activeCity: string,
+  activeCity: string;
   onCityClick: () => void;
   onCardHover: () => void;
-  hoveredOffer: {
-    coordinates: number[],
-    zoom: number,
-  });
   activeOffer: Offer;
 }
 
 const SortWrapped = withOpenFlag(Sort);
 
-const ResultsWrapped: React.FunctionComponent<Props> = (props: Props) => { 
+const ResultsWrapped: React.FunctionComponent<Props> = (props: Props) => {
   const {places, cities, activeCity, onCityClick, onCardHover, activeOffer} = props;
   const cardsListClassName = `cities__places-list tabs__content`;
   const mapPrefix = `cities`;
@@ -53,7 +49,6 @@ const ResultsWrapped: React.FunctionComponent<Props> = (props: Props) => {
           <Map
             places={places}
             prefix={mapPrefix}
-            activeCity={activeCity}
             activePlace={activeOffer}
           />
         </div>
