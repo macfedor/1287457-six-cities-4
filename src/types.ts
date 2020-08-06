@@ -26,13 +26,13 @@ export interface Offer {
     id: number,
   },
   location: {
-    coordinates: number[],
+    coordinates: [number, number],
     zoom: number,
   },
   reviews: string,
   city: {
     name: string,
-    coordinates: number[],
+    coordinates: [number, number],
     zoom: number,
   },
 };

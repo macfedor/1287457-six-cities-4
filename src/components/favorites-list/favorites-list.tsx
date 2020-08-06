@@ -10,7 +10,7 @@ interface Props {
 
 const FavoritesList: React.FunctionComponent<Props> = (props: Props) => {
   const {offers} = props;
-  const citiesOffers = sortOffersByCity(offers);
+  const citiesOffers: {[city in string]: Offer[]} = sortOffersByCity(offers);
 
   return (
     <main className="page__main page__main--favorites">

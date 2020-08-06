@@ -1,5 +1,5 @@
 import * as React from "react";
-import leaflet from "leaflet";
+import * as leaflet from "leaflet";
 import {Offer} from "../../types";
 
 interface Props {
@@ -24,6 +24,8 @@ const MapConfig = {
 };
 
 class Map extends React.PureComponent<Props, Record<string, unknown>> {
+  _map: leaflet.Map;
+  _markersGroup: leaflet.LayerGroup;
 
   componentDidMount() {
     this._initMap();
@@ -68,7 +70,6 @@ class Map extends React.PureComponent<Props, Record<string, unknown>> {
       center: this._getMapCenter(),
       zoom: this.props.activePlace ? this.props.activePlace.location.zoom : this.props.places[0].city.zoom,
       zoomControl: MapConfig.ZOOM_CONTROL,
-      marker: MapConfig.MARKER
     });
     leaflet
     .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {

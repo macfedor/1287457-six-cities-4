@@ -27,6 +27,8 @@ const withCommentForm = (Component) => {
   type T = Props & Subtract<P, InjectedProps>;
 
   class CommentForm extends React.PureComponent<T, State> {
+    formElement: HTMLFormElement;
+
     constructor(props) {
       super(props);
 
@@ -35,8 +37,6 @@ const withCommentForm = (Component) => {
         comment: ``,
         activeSubmit: false,
       };
-
-      this.formElement = null;
 
       this.changeRatingHandler = this.changeRatingHandler.bind(this);
       this.changeCommentHandler = this.changeCommentHandler.bind(this);
@@ -58,7 +58,7 @@ const withCommentForm = (Component) => {
     onSuccess() {
       this.resetState();
       const inputElements = this.formElement.querySelectorAll(`input, textarea, button`);
-      inputElements.forEach((item) => {
+      inputElements.forEach((item: HTMLInputElement) => {
         item.disabled = false;
       });
       this.formElement.reset();
@@ -66,7 +66,7 @@ const withCommentForm = (Component) => {
 
     onError() {
       const inputElements = this.formElement.querySelectorAll(`input, textarea, button`);
-      inputElements.forEach((item) => {
+      inputElements.forEach((item: HTMLInputElement) => {
         item.disabled = false;
       });
 
@@ -82,9 +82,9 @@ const withCommentForm = (Component) => {
       const {postReview, hotelId} = this.props;
 
       postReview(hotelId, rating, comment, this.onSuccess, this.onError);
-      this.formElement = evt.target;
-      const inputElements = evt.target.querySelectorAll(`input, textarea, button`);
-      inputElements.forEach((item) => {
+      this.formElement = evt.target as HTMLFormElement;
+      const inputElements = (evt.target as HTMLFormElement).querySelectorAll(`input, textarea, button`);
+      inputElements.forEach((item: HTMLInputElement) => {
         item.disabled = true;
       });
     }

@@ -1,4 +1,5 @@
 import * as React from "react";
+import {RouteProps} from "react-router-dom";
 import {formatRating} from "../../utils/common";
 import ReviewsList from "../reviews-list/reviews-list";
 import NearbyPlaces from "../nearby-places/nearby-places";
@@ -10,7 +11,7 @@ import {Operation as DataOperation} from "../../reducer/data/data";
 import {getReviewsList, getActiveOffer, getNearbyPlacesList} from "../../reducer/data/selectors";
 import {Offer, ReviewInterface} from "../../types";
 
-interface Props {
+type Props = RouteProps & {
   property: Offer;
   getReviews: (id: number) => void;
   onCardHover: () => void;
@@ -20,7 +21,6 @@ interface Props {
   reviews: ReviewInterface[];
   onFavoriteToggle: (id: number, status: number) => void;
   nearbyPlaces: Offer[];
-  routerProps: object;
 }
 
 class Property extends React.PureComponent<Props, Record<string, unknown>> {
@@ -53,7 +53,7 @@ class Property extends React.PureComponent<Props, Record<string, unknown>> {
 
   render() {
     const mapPrefix = `property`;
-    const {property, authorizationStatus, reviews, onFavoriteToggle, getOfferById, nearbyPlaces, onCardHover} = this.props;
+    const {property, authorizationStatus, reviews, onFavoriteToggle, getOfferById, nearbyPlaces} = this.props;
     if (!property && this.props.routerProps.match.params.id) {
       getOfferById(this.props.routerProps.match.params.id);
     }

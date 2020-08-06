@@ -41,6 +41,7 @@
     "node": "10"
   },
   "dependencies": {
+    "@types/leaflet": "^1.5.17",
     "axios": "0.19.2",
     "history": "4.10.1",
     "leaflet": "1.6.0",

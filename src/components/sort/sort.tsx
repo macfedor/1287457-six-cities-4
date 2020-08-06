@@ -24,8 +24,8 @@ class Sort extends React.PureComponent<Props, Record<string, unknown>> {
         <li
           key={index}
           className={`places__option ${activeClass}`}
-          onClick={() => this.props.onSortItemClick(item)}
-          onKeyDown={() => this.props.onSortItemClick(item)}
+          onClick={(evt) => this.props.onSortItemClick((evt.target as Element).innerHTML)}
+          onKeyDown={(evt) => this.props.onSortItemClick((evt.target as Element).innerHTML)}
         >{item}</li>
       );
     });
@@ -39,7 +39,7 @@ class Sort extends React.PureComponent<Props, Record<string, unknown>> {
         onClick={() => onOpenChange()}
         onKeyDown={() => onOpenChange()}
         className="places__sorting-type"
-        tabIndex="0">
+        tabIndex={0}>
         {activeSortType}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>

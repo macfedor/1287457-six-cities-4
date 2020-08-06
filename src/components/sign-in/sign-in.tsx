@@ -14,7 +14,7 @@ interface Props {
 class SignIn extends React.PureComponent<Props, Record<string, unknown>> {
   private emailRef: React.RefObject<HTMLInputElement>;
   private passwordRef: React.RefObject<HTMLInputElement>;
-  
+
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
