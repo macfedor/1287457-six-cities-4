@@ -216,28 +216,6 @@ function getPrices(app) {
   return prices;
 }
 
-function getNames(app) {
-  const namesNodes = app.find(`.place-card__name`);
-  const names = [];
-  namesNodes.forEach((nameItem) => {
-    names.push(
-        String(
-            nameItem
-              .find(`a`)
-              .props()
-              .children
-        )
-    );
-  });
-
-  return names;
-}
-
-function getNamesInOffers() {
-  const currentCityOffers = mockOffers.filter((item) => item.city.name === mockActiveCity);
-  return currentCityOffers.map((item) => item.name);
-}
-
 describe(`Should sort item be clicked`, () => {
   const appWithProvider = mount(
       <Provider store={store}>
@@ -304,18 +282,4 @@ describe(`Should sort item be clicked`, () => {
 
   });
 
-  it(`Should sort by popular`, () => {
-
-    sort.simulate(`click`);
-
-    const popularFirst = appWithProvider.find(`.places__options li`).at(0);
-
-    popularFirst.simulate(`click`);
-
-    const namesAfterSorting = getNames(appWithProvider);
-    const namesDefaultSorting = getNamesInOffers();
-
-    expect(namesAfterSorting).toEqual(namesDefaultSorting);
-
-  });
 });
