@@ -5,7 +5,9 @@ import App from "./app";
 import {Provider} from "react-redux";
 import {createStore} from "redux";
 import reducer from "../../reducer/reducer";
-import {Offer} from "../../types";
+import {Offer, PlaceType} from "../../types";
+import {noop} from "../../utils/common";
+import {AuthorizationStatus} from "../../reducer/user/user";
 
 const mockCities: string[] = [
   `Paris`,
@@ -26,7 +28,7 @@ const mockOffers: Offer[] = [
     isFavorite: false,
     price: 100,
     name: `First`,
-    type: `apartment`,
+    type: PlaceType.APARTMENT,
     rating: 5,
     images: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/studio-01.jpg`],
     insideItems: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
@@ -56,8 +58,68 @@ const mockOffers: Offer[] = [
     isFavorite: false,
     price: 1000,
     name: `Secont`,
-    type: `room`,
+    type: PlaceType.ROOM,
     rating: 5,
+    images: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`],
+    insideItems: [`Wi-Fi`, `Washing machine`, `Towels`],
+    bedrooms: 3,
+    guests: 4,
+    description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+    host: {
+      name: `Angelina`,
+      avatar: `img/avatar-angelina.jpg`,
+      isPro: true,
+      id: 2,
+    },
+    location: {
+      coordinates: [52.3909553943508, 4.929309666406198],
+      zoom: 13,
+    },
+    city: {
+      coordinates: [52.3909553943508, 4.929309666406198],
+      zoom: 13,
+      name: `Paris`,
+    }
+  },
+  {
+    id: 4,
+    image: `img/apartment-01.jpg`,
+    isPremium: false,
+    isFavorite: false,
+    price: 10,
+    name: `Third`,
+    type: PlaceType.APARTMENT,
+    rating: 2.5,
+    images: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/studio-01.jpg`],
+    insideItems: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
+    bedrooms: 2,
+    guests: 3,
+    description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century. An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.`,
+    host: {
+      id: 1,
+      name: `Angelina`,
+      avatar: `img/avatar-angelina.jpg`,
+      isPro: true,
+    },
+    location: {
+      coordinates: [52.3909553943508, 4.929309666406198],
+      zoom: 13,
+    },
+    city: {
+      coordinates: [52.3909553943508, 4.929309666406198],
+      zoom: 13,
+      name: `Paris`,
+    }
+  },
+  {
+    id: 3,
+    image: `img/apartment-01.jpg`,
+    isPremium: false,
+    isFavorite: false,
+    price: 100000,
+    name: `Last`,
+    type: PlaceType.ROOM,
+    rating: 4,
     images: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`],
     insideItems: [`Wi-Fi`, `Washing machine`, `Towels`],
     bedrooms: 3,
@@ -83,13 +145,19 @@ const mockOffers: Offer[] = [
 
 const initialState = {
   DATA: {
-    step: `main`,
     activeCity: mockActiveCity,
     activeOffer: null,
     hoveredOffer: null,
     cities: mockCities,
     places: mockOffers,
     activeSortType: `popular`,
+    reviews: null,
+    nearbyPlaces: null,
+    favorites: [],
+  },
+  USER: {
+    AuthorizationStatus: AuthorizationStatus.NO_AUTH,
+    userEmail: ``,
   }
 };
 
@@ -98,7 +166,9 @@ const store = createStore(
     initialState
 );
 
-jest.mock(`../map/map.jsx`, () => `section`);
+const div = document.createElement(`div`);
+div.id = `map`;
+document.body.appendChild(div);
 
 configure({
   adapter: new Adapter(),
@@ -164,13 +234,21 @@ function getNames(app) {
 }
 
 function getNamesInOffers() {
-  const currentCityOffers = mockOffers.filter((item) => item.city === mockActiveCity);
+  const currentCityOffers = mockOffers.filter((item) => item.city.name === mockActiveCity);
   return currentCityOffers.map((item) => item.name);
 }
 
 describe(`Should sort item be clicked`, () => {
   const appWithProvider = mount(
-      <Provider store={store}><App /></Provider>
+      <Provider store={store}>
+        <App
+          activeOffer={null}
+          authorizationStatus={AuthorizationStatus.NO_AUTH}
+          onCityClick={noop}
+          onCardHover={noop}
+          login={noop}
+        />
+      </Provider>
   );
 
   const sort = appWithProvider.find(`.places__sorting .places__sorting-type`);
@@ -231,6 +309,7 @@ describe(`Should sort item be clicked`, () => {
     sort.simulate(`click`);
 
     const popularFirst = appWithProvider.find(`.places__options li`).at(0);
+
     popularFirst.simulate(`click`);
 
     const namesAfterSorting = getNames(appWithProvider);

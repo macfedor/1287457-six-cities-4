@@ -3,21 +3,21 @@ import {shallow, configure} from "enzyme";
 import * as Adapter from "enzyme-adapter-react-16";
 import {Sort} from "./sort";
 import {SortType} from "../../consts";
+import {noop} from "../../utils/common";
 
 configure({
   adapter: new Adapter(),
 });
 
 it(`Should sort item be clicked`, () => {
-  const onSortClick = () => {};
   const onSortItemClick = jest.fn();
 
   const sort = shallow(
       <Sort
         activeSortType={`Popular`}
-        isSortOpen={false}
+        isOpen={false}
         onSortItemClick={onSortItemClick}
-        onSortClick={onSortClick}
+        onOpenChange={noop}
       />
   );
 

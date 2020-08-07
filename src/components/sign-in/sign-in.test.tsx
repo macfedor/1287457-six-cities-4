@@ -5,11 +5,13 @@ import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import {Router} from "react-router-dom";
 import history from "../../history";
+import {noop} from "../../utils/common";
+import {Offer, PlaceType} from "../../types";
+import {AuthorizationStatus} from "../../reducer/user/user";
 
 const mockStore = configureStore([]);
 
-const mockCities = [
-  `Amsterdam`,
+const mockCities: string[] = [
   `Paris`,
   `Cologne`,
   `Brussels`,
@@ -18,16 +20,17 @@ const mockCities = [
   `Omsk`,
 ];
 
-const mockActiveCity = mockCities[0];
+const mockActiveCity: string = mockCities[0];
 
-const mockOffers = [
+const mockOffers: Offer[] = [
   {
-    id: Math.random(),
+    id: 1,
     image: `img/apartment-01.jpg`,
     isPremium: false,
+    isFavorite: false,
     price: 100,
     name: `First`,
-    type: `apartment`,
+    type: PlaceType.APARTMENT,
     rating: 5,
     images: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/studio-01.jpg`],
     insideItems: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
@@ -51,12 +54,13 @@ const mockOffers = [
     }
   },
   {
-    id: Math.random(),
+    id: 2,
     image: `img/apartment-01.jpg`,
     isPremium: false,
+    isFavorite: false,
     price: 1000,
     name: `Secont`,
-    type: `room`,
+    type: PlaceType.ROOM,
     rating: 5,
     images: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`],
     insideItems: [`Wi-Fi`, `Washing machine`, `Towels`],
@@ -81,18 +85,21 @@ const mockOffers = [
   }
 ];
 
+
 const store = mockStore({
   DATA: {
-    step: `main`,
     activeCity: mockActiveCity,
     activeOffer: null,
     hoveredOffer: null,
     cities: mockCities,
     places: mockOffers,
     activeSortType: `popular`,
+    reviews: null,
+    nearbyPlaces: null,
+    favorites: [],
   },
   USER: {
-    AuthorizationStatus: `NO_AUTH`,
+    AuthorizationStatus: AuthorizationStatus.NO_AUTH,
     userEmail: ``,
   }
 });
@@ -101,7 +108,8 @@ it(`SignIn component render correctly`, () => {
   const tree = renderer
     .create(<Router history={history} ><Provider store={store}>
       <SignIn
-        onSubmit={() => {}}
+        onSubmit={noop}
+        authorizationStatus={AuthorizationStatus.NO_AUTH}
       />
     </Provider></Router>)
     .toJSON();

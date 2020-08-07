@@ -3,6 +3,7 @@ import * as renderer from "react-test-renderer";
 import withCommentForm from "./with-comment-form";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
+import {AuthorizationStatus} from "../../reducer/user/user";
 
 const mockStore = configureStore([]);
 
@@ -11,16 +12,18 @@ const MockComponentWrapped = withCommentForm(MockComponent);
 
 const store = mockStore({
   DATA: {
-    step: `property`,
     activeCity: null,
     activeOffer: null,
     hoveredOffer: null,
     cities: [],
     places: [],
     activeSortType: `popular`,
+    reviews: null,
+    nearbyPlaces: null,
+    favorites: [],
   },
   USER: {
-    AuthorizationStatus: `NO_AUTH`,
+    AuthorizationStatus: AuthorizationStatus.NO_AUTH,
     userEmail: ``,
   }
 });

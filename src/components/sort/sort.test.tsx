@@ -3,6 +3,7 @@ import * as renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import {Sort} from "./sort";
 import configureStore from "redux-mock-store";
+import {noop} from "../../utils/common";
 
 const mockStore = configureStore([]);
 
@@ -16,9 +17,9 @@ it(`Render Sort`, () => {
     .create(<Provider store={store}>
       <Sort
         activeSortType={`Popular`}
-        isSortOpen={false}
-        onSortItemClick={() => {}}
-        onSortClick={() => {}}
+        isOpen={false}
+        onSortItemClick={noop}
+        onOpenChange={noop}
       />
     </Provider>)
     .toJSON();

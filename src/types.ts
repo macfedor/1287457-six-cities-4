@@ -29,7 +29,6 @@ export interface Offer {
     coordinates: [number, number],
     zoom: number,
   },
-  reviews: string,
   city: {
     name: string,
     coordinates: [number, number],

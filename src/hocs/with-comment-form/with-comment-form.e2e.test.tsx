@@ -5,6 +5,7 @@ import withCommentForm from "./with-comment-form";
 import CommentForm from "../../components/comment-form/comment-form";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
+import {AuthorizationStatus} from "../../reducer/user/user";
 
 const mockStore = configureStore([]);
 
@@ -16,16 +17,18 @@ const MockComponentWrapped = withCommentForm(CommentForm);
 
 const store = mockStore({
   DATA: {
-    step: `property`,
     activeCity: null,
     activeOffer: null,
     hoveredOffer: null,
     cities: [],
     places: [],
     activeSortType: `popular`,
+    reviews: null,
+    nearbyPlaces: null,
+    favorites: [],
   },
   USER: {
-    AuthorizationStatus: `NO_AUTH`,
+    AuthorizationStatus: AuthorizationStatus.NO_AUTH,
     userEmail: ``,
   }
 });
@@ -39,7 +42,7 @@ describe(`Should change state`, () => {
     const item = wrapper.find(`[name="rating"]`).first();
 
     item.simulate(`change`);
-    expect(wrapper.find(MockComponentWrapped).childAt(0).state().rating).toEqual(item.getElement().props.value);
+    expect(wrapper.find(MockComponentWrapped).childAt(0).state().rating).toEqual(Number(item.getElement().props.value));
   });
 
   it(`Should comment state change`, () => {

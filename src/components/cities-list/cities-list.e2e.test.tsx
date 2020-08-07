@@ -3,12 +3,13 @@ import {mount, configure} from "enzyme";
 import * as Adapter from "enzyme-adapter-react-16";
 import CitiesList from "./cities-list";
 import {MAX_CITIES} from "../../consts";
+import {noop} from "../../utils/common";
 
 configure({
   adapter: new Adapter(),
 });
 
-const mockCities = [
+const mockCities: string[] = [
   `Amsterdam`,
   `Paris`,
   `Cologne`,
@@ -24,7 +25,7 @@ it(`Should be max "MAX_CITIES" cities`, () => {
       <CitiesList
         cities={mockCities}
         activeCity={``}
-        onCityClick={() => {}}
+        onCityClick={noop}
       />
   );
 
@@ -54,7 +55,7 @@ it(`Should active city has special class`, () => {
       <CitiesList
         cities={mockCities}
         activeCity={activeCity}
-        onCityClick={() => {}}
+        onCityClick={noop}
       />
   );
 

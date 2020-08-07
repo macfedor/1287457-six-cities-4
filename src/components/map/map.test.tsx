@@ -1,19 +1,21 @@
 import * as React from "react";
 import * as renderer from "react-test-renderer";
 import Map from "./map";
+import {Offer, PlaceType} from "../../types";
 
 const div = document.createElement(`div`);
 div.id = `map`;
 document.body.appendChild(div);
 
-const testData = [
+const mockOffers: Offer[] = [
   {
-    id: Math.random(),
+    id: 1,
     image: `img/apartment-01.jpg`,
     isPremium: false,
+    isFavorite: false,
     price: 100,
     name: `First`,
-    type: `apartment`,
+    type: PlaceType.APARTMENT,
     rating: 5,
     images: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/studio-01.jpg`],
     insideItems: [`Wi-Fi`, `Washing machine`, `Towels`, `Heating`, `Coffee machine`, `Baby seat`, `Kitchen`, `Dishwasher`, `Cabel TV`, `Fridge`],
@@ -37,12 +39,13 @@ const testData = [
     }
   },
   {
-    id: Math.random(),
+    id: 2,
     image: `img/apartment-01.jpg`,
     isPremium: false,
+    isFavorite: false,
     price: 1000,
     name: `Secont`,
-    type: `room`,
+    type: PlaceType.ROOM,
     rating: 5,
     images: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`],
     insideItems: [`Wi-Fi`, `Washing machine`, `Towels`],
@@ -67,13 +70,16 @@ const testData = [
   }
 ];
 
+const mockActiveOffer = mockOffers[0];
+
 const prefix = `city`;
 
 it(`Should Map render correctly`, () => {
   const tree = renderer
     .create(<Map
-      places={testData}
+      places={mockOffers}
       prefix={prefix}
+      activePlace={mockActiveOffer}
     />)
     .toJSON();
 

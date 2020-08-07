@@ -4,8 +4,9 @@ import {SortType} from "../../consts";
 import {sortPlaces, getCitiesList} from "../../utils/common";
 import MockAdapter from "axios-mock-adapter";
 import {createAPI} from "../../api";
+import {noop} from "../../utils/common";
 
-const api = createAPI(() => {});
+const api = createAPI(noop);
 
 const citiesList = [
   `Amsterdam`,
@@ -174,12 +175,10 @@ it(`Reducer without additional parameters should return initial state`, () => {
   expect(reducer({
     activeCity: citiesList[0],
     activeOffer: null,
-    step: `main`,
     cities: citiesList
   }, {})).toEqual({
     activeCity: citiesList[0],
     activeOffer: null,
-    step: `main`,
     cities: citiesList
   });
 });
@@ -188,7 +187,6 @@ it(`Reducer should change state by a given value`, () => {
   expect(reducer({
     activeCity: citiesList[0],
     activeOffer: null,
-    step: `main`,
     cities: citiesList
   }, {
     type: ActionType.CHANGE_CITY,
@@ -196,7 +194,6 @@ it(`Reducer should change state by a given value`, () => {
   })).toEqual({
     activeCity: `Paris`,
     activeOffer: null,
-    step: `main`,
     cities: citiesList
   });
 });
@@ -222,7 +219,7 @@ describe(`Operation works correctly`, () => {
       .onGet(`/hotels`)
       .reply(200, mockServerTypeOffers);
 
-    return loadOffers(dispatch, () => {}, api)
+    return loadOffers(dispatch, noop, api)
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenNthCalledWith(1, {

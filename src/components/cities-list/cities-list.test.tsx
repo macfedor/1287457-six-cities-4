@@ -1,8 +1,9 @@
 import * as React from "react";
 import * as renderer from "react-test-renderer";
 import CitiesList from "./cities-list";
+import {noop} from "../../utils/common";
 
-const testData = [
+const mockCities: string[] = [
   `Amsterdam`,
   `Paris`,
   `Cologne`,
@@ -17,9 +18,9 @@ const activeCity = `Paris`;
 it(`Should CitiesList render correctly`, () => {
   const tree = renderer
     .create(<CitiesList
-      cities={testData}
+      cities={mockCities}
       activeCity={activeCity}
-      onCityClick={() => {}}
+      onCityClick={noop}
     />)
     .toJSON();
 

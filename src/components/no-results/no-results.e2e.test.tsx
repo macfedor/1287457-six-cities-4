@@ -7,6 +7,8 @@ import {createStore} from "redux";
 import reducer from "../../reducer/reducer";
 import {Router} from "react-router-dom";
 import history from "../../history";
+import {AuthorizationStatus} from "../../reducer/user/user";
+import {noop} from "../../utils/common";
 
 configure({
   adapter: new Adapter(),
@@ -14,13 +16,19 @@ configure({
 
 const initialState = {
   DATA: {
-    step: `main`,
     activeCity: ``,
     activeOffer: null,
     hoveredOffer: null,
     cities: [],
     places: [],
     activeSortType: `popular`,
+    reviews: null,
+    nearbyPlaces: null,
+    favorites: [],
+  },
+  USER: {
+    AuthorizationStatus: AuthorizationStatus.NO_AUTH,
+    userEmail: ``,
   }
 };
 
@@ -31,9 +39,12 @@ it(`Should render no results page`, () => {
       <Router history={history} >
         <Provider store={store}>
           <Main
-            onTitleClick={() => {}}
-            onCityClick={() => {}}
-            onCardHover={() => {}}
+            cities={[]}
+            places={[]}
+            activeCity={``}
+            activeOffer={null}
+            onCityClick={noop}
+            onCardHover={noop}
           />
         </Provider>
       </Router>
