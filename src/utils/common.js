@@ -1,5 +1,5 @@
-import {MONTH_NAMES, SortType} from "../consts.js";
-import {defaultSortedOffers} from "../reducer/data/data.js";
+import {MONTH_NAMES, SortType} from "../consts";
+import {defaultSortedOffers} from "../reducer/data/data";
 
 const RATING_PITCH = 20;
 
@@ -64,3 +64,7 @@ export const sortOffersByCity = (offers) => {
 };
 
 export const getCitiesList = (places) => Array.from(new Set(places.map((item) => item.city.name)));
+
+export const noop = () => {
+  // do nothing
+};

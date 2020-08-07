@@ -1,6 +1,6 @@
-import {extend} from "../../utils/common.js";
-import history from "../../history.js";
-import {AppRoute} from "../../consts.js";
+import {extend} from "../../utils/common";
+import history from "../../history";
+import {AppRoute} from "../../consts";
 
 const AuthorizationStatus = {
   AUTH: `AUTH`,
