@@ -64,3 +64,7 @@ export const sortOffersByCity = (offers) => {
 };
 
 export const getCitiesList = (places) => Array.from(new Set(places.map((item) => item.city.name)));
+
+export const noop = () => {
+  // do nothing
+};

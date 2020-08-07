@@ -1,5 +1,5 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
+import * as renderer from "react-test-renderer";
 import FavoritesList from "./favorites-list";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";

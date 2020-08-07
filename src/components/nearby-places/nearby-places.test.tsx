@@ -1,5 +1,5 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
+import * as renderer from "react-test-renderer";
 import NearbyPlaces from "./nearby-places";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";

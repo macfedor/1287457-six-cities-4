@@ -1,6 +1,6 @@
 import * as React from "react";
-import Enzyme, {mount} from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import {mount, configure} from "enzyme";
+import * as Adapter from "enzyme-adapter-react-16";
 import withCommentForm from "./with-comment-form";
 import CommentForm from "../../components/comment-form/comment-form";
 import {Provider} from "react-redux";
@@ -8,7 +8,7 @@ import configureStore from "redux-mock-store";
 
 const mockStore = configureStore([]);
 
-Enzyme.configure({
+configure({
   adapter: new Adapter(),
 });
 

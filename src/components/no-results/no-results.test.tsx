@@ -1,5 +1,5 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
+import * as renderer from "react-test-renderer";
 import NoResults from "./no-results";
 
 it(`Should NoResults render correctly`, () => {

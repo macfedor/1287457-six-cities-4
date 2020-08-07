@@ -1,5 +1,5 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
+import * as renderer from "react-test-renderer";
 import withOpenFlag from "./with-open-flag";
 
 const MockComponent = () => <div />;

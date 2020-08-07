@@ -1,8 +1,10 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
+import * as renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import {App} from "./app";
 import configureStore from "redux-mock-store";
+import {noop} from "../../utils";
+import {Offer} from "../../types";
 
 const mockStore = configureStore([]);
 
@@ -10,7 +12,7 @@ const div = document.createElement(`div`);
 div.id = `map`;
 document.body.appendChild(div);
 
-const mockCities = [
+const mockCities: string[] = [
   `Amsterdam`,
   `Paris`,
   `Cologne`,
@@ -20,13 +22,14 @@ const mockCities = [
   `Omsk`,
 ];
 
-const mockActiveCity = mockCities[0];
+const mockActiveCity: string = mockCities[0];
 
-const mockOffers = [
+const mockOffers: Offer[] = [
   {
-    id: Math.random(),
+    id: 1,
     image: `img/apartment-01.jpg`,
     isPremium: false,
+    isFavorite: false,
     price: 100,
     name: `First`,
     type: `apartment`,
@@ -53,9 +56,10 @@ const mockOffers = [
     }
   },
   {
-    id: Math.random(),
+    id: 2,
     image: `img/apartment-01.jpg`,
     isPremium: false,
+    isFavorite: false,
     price: 1000,
     name: `Secont`,
     type: `room`,

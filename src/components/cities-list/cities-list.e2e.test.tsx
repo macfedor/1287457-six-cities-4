@@ -1,10 +1,10 @@
 import * as React from "react";
-import Enzyme, {mount} from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import {mount, configure} from "enzyme";
+import * as Adapter from "enzyme-adapter-react-16";
 import CitiesList from "./cities-list";
 import {MAX_CITIES} from "../../consts";
 
-Enzyme.configure({
+configure({
   adapter: new Adapter(),
 });
 

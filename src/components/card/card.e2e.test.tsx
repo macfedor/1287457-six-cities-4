@@ -1,16 +1,19 @@
 import * as React from "react";
-import Enzyme, {shallow} from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import {shallow, configure} from "enzyme";
+import * as Adapter from "enzyme-adapter-react-16";
 import {Card} from "./card";
+import {Offer} from "../../types";
+import {noop} from "../../utils";
 
-Enzyme.configure({
+configure({
   adapter: new Adapter(),
 });
 
-const mock = {
-  id: Math.random(),
+const mockOffer: Offer = {
+  id: 1,
   image: `img/apartment-01.jpg`,
   isPremium: false,
+  isFavorite: false,
   price: 1000,
   name: `Secont`,
   type: `room`,
@@ -37,20 +40,17 @@ const mock = {
   }
 };
 
-const cardType = `city`;
+const cardType: string = `city`;
 
 it(`Should place's title be pressed`, () => {
-  const onTitleClick = jest.fn();
-  const onMouseEnter = () => {};
-  const onMouseLeave = () => {};
 
   const card = shallow(
       <Card
         card={mock}
         cardType={cardType}
-        onTitleClick={onTitleClick}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
+        onTitleClick={jest.fn()}
+        onMouseEnter={noop}
+        onMouseLeave={noop}
       />
   );
 
@@ -61,17 +61,14 @@ it(`Should place's title be pressed`, () => {
 });
 
 it(`Should card be hovered`, () => {
-  const onTitleClick = () => {};
-  const onMouseLeave = () => {};
-  const onMouseEnter = jest.fn();
 
   const card = shallow(
       <Card
         card={mock}
         cardType={cardType}
-        onTitleClick={onTitleClick}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
+        onTitleClick={noop}
+        onMouseEnter={jest.fn()}
+        onMouseLeave={noop}
       />
   );
 

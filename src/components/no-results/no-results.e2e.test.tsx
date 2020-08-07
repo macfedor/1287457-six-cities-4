@@ -1,6 +1,6 @@
 import * as React from "react";
-import Enzyme, {mount} from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import {mount, configure} from "enzyme";
+import * as Adapter from "enzyme-adapter-react-16";
 import Main from "../main/main";
 import {Provider} from "react-redux";
 import {createStore} from "redux";
@@ -8,7 +8,7 @@ import reducer from "../../reducer/reducer";
 import {Router} from "react-router-dom";
 import history from "../../history";
 
-Enzyme.configure({
+configure({
   adapter: new Adapter(),
 });
 

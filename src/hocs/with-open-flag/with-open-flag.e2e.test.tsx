@@ -1,10 +1,10 @@
 import * as React from "react";
-import Enzyme, {mount} from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import {mount, configure} from "enzyme";
+import * as Adapter from "enzyme-adapter-react-16";
 import withOpenFlag from "./with-open-flag";
 import {Sort} from "../../components/sort/sort";
 
-Enzyme.configure({
+configure({
   adapter: new Adapter(),
 });
 

@@ -1,10 +1,12 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
+import * as renderer from "react-test-renderer";
 import {Card} from "./card";
 import {Router} from "react-router-dom";
 import history from "../../history";
+import {Offer} from "../../types";
+import {noop} from "../../utils";
 
-const testData = {
+const mockOffer: Offer = {
   id: 1,
   image: `img/apartment-01.jpg`,
   isPremium: false,
@@ -35,16 +37,16 @@ const testData = {
   }
 };
 
-const cardType = `city`;
+const cardType: string = `city`;
 
 it(`Should Card render correctly`, () => {
   const tree = renderer
     .create(<Router history={history} ><Card
-      card={testData}
+      card={mockOffer}
       cardType={cardType}
-      onMouseEnter={() => {}}
-      onMouseLeave={() => {}}
-      onTitleClick={() => {}}
+      onMouseEnter={noop}
+      onMouseLeave={noop}
+      onTitleClick={noop}
     /></Router>)
     .toJSON();
 
