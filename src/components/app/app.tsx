@@ -12,6 +12,7 @@ import history from "../../history";
 import {getAuthorizationStatus} from "../../reducer/user/selectors";
 import {Operation as UserOperation} from "../../reducer/user/user";
 import {Offer} from "../../types";
+import PrivateRoute from "../private-route/private-route";
 
 interface Props {
   activeOffer: Offer;
@@ -38,9 +39,9 @@ class App extends React.PureComponent<Props, {}> {
           <Route exact path={AppRoute.LOGIN}>
             <SignIn onSubmit={login}/>
           </Route>
-          <Route exact path={AppRoute.FAVORITES}>
+          <PrivateRoute exact path={AppRoute.FAVORITES}>
             <Favorites />
-          </Route>
+          </PrivateRoute>
           <Route exact path={AppRoute.OFFER}
             render={(props) => (
               <Property
