@@ -58,9 +58,10 @@ const withCommentForm = (Component) => {
 
     onSuccess() {
       this.resetState();
-      const inputElements = this.formElement.querySelectorAll(`input, textarea, button`);
+      const inputElements = this.formElement.querySelectorAll(`input, textarea`);
       inputElements.forEach((item: HTMLInputElement) => {
         item.disabled = false;
+        item.checked = false;
       });
       this.formElement.reset();
     }
