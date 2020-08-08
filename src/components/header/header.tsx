@@ -1,5 +1,6 @@
 import * as React from "react";
 import {getAuthorizationStatus, getUserEmail} from "../../reducer/user/selectors";
+import {getError} from "../../reducer/data/selectors";
 import {AuthorizationStatus} from "../../reducer/user/user";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
@@ -8,11 +9,13 @@ import {AppRoute} from "../../consts";
 interface Props {
   authorizationStatus: string;
   userEmail: string;
+  error: string;
 }
 
 const Header: React.FunctionComponent<Props> = (props: Props) => {
-  const {authorizationStatus, userEmail} = props;
+  const {authorizationStatus, userEmail, error} = props;
   return <header className="header">
+    {error ? <div className="error__message">{error}</div> : ``}
     <div className="container">
       <div className="header__wrapper">
         <div className="header__left">
@@ -45,6 +48,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
   userEmail: getUserEmail(state),
+  error: getError(state),
 });
 
 export {Header};

@@ -102,6 +102,7 @@ it(`Should Main render correctly`, () => {
       reviews: null,
       nearbyPlaces: null,
       favorites: [],
+      error: ``,
     },
     USER: {
       AuthorizationStatus: AuthorizationStatus.NO_AUTH,

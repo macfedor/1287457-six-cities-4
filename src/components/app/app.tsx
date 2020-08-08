@@ -40,7 +40,7 @@ class App extends React.PureComponent<Props, {}> {
             <SignIn onSubmit={login}/>
           </Route>
           <PrivateRoute exact path={AppRoute.FAVORITES}>
-            <Favorites />
+            <Favorites/>
           </PrivateRoute>
           <Route exact path={AppRoute.OFFER}
             render={(props) => (

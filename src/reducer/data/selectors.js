@@ -11,6 +11,10 @@ export const getCities = (state) => {
   return state[NAME_SPACE].cities;
 };
 
+export const getError = (state) => {
+  return state[NAME_SPACE].error;
+};
+
 export const getFavorites = (state) => {
   return state[NAME_SPACE].favorites;
 };

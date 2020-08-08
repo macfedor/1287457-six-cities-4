@@ -4,6 +4,7 @@ exports[`Header component render correctly 1`] = `
 <header
   className="header"
 >
+  
   <div
     className="container"
   >

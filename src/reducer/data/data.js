@@ -15,6 +15,7 @@ const initialState = {
   reviews: null,
   nearbyPlaces: null,
   favorites: [],
+  error: ``,
 };
 
 const ActionType = {
@@ -29,6 +30,7 @@ const ActionType = {
   RELOAD_NEARBY_PLACES: `RELOAD_NEARBY_PLACES`,
   GET_OFFER_BY_ID: `GET_OFFER_BY_ID`,
   LOAD_NEARBY_PLACES: `LOAD_NEARBY_PLACES`,
+  CHANGE_ERROR: `CHANGE_ERROR`,
 };
 
 const Operation = {
@@ -110,6 +112,11 @@ const ActionCreator = {
     payload: result,
   }),
 
+  changeError: (result) => ({
+    type: ActionType.CHANGE_ERROR,
+    payload: result,
+  }),
+
   setActiveOffer: (result) => ({
     type: ActionType.SET_ACTIVE_OFFER,
     payload: result,
@@ -175,6 +182,10 @@ const reducer = (state = initialState, action) => {
     case ActionType.CHANGE_CITY:
       return extend(state, {
         activeCity: action.payload
+      });
+    case ActionType.CHANGE_ERROR:
+      return extend(state, {
+        error: action.payload
       });
     case ActionType.SET_ACTIVE_OFFER:
       return extend(state, {

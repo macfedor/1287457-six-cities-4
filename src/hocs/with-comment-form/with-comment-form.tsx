@@ -1,6 +1,6 @@
 import * as React from "react";
 import {MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH, WARNING_TIMEOUT} from "../../consts";
-import {Operation} from "../../reducer/data/data";
+import {Operation, ActionCreator} from "../../reducer/data/data";
 import {connect} from "react-redux";
 import {Subtract} from 'utility-types';
 
@@ -14,6 +14,7 @@ interface InjectedProps {
 interface Props {
   postReview: (hotelId: number, rating: number, comment: string, onSuccess: Function, onError: Function) => void;
   hotelId: number;
+  changeError: (error: string) => void;
 }
 
 interface State {
@@ -65,16 +66,13 @@ const withCommentForm = (Component) => {
     }
 
     onError() {
+      const {changeError} = this.props;
       const inputElements = this.formElement.querySelectorAll(`input, textarea, button`);
       inputElements.forEach((item: HTMLInputElement) => {
         item.disabled = false;
       });
 
-      document.body.insertAdjacentHTML(`afterbegin`, `<div class="warning" style="position:fixed;top:0;left:0;width:100%;box-sizing:border-box;padding:10px;background:#ff0000;color:#fff;text-align:center;z-index:100">Something wrong</div>`);
-
-      setTimeout(() => {
-        document.querySelector(`.warning`).remove();
-      }, WARNING_TIMEOUT);
+      changeError(`Something wrong`);
     }
 
     submitHandler(evt) {
@@ -90,6 +88,9 @@ const withCommentForm = (Component) => {
     }
 
     componentDidUpdate() {
+      console.log(this.state.rating);
+      console.log(this.state.comment.length);
+      console.log(this.state.comment.length >= MIN_REVIEW_LENGTH && this.state.comment.length <= MAX_REVIEW_LENGTH);
       if (this.state.rating && (this.state.comment.length >= MIN_REVIEW_LENGTH && this.state.comment.length <= MAX_REVIEW_LENGTH)) {
         this.setState({activeSubmit: true});
       } else {
@@ -119,6 +120,10 @@ const withCommentForm = (Component) => {
     postReview(hotelId, rating, comment, onSuccess, onError) {
       dispatch(Operation.postReview(hotelId, rating, comment, onSuccess, onError));
     },
+    changeError(error) {
+      dispatch(ActionCreator.changeError(error));
+      setTimeout(() => dispatch(ActionCreator.changeError(``)), WARNING_TIMEOUT);
+    }
   });
 
   return connect(null, mapDispatchToProps)(CommentForm);

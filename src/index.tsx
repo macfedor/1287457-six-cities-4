@@ -3,7 +3,8 @@ import * as ReactDOM from 'react-dom';
 import {createStore, applyMiddleware} from "redux";
 import {Provider} from "react-redux";
 import App from "./components/app/app";
-import {Operation as DataOperation} from "./reducer/data/data";
+import {WARNING_TIMEOUT} from "./consts";
+import {Operation as DataOperation, ActionCreator as DataActionCreator} from "./reducer/data/data";
 import {Operation as UserOperation, ActionCreator, AuthorizationStatus} from "./reducer/user/user";
 import reducer from "./reducer/reducer";
 import thunk from "redux-thunk";
@@ -13,7 +14,12 @@ const onUnauthorized = () => {
   store.dispatch(ActionCreator.requiredAuthorization(AuthorizationStatus.NO_AUTH));
 };
 
-const api = createAPI(onUnauthorized);
+const onResponseError = (error) => {
+  store.dispatch(DataActionCreator.changeError(error));
+  setTimeout(() => store.dispatch(DataActionCreator.changeError(``)), WARNING_TIMEOUT);
+};
+
+const api = createAPI(onUnauthorized, onResponseError);
 
 const store = createStore(
     reducer,

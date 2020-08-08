@@ -27,14 +27,6 @@ const withOpenFlag = (Component) => {
       this.setState((prevState) => ({isOpen: !prevState.isOpen}));
     }
 
-    componentDidUpdate() {
-      if (this.state.isOpen) {
-        document.addEventListener(`click`, this._handleOpenChange);
-      } else {
-        document.removeEventListener(`click`, this._handleOpenChange);
-      }
-    }
-
     render() {
       return <Component
         {...this.props}

@@ -96,6 +96,7 @@ const store = mockStore({
     reviews: null,
     nearbyPlaces: null,
     favorites: [],
+    error: ``,
   },
   USER: {
     AuthorizationStatus: AuthorizationStatus.NO_AUTH,

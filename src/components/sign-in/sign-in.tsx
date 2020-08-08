@@ -7,7 +7,7 @@ import {AuthorizationStatus} from "../../reducer/user/user";
 import {connect} from "react-redux";
 
 interface Props {
-  onSubmit: ({login, password}: {login: string; password: string}) => void;
+  onSubmit: ({email, password}: {email: string; password: string}) => void;
   authorizationStatus: string;
 }
 
@@ -28,7 +28,7 @@ class SignIn extends React.PureComponent<Props, Record<string, unknown>> {
     evt.preventDefault();
 
     onSubmit({
-      login: this.emailRef.current.value,
+      email: this.emailRef.current.value,
       password: this.passwordRef.current.value,
     });
   }
@@ -52,7 +52,7 @@ class SignIn extends React.PureComponent<Props, Record<string, unknown>> {
               <form className="login__form form" action="#" method="post" onSubmit={this.handleSubmit}>
                 <div className="login__input-wrapper form__input-wrapper">
                   <label className="visually-hidden">E-mail</label>
-                  <input className="login__input form__input" type="email" name="email" placeholder="Email" required ref={this.emailRef} />
+                  <input className="login__input form__input" type="email" name="email" placeholder="Email" required ref={this.emailRef} pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"/>
                 </div>
                 <div className="login__input-wrapper form__input-wrapper">
                   <label className="visually-hidden">Password</label>

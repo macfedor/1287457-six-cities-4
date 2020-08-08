@@ -12,6 +12,7 @@ it(`Header component render correctly`, () => {
           <Header
             authorizationStatus={AuthorizationStatus.AUTH}
             userEmail={`test@test.com`}
+            error={``}
           />
         </Router>
     )
