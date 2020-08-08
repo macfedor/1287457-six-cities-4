@@ -10,6 +10,7 @@ import {getAuthorizationStatus} from "../../reducer/user/selectors";
 import {AuthorizationStatus} from "../../reducer/user/user";
 import history from "../../history";
 import {Offer} from "../../types";
+import {Link} from "react-router-dom";
 
 interface Props {
   loadFavorites: () => void;
@@ -46,9 +47,9 @@ class Favorites extends React.PureComponent<Props, Record<string, unknown>> {
           <FavoritesEmpty />
         }
         <footer className="footer container">
-          <a className="footer__logo-link" href="main.html">
+          <Link to={AppRoute.ROOT} className="footer__logo-link" href="main.html">
             <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
-          </a>
+          </Link>
         </footer>
       </div>
     );

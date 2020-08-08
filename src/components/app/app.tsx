@@ -38,9 +38,15 @@ const App: React.FunctionComponent<Props> = (props: Props) => {
         <Route exact path={AppRoute.LOGIN}>
           <SignIn onSubmit={login}/>
         </Route>
-        <PrivateRoute exact path={AppRoute.FAVORITES}>
-          <Favorites/>
-        </PrivateRoute>
+        <PrivateRoute
+            exact
+            path={AppRoute.FAVORITES}
+            render={() => {
+              return (
+                <Favorites />
+              );
+            }}
+          />
         <Route exact path={AppRoute.OFFER}
           render={(renderProps) => (
             <Property
