@@ -22,6 +22,14 @@ class SignIn extends React.PureComponent<Props, Record<string, unknown>> {
     this.passwordRef = React.createRef();
   }
 
+  componentDidUpdate() {
+    if (this.props.authorizationStatus === AuthorizationStatus.AUTH) {
+      return history.push(AppRoute.ROOT);
+    }
+
+    return true;
+  }
+
   handleSubmit(evt) {
     const {onSubmit} = this.props;
 
@@ -31,14 +39,6 @@ class SignIn extends React.PureComponent<Props, Record<string, unknown>> {
       email: this.emailRef.current.value,
       password: this.passwordRef.current.value,
     });
-  }
-
-  componentDidUpdate() {
-    if (this.props.authorizationStatus === AuthorizationStatus.AUTH) {
-      return history.push(AppRoute.ROOT);
-    }
-
-    return true;
   }
 
   render() {
