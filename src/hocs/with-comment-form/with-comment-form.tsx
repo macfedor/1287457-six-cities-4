@@ -88,9 +88,6 @@ const withCommentForm = (Component) => {
     }
 
     componentDidUpdate() {
-      console.log(this.state.rating);
-      console.log(this.state.comment.length);
-      console.log(this.state.comment.length >= MIN_REVIEW_LENGTH && this.state.comment.length <= MAX_REVIEW_LENGTH);
       if (this.state.rating && (this.state.comment.length >= MIN_REVIEW_LENGTH && this.state.comment.length <= MAX_REVIEW_LENGTH)) {
         this.setState({activeSubmit: true});
       } else {

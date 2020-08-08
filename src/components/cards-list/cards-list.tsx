@@ -9,23 +9,21 @@ interface Props {
   cardType: string;
 }
 
-class CardsList extends React.PureComponent<Props, Record<string, unknown>> {
+const CardsList: React.FunctionComponent<Props> = (props: Props) => {
 
-  render() {
-    const {cards, onCardHover, cardsListClassName, cardType} = this.props;
-    return (
-      <div className={`places__list ${cardsListClassName}`}>
-        {cards.map((card) => (
-          <Card key={card.id}
-            card={card}
-            cardType={cardType}
-            onMouseEnter={() => onCardHover(card)}
-            onMouseLeave={() => onCardHover(null)}
-          />
-        ))}
-      </div>
-    );
-  }
-}
+  const {cards, onCardHover, cardsListClassName, cardType} = props;
+  return (
+    <div className={`places__list ${cardsListClassName}`}>
+      {cards.map((card) => (
+        <Card key={card.id}
+          card={card}
+          cardType={cardType}
+          onMouseEnter={() => onCardHover(card)}
+          onMouseLeave={() => onCardHover(null)}
+        />
+      ))}
+    </div>
+  );
+};
 
 export default CardsList;

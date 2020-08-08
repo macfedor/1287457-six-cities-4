@@ -22,40 +22,38 @@ interface Props {
   login: () => void;
 }
 
-class App extends React.PureComponent<Props, {}> {
+const App: React.FunctionComponent<Props> = (props: Props) => {
 
-  render() {
-    const {login, activeOffer, onCardHover, onCityClick, authorizationStatus} = this.props;
-    return (
-      <Router history={history}>
-        <Switch>
-          <Route exact path={AppRoute.ROOT}>
-            <Main
-              onCityClick={onCityClick}
-              onCardHover={onCardHover}
-              authorizationStatus={authorizationStatus}
-            />
-          </Route>
-          <Route exact path={AppRoute.LOGIN}>
-            <SignIn onSubmit={login}/>
-          </Route>
-          <PrivateRoute exact path={AppRoute.FAVORITES}>
-            <Favorites/>
-          </PrivateRoute>
-          <Route exact path={AppRoute.OFFER}
-            render={(props) => (
-              <Property
-                routerProps={props}
-                property={activeOffer}
-                onCardHover={onCardHover}
-              />
-            )}
+  const {login, activeOffer, onCardHover, onCityClick, authorizationStatus} = props;
+  return (
+    <Router history={history}>
+      <Switch>
+        <Route exact path={AppRoute.ROOT}>
+          <Main
+            onCityClick={onCityClick}
+            onCardHover={onCardHover}
+            authorizationStatus={authorizationStatus}
           />
-        </Switch>
-      </Router>
-    );
-  }
-}
+        </Route>
+        <Route exact path={AppRoute.LOGIN}>
+          <SignIn onSubmit={login}/>
+        </Route>
+        <PrivateRoute exact path={AppRoute.FAVORITES}>
+          <Favorites/>
+        </PrivateRoute>
+        <Route exact path={AppRoute.OFFER}
+          render={(renderProps) => (
+            <Property
+              routerProps={renderProps}
+              property={activeOffer}
+              onCardHover={onCardHover}
+            />
+          )}
+        />
+      </Switch>
+    </Router>
+  );
+};
 
 const mapStateToProps = (state) => ({
   activeOffer: getActiveOffer(state),
