@@ -4,9 +4,8 @@ import {SortType} from "../../consts";
 import {sortPlaces, getCitiesList} from "../../utils/common";
 import MockAdapter from "axios-mock-adapter";
 import {createAPI} from "../../api";
-import {noop} from "../../utils/common";
 
-const api = createAPI(noop);
+const api = createAPI(() => {});
 
 const citiesList = [
   `Amsterdam`,
@@ -219,7 +218,7 @@ describe(`Operation works correctly`, () => {
       .onGet(`/hotels`)
       .reply(200, mockServerTypeOffers);
 
-    return loadOffers(dispatch, noop, api)
+    return loadOffers(dispatch, () => {}, api)
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
